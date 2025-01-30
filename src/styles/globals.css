@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#FDF8F3] text-gray-900;
+  }
+}
+
+@layer components {
+  .hero {
+    @apply relative py-16 overflow-hidden;
+  }
+
+  .container {
+    @apply max-w-[1200px] mx-auto px-4;
+  }
+
+  .trust-badge {
+    @apply mb-8;
+  }
+
+  .platform-logos {
+    @apply flex gap-4 mt-2;
+  }
+
+  .primary-cta {
+    @apply relative border-2 border-[#FF4D4D] text-[#00FF88] 
+           shadow-[0_0_10px_#00FF88] px-8 py-4 rounded-full
+           transition-all duration-300 hover:scale-105;
+  }
+
+  .secondary-cta {
+    @apply px-8 py-4 text-white/80 hover:text-white;
+  }
+
+  .cyber-overlay {
+    @apply absolute inset-0 bg-black/50 z-[-1];
+  }
+
+  .pricing-widget {
+    @apply bg-white/10 p-8 rounded-xl max-w-2xl mx-auto my-8;
+  }
+
+  .particles-animation {
+    @apply pointer-events-none;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: particleFloat 20s linear infinite;
+  }
+
+  @keyframes particleFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50px); }
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r 
+           from-primary-blue to-secondary-blue;
+  }
+
+  .toxicity-meter {
+    @apply h-2 bg-gray-800 rounded-full overflow-hidden;
+    transition: all 0.3s ease;
+  }
+
+  .toxicity-score {
+    @apply h-full bg-gradient-to-r from-cyber-green to-toxic-red;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ai-editor {
+    @apply bg-white/10 rounded-xl p-6 resize-none min-h-[200px] text-white;
+    &:focus {
+      @apply ring-2 ring-cyber-green outline-none;
+    }
+  }
+}
+
+@layer utilities {
+  .backdrop-blur-sm {
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+
+.primary-cta:hover {
+  animation: glitch 0.3s infinite;
+  background: linear-gradient(45deg, #FF4D4D 0%, transparent 50%, #00FF88 100%);
+}
+
+:root {
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+}
+
+/* Добавьте сюда ваши кастомные стили */
+
+@media (max-width: 640px) {
+  .text-4xl { 
+    font-size: 28px;
+    line-height: 2.25rem;
+  }
+  .text-xl { 
+    font-size: 18px;
+    line-height: 1.5rem;
+  }
+}
+
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-4;
+}
+
+.counter {
+  @apply text-3xl font-bold text-cyber-green;
+}
+
+/* Анимации */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+} 

@@ -1,0 +1,124 @@
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0A1A3A, #1A3B6A);
+    color: white;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    padding: 4rem 0;
+    overflow: hidden;
+}
+
+.red-flags-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('red-flags.svg') repeat;
+    animation: floatFlags 20s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes floatFlags {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.primary-cta {
+    background: none;
+    position: relative;
+    border: 2px solid #FF4D4D;
+    color: #00FF88;
+    text-shadow: 0 0 10px #00FF88;
+}
+
+.primary-cta::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FF4D4D;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    opacity: 0.8;
+}
+
+/* Глитч-эффект */
+@keyframes glitch {
+    0% { transform: translate(0) }
+    20% { transform: translate(-2px, 2px) }
+    40% { transform: translate(-2px, -2px) }
+    60% { transform: translate(2px, 2px) }
+    80% { transform: translate(2px, -2px) }
+    100% { transform: translate(0) }
+}
+
+.primary-cta:hover {
+    animation: glitch 0.3s infinite;
+    background: linear-gradient(45deg, #FF4D4D 0%, transparent 50%, #00FF88 100%);
+}
+
+/* Матричная сетка */
+.grid-lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 19px,
+        rgba(0, 255, 136, 0.1) 20px
+    );
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Pricing Widget */
+.pricing-widget {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.calculator {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+#client-budget {
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.multiplier {
+    background: #ff4757;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .cta-buttons {
+        flex-direction: column;
+    }
+} 
