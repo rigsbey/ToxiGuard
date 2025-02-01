@@ -1,5 +1,5 @@
 module.exports = {
-  // УДАЛИТЬ ПРАВИЛА REWRITES
+  // Убедитесь что нет лишних правил
   async headers() {
     return [
       {

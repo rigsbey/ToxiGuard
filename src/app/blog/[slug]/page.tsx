@@ -110,7 +110,7 @@ export default function BlogPost({ params }: Params) {
         <h2 className="text-2xl font-bold mb-4">Ready to Protect Your Business?</h2>
         <p className="mb-6">Join 8,214+ professionals using ToxiGuard for client risk detection</p>
         <Link
-          href="/waitlist"
+          href="/early-access"
           className="bg-primary-blue text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-primary-blue/90 transition-all"
         >
           Get Early Access Now
