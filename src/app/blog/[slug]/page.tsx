@@ -11,7 +11,7 @@ type PageParams = {
 }
 
 type PageProps = {
-  params: Promise<PageParams> | PageParams;
+  params: Promise<PageParams>;
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
@@ -82,8 +82,8 @@ export default async function BlogArticlePage({
   params,
   searchParams 
 }: PageProps) {
-  // Убеждаемся, что params разрешен
-  const resolvedParams = await Promise.resolve(params);
+  // Вместо await Promise.resolve(params) просто ожидаем params
+  const resolvedParams = await params;
   const article = articles[resolvedParams.slug as keyof typeof articles];
 
   if (!article) {
