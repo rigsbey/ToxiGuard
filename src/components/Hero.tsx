@@ -13,6 +13,14 @@ export default function Hero() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
   const scrollToHowItWorks = useScrollToSection('how-it-works-section');
 
+  // Добавляем массив benefits для отображения "Доверительных элементов"
+  const benefits = [
+    { icon: "🔒", text: "256-bit Encryption" },
+    { icon: "✅", text: "GDPR Compliant" },
+    // При необходимости можно добавить новые пункты, например:
+    // { icon: "⚡", text: "Fast Performance" },
+  ];
+
   return (
     <section className="relative py-24 md:py-32 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
@@ -51,10 +59,10 @@ export default function Hero() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {benefit.title}
+                      {benefit.text}
                     </h3>
                     <p className="text-gray-600 mt-2 text-sm leading-relaxed">
-                      {benefit.description}
+                      {/* You can add a description here if needed */}
                     </p>
                   </div>
                 </div>
@@ -104,12 +112,18 @@ export default function Hero() {
 
         {/* Доверительные элементы */}
         <div className="flex flex-wrap justify-center gap-4 text-sm">
-          <div className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
-            🔒 256-bit Encryption
-          </div>
-          <div className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
-            ✅ GDPR Compliant
-          </div>
+          {benefits.map((benefit, index) => (
+            <motion.li 
+              key={index}
+              className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+            >
+              <span>{benefit.icon}</span>
+              <span className="ml-2">{benefit.text}</span>
+            </motion.li>
+          ))}
         </div>
       </div>
     </section>

@@ -2,10 +2,17 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type Params = {
-  params: {
-    slug: string
-  }
+// Отключаем динамические параметры
+export const dynamicParams = false;
+
+// Обновляем типы для Next.js 15+
+type PageParams = {
+  slug: string;
+}
+
+type PageProps = {
+  params: Promise<PageParams> | PageParams;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 const articles = {
@@ -51,27 +58,33 @@ const articles = {
   // Add other articles
 };
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: PageParams }
+): Promise<Metadata> {
   const article = articles[params.slug as keyof typeof articles];
   
-  if (!article) {
-    return {
-      title: 'Article Not Found | ToxiGuard Blog',
-      description: 'The requested article does not exist',
-    }
-  }
-
-  return {
-    title: `${article.title} | ToxiGuard Blog`,
-    description: article.seoDescription,
-    openGraph: {
-      images: [article.image]
-    }
-  };
+  return article
+    ? {
+        title: `${article.title} | ToxiGuard Blog`,
+        description: article.seoDescription,
+        openGraph: {
+          images: [article.image]
+        }
+      }
+    : {
+        title: 'Article Not Found | ToxiGuard Blog',
+        description: 'The requested article does not exist',
+      };
 }
 
-export default function BlogPost({ params }: Params) {
-  const article = articles[params.slug as keyof typeof articles];
+// Обновляем компонент страницы для поддержки асинхронных параметров
+export default async function BlogArticlePage({ 
+  params,
+  searchParams 
+}: PageProps) {
+  // Убеждаемся, что params разрешен
+  const resolvedParams = await Promise.resolve(params);
+  const article = articles[resolvedParams.slug as keyof typeof articles];
 
   if (!article) {
     return (
@@ -85,7 +98,7 @@ export default function BlogPost({ params }: Params) {
           View All Articles
         </Link>
       </div>
-    )
+    );
   }
 
   return (
@@ -140,11 +153,17 @@ export default function BlogPost({ params }: Params) {
             "description": article.seoDescription,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://toxiguard.com/blog/${params.slug}`
+              "@id": `https://toxiguard.com/blog/${resolvedParams.slug}`
             }
           })
         }}
       />
     </article>
   );
+}
+
+export async function generateStaticParams(): Promise<PageParams[]> {
+  return Object.keys(articles).map(slug => ({
+    slug
+  }));
 } 
