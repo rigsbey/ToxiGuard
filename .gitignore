@@ -1,5 +1,11 @@
 # Dependencies
-node_modules/
+**/*.node
+**/*.dll
+**/*.so
+**/*.dylib
+**/*.exe
+**/node_modules/
+.next/
 
 # Build and cache output
 dist/
