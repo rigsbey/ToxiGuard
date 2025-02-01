@@ -44,3 +44,36 @@ coverage/
 !.gitkeep
 *.swp
 
+# Next.js сборка
+.next/cache/**
+.next/package.json
+
+# IDE
+.idea/modules.xml
+.idea/workspace.xml
+
+# Локальные настройки
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Временные файлы редакторов
+*.swp
+*.swo
+*~
+
+# Тестовые данные
+cypress/videos/**
+cypress/screenshots/**
+
+# Документация
+/docs_build/
+
+# Добавить в существующие правила
+*.node
+*.exe
+*.bin
+*.dll
+*.so
+*.dylib
