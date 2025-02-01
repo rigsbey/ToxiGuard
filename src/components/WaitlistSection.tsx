@@ -52,51 +52,56 @@ export default function WaitlistSection() {
   };
 
   return (
-    <section id="waitlist-section" className="py-20 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-4xl mx-auto px-4 text-center">
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Join {METRICS.CURRENT_SIGNUPS}+ Early Adopters
+        <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 border border-gray-200">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Join {METRICS.CURRENT_SIGNUPS}+ 
+            <span className="text-blue-600"> Early Adopters</span>
           </h2>
-          <p className="text-gray-600 text-lg mb-8">
-            Be among the first {METRICS.TOTAL_SPOTS} to transform your freelance business
-          </p>
-
-          <div className="grid grid-cols-3 gap-8 mb-12">
+          
+          {/* Статистика */}
+          <div className="flex justify-center gap-8 mb-12">
             <div className="text-center">
-              <div className="font-bold text-blue-800 text-2xl">
+              <div className="text-3xl font-bold text-gray-900">
                 {METRICS.PROJECTS_ANALYZED}+
               </div>
-              <div className="text-sm">Projects Analyzed</div>
+              <div className="text-gray-600 text-sm">Projects Analyzed</div>
             </div>
             
             <div className="text-center">
-              <div className="font-bold text-green-800 text-2xl">
+              <div className="text-3xl font-bold text-gray-900">
                 ${(METRICS.PROTECTED_AMOUNT / 1000).toFixed(1)}k
               </div>
-              <div className="text-sm">Protected</div>
+              <div className="text-gray-600 text-sm">Protected</div>
             </div>
             
             <div className="text-center">
-              <div className="font-bold text-purple-800 text-2xl">
+              <div className="text-3xl font-bold text-gray-900">
                 {METRICS.AVG_HOURS_SAVED}h
               </div>
-              <div className="text-sm">Monthly Saved</div>
+              <div className="text-gray-600 text-sm">Monthly Saved</div>
             </div>
           </div>
 
-          <form className="max-w-md mx-auto space-y-4">
-            <input
-              type="email"
-              placeholder="Your best professional email"
-              className="w-full px-6 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-lg"
-            />
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-700 transition-colors text-lg"
-            >
-              Join Early Access →
-            </button>
+          {/* Форма */}
+          <form className="max-w-md mx-auto">
+            <div className="relative">
+              <input 
+                type="email"
+                className="w-full py-4 px-6 rounded-xl border border-gray-300 
+                         focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                         placeholder-gray-500 text-gray-900"
+                placeholder="Your professional email"
+              />
+              <button 
+                type="submit"
+                className="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 
+                         text-white px-8 py-2.5 rounded-lg font-medium transition-all"
+              >
+                Join Now
+              </button>
+            </div>
           </form>
 
           <p className="text-sm text-gray-500 mt-6">

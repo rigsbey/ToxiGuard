@@ -453,4 +453,24 @@ h1 {
     font-size: 3rem;
     line-height: 1;
   }
+}
+
+/* Тени */
+.shadow-soft {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+/* Градиенты */
+.bg-gradient-blue {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+}
+
+/* Анимации */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Кастомные радиусы */
+.rounded-inner {
+  border-radius: 20px;
 } 

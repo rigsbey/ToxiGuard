@@ -14,50 +14,52 @@ export default function Hero() {
   const scrollToHowItWorks = useScrollToSection('how-it-works-section');
 
   return (
-    <section className="relative py-16 md:py-24 bg-gradient-to-b from-blue-50 to-white">
+    <section className="relative py-24 md:py-32 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* Заголовок с акцентом на действие */}
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          <span className="block mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 
-                min-h-[1.2em] align-middle">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8">
+          <span className="block mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 
+                          leading-[1.15] tracking-tight px-2">
             Stop Client Nightmares
           </span>
-          <span className="text-2xl md:text-3xl font-medium text-gray-600">
+          <span className="text-2xl md:text-3xl font-medium text-gray-600 mt-4">
             AI-Powered Protection for Freelancers
           </span>
         </h1>
 
-        {/* Добавить после заголовка */}
-        <div className="mb-6">
-          <span className="inline-block bg-green-100 text-green-800 px-6 py-3 rounded-full text-sm font-medium">
-            🚀 {METRICS.PROJECTS_ANALYZED}+ Projects Protected
+        {/* Бейдж */}
+        <div className="mb-12">
+          <span className="inline-block bg-blue-50 text-blue-800 px-8 py-3 rounded-full 
+                         text-base font-medium border border-blue-100">
+            🛡️ Protected ${(METRICS.PROTECTED_AMOUNT / 1000).toFixed(0)}k+ Payments
           </span>
         </div>
 
-        {/* Список преимуществ */}
-        <div className="max-w-3xl mx-auto mb-12">
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-            <li className="flex items-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-2xl mr-3">🔍</span>
-              <div>
-                <h3 className="font-semibold">Red Flag Detection</h3>
-                <p className="text-sm text-gray-600">3-second AI analysis</p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-2xl mr-3">⏱️</span>
-              <div>
-                <h3 className="font-semibold">{METRICS.AVG_HOURS_SAVED} Hours/Month</h3>
-                <p className="text-sm text-gray-600">Average time saved</p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-2xl mr-3">💸</span>
-              <div>
-                <h3 className="font-semibold">{(METRICS.DISPUTE_IMPROVEMENT * 100).toFixed(0)}% Fewer Delays</h3>
-                <p className="text-sm text-gray-600">Payment protection</p>
-              </div>
-            </li>
+        {/* Преимущества */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            {benefits.map((benefit, index) => (
+              <motion.li 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 
+                          hover:border-blue-200 transition-all"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
+                    {benefit.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-gray-600 mt-2 text-sm leading-relaxed">
+                      {benefit.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.li>
+            ))}
           </ul>
         </div>
 
