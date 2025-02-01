@@ -6,13 +6,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'toxic-red': '#FF4D4D',
-        'cyber-green': '#00FF88',
-        'primary-blue': '#4A90E2',
-        'secondary-blue': '#6AC8FF',
+        'primary-blue': '#2A5CAA',
+        'success-green': '#4CAF50',
+        'toxic-red': '#EF4444',
+        'warning-orange': '#F59E0B',
+        primary: '#2A2A2A',
+        secondary: '#5E5E5E',
+        accent: '#00C389',
+        'accent-dark': '#008C65'
       },
       fontFamily: {
-        sans: ['var(--font-space-grotesk)', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        headings: ['Space Grotesk', 'sans-serif']
       },
       boxShadow: {
         'cyber-green/30': '0 0 30px rgba(0, 255, 136, 0.3)',

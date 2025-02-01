@@ -35,6 +35,8 @@ body {
 }
 
 .primary-cta {
+    transition: all 0.3s ease;
+    background-size: 200% auto;
     background: none;
     position: relative;
     border: 2px solid #FF4D4D;
@@ -54,19 +56,10 @@ body {
     opacity: 0.8;
 }
 
-/* Глитч-эффект */
-@keyframes glitch {
-    0% { transform: translate(0) }
-    20% { transform: translate(-2px, 2px) }
-    40% { transform: translate(-2px, -2px) }
-    60% { transform: translate(2px, 2px) }
-    80% { transform: translate(2px, -2px) }
-    100% { transform: translate(0) }
-}
-
 .primary-cta:hover {
-    animation: glitch 0.3s infinite;
-    background: linear-gradient(45deg, #FF4D4D 0%, transparent 50%, #00FF88 100%);
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 77, 77, 0.3);
 }
 
 /* Матричная сетка */

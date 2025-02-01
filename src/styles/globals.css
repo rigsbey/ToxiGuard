@@ -6,6 +6,17 @@
   body {
     @apply bg-[#FDF8F3] text-gray-900;
   }
+  
+  /* Добавить стили для улучшения читаемости текста */
+  .text-content {
+    @apply text-gray-800 leading-relaxed tracking-normal;
+    font-variation-settings: 'opsz' 32, 'GRAD' 88;
+  }
+  
+  /* Улучшить контрастность для важных элементов */
+  .text-danger {
+    @apply text-red-700;
+  }
 }
 
 @layer components {
@@ -26,9 +37,9 @@
   }
 
   .primary-cta {
-    @apply relative border-2 border-[#FF4D4D] text-[#00FF88] 
-           shadow-[0_0_10px_#00FF88] px-8 py-4 rounded-full
-           transition-all duration-300 hover:scale-105;
+    @apply bg-toxic-red text-white px-8 py-4 rounded-full font-bold 
+           hover:bg-red-600 transition-all transform hover:scale-105 
+           shadow-lg hover:shadow-xl;
   }
 
   .secondary-cta {
@@ -66,7 +77,7 @@
   }
 
   .toxicity-score {
-    @apply h-full bg-gradient-to-r from-cyber-green to-toxic-red;
+    @apply h-full bg-gradient-to-r from-cyber-green to-danger;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -76,11 +87,30 @@
       @apply ring-2 ring-cyber-green outline-none;
     }
   }
+
+  /* Добавить стили для карточек и бейджей */
+  .badge {
+    @apply shadow-sm border border-opacity-10;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all;
+  }
 }
 
 @layer utilities {
   .backdrop-blur-sm {
     backdrop-filter: blur(8px);
+  }
+
+  .text-toxic-red {
+    color: #ff4d4f;
+  }
+  .bg-toxic-red {
+    background-color: #ff4d4f;
+  }
+  .hover\:bg-toxic-red:hover {
+    background-color: #ff4d4f;
   }
 }
 
@@ -100,6 +130,10 @@
 
 :root {
   --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --primary: #1d4ed8;
+  --primary-hover: #1e40af;
+  --text: #1f2937;
+  --text-light: #4b5563;
 }
 
 /* Добавьте сюда ваши кастомные стили */
@@ -113,6 +147,20 @@
     font-size: 18px;
     line-height: 1.5rem;
   }
+  .hero h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .hero li {
+    font-size: 1rem;
+    align-items: flex-start;
+  }
+  
+  .hero button {
+    width: 100%;
+    padding: 1rem;
+  }
 }
 
 .stats-grid {
@@ -120,7 +168,7 @@
 }
 
 .counter {
-  @apply text-3xl font-bold text-cyber-green;
+  @apply text-3xl font-bold text-danger;
 }
 
 /* Анимации */
@@ -131,4 +179,278 @@
 
 .float {
   animation: float 6s ease-in-out infinite;
+}
+
+/* Улучшим контрастность для кнопок */
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors;
+}
+
+/* Новая анимация пульсации */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.hover-pulse:hover {
+  animation: pulse 1.5s infinite;
+}
+
+/* Параллакс-эффект */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Testimonial Badges */
+.testimonial-badge {
+  @apply text-xs font-medium bg-gray-100 text-gray-600 px-2 py-1 rounded-full;
+}
+
+/* Emoji Containers */
+.emoji-container {
+  @apply flex items-center justify-center w-12 h-12 rounded-full bg-toxic-red/10 text-toxic-red;
+}
+
+/* Quote Styling */
+.testimonial-quote {
+  @apply pl-4 border-l-4 border-toxic-red italic text-gray-700;
+}
+
+/* Добавить адаптивные шрифты */
+@screen md {
+  .hero h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+  }
+  
+  .hero li {
+    font-size: 1.1rem;
+  }
+}
+
+/* Добавьте градиенты */
+.bg-gradient-cyan {
+  background-image: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+}
+
+/* Тени для карточек */
+.shadow-3xl {
+  box-shadow: 0 25px 50px -12px rgba(42,92,170,0.15);
+}
+
+.hover\\:shadow-3xl:hover {
+  box-shadow: 0 32px 64px -12px rgba(42,92,170,0.2);
+}
+
+/* Новые градиенты */
+.bg-gradient-case-study {
+  background-image: linear-gradient(135deg, rgba(42,92,170,0.05) 0%, rgba(255,255,255,1) 100%);
+}
+
+/* Анимация бейджа */
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.verified-badge {
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+/* Анимации */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+@media (max-width: 768px) {
+  .case-study-card {
+    padding: 1.5rem;
+  }
+  
+  .case-study-title {
+    font-size: 1.25rem;
+  }
+  
+  .stats-badge {
+    font-size: 0.875rem;
+  }
+}
+
+/* Добавьте если отсутствует */
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Обновленные стили графиков */
+.bar-chart-label {
+  @apply text-sm font-medium text-gray-600;
+}
+
+.chart-tooltip {
+  @apply bg-gray-800 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-lg;
+  position: relative;
+}
+
+.chart-tooltip::after {
+  content: '';
+  @apply absolute w-3 h-3 bg-gray-800 rotate-45 -bottom-1 left-1/2 -translate-x-1/2;
+}
+
+/* Стили для стеклянных кнопок */
+.glass-button {
+  @apply bg-white/10 backdrop-blur-lg border-2 border-opacity-20 hover:border-opacity-100;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анимация волны при наведении */
+.hover-wave::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-[#2A5CAA]/10 to-transparent opacity-0;
+  animation: wave 1.2s infinite;
+}
+
+@keyframes wave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Стили для токсичных проектов */
+.toxic-project {
+  @apply bg-red-50/50 p-6 rounded-xl border-2 border-red-100;
+}
+
+.toxic-badge {
+  @apply bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+/* Стили для безопасных проектов */
+.safe-project {
+  @apply bg-green-50/50 p-6 rounded-xl border-2 border-green-100;
+}
+
+.safe-badge {
+  @apply bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+/* Анимация перехода */
+.project-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Иконки рисков */
+.risk-icon {
+  @apply w-6 h-6 p-1 rounded-full bg-red-50 text-red-600;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .project-grid {
+    @apply grid-cols-1 gap-6;
+  }
+  
+  .project-card {
+    @apply p-4;
+  }
+  
+  .risk-item {
+    @apply p-3;
+  }
+}
+
+/* Новые градиенты */
+.bg-gradient-success-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+  backdrop-filter: blur(20px);
+}
+
+/* Тени */
+.shadow-impact {
+  box-shadow: 0 25px 50px -12px rgba(42,92,170,0.15), 
+              0 8px 24px -4px rgba(42,92,170,0.1);
+}
+
+/* Анимации */
+@keyframes float-card {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.hover-float:hover {
+  animation: float-card 6s ease-in-out infinite;
+}
+
+/* Иконки верификации */
+.verified-badge {
+  background: linear-gradient(45deg, #2A5CAA 0%, #3B82F6 100%);
+  box-shadow: 0 4px 12px rgba(42,92,170,0.25);
+}
+
+/* Улучшенные тени */
+.shadow-story-card {
+  box-shadow: 0 32px 64px -12px rgba(42,92,170,0.2), 
+              0 16px 32px -16px rgba(0,0,0,0.1);
+}
+
+/* Анимация карточек */
+@keyframes card-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+.story-card:hover {
+  animation: card-float 6s ease-in-out infinite;
+}
+
+/* Градиентные обводки */
+.gradient-border {
+  position: relative;
+  &::before {
+    content: '';
+    @apply absolute inset-0 rounded-3xl p-px bg-gradient-to-r from-[#2A5CAA] to-[#3B82F6];
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.75; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+.animate-pulse::after {
+  content: '';
+  @apply absolute inset-0 rounded-full border-2 border-[#2A5CAA]/20;
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Базовые анимации */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Адаптивная типографика */
+h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
 } 

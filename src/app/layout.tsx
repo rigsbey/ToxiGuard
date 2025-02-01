@@ -9,8 +9,22 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'ToxiGuard - AI Detector for Toxic Requirements',
-  description: 'Stop wasting time on toxic clients with AI-powered protection',
+  title: {
+    default: 'ToxiGuard - AI Client Risk Detection for Freelancers',
+    template: '%s | ToxiGuard Blog'
+  },
+  description: 'AI-powered protection against toxic clients and payment risks',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://toxiguard.com/',
+    siteName: 'ToxiGuard',
+    images: [{
+      url: 'https://toxiguard.com/og-default.jpg',
+      width: 1200,
+      height: 630,
+    }]
+  }
 }
 
 export default function RootLayout({
@@ -20,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${spaceGrotesk.variable}`}>
+      <body className={inter.className}>
         {children}
       </body>
     </html>
