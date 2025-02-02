@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useScrollToSection } from '@/hooks/useScrollToWaitlist';
 
 interface ExitPopupProps {
   onClose?: () => void;
@@ -10,6 +11,8 @@ interface ExitPopupProps {
 export default function ExitPopup({ onClose }: ExitPopupProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
+
+  const scrollToWaitlist = useScrollToSection('waitlist-section');
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -38,7 +41,10 @@ export default function ExitPopup({ onClose }: ExitPopupProps) {
             <p className="text-gray-600 mb-6">
               Join our waitlist now and unlock exclusive benefits when we launch
             </p>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={(e) => {
+              e.preventDefault();
+              scrollToWaitlist();
+            }}>
               <input
                 type="email"
                 value={email}

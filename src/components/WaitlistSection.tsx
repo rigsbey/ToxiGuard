@@ -52,7 +52,10 @@ export default function WaitlistSection() {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section 
+      id="waitlist-section" 
+      className="py-24 bg-gradient-to-b from-white to-gray-50"
+    >
       <div className="max-w-4xl mx-auto px-4 text-center">
         <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 border border-gray-200">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">

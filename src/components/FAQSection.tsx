@@ -7,7 +7,7 @@ import {
   QuestionMarkCircleIcon, 
   ShieldCheckIcon 
 } from '@heroicons/react/24/outline';
-import { useScrollToWaitlist } from '@/hooks/useScrollToWaitlist';
+import { useScrollToSection } from '@/hooks/useScrollToWaitlist';
 
 interface FAQItem {
   question: string;
@@ -16,7 +16,7 @@ interface FAQItem {
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const scrollToWaitlist = useScrollToWaitlist();
+  const scrollToWaitlist = useScrollToSection('waitlist-section');
 
   const faqs: FAQItem[] = [
     {

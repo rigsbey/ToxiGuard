@@ -5,7 +5,10 @@ import {
 
 export default function Roadmap() {
   return (
-    <section className="py-24 bg-gray-50">
+    <section 
+      id="roadmap" 
+      className="py-24 bg-gray-50"
+    >
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-16">Product Roadmap</h2>
         

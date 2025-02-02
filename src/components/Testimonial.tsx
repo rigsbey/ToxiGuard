@@ -1,5 +1,6 @@
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { motion } from 'framer-motion';
+import { useScrollToSection } from '@/hooks/useScrollToWaitlist';
 
 const testimonials = [
   {
@@ -19,6 +20,8 @@ const testimonials = [
 ];
 
 export default function Testimonial() {
+  const scrollToStats = useScrollToSection('stats');
+
   return (
     <div className="space-y-12">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -28,7 +31,10 @@ export default function Testimonial() {
             whileHover={{ scale: 1.02 }}
             className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 relative"
           >
-            <button className="absolute top-4 right-4 text-gray-400 hover:text-toxic-red">
+            <button 
+              onClick={scrollToStats}
+              className="absolute top-4 right-4 text-gray-400 hover:text-toxic-red"
+            >
               <InformationCircleIcon className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-4 mb-4">

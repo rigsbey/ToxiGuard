@@ -39,12 +39,24 @@ const demoProjects: Project[] = [
   {
     title: "Mobile App Design",
     icon: <Edit3 className="w-6 h-6 text-toxic-red" />,
-    content: "Looking for designer to create 50 screens for fitness app. Need unlimited revisions. Final payment after investor approval.",
+    content: "Project spec analysis revealed 3 critical issues in requirements:",
     riskLevel: 87,
     redFlags: [
-      { label: "Scope creep", icon: <AlertTriangle className="w-4 h-4" />, tip: "Unlimited revisions = endless project" },
-      { label: "Payment delay", icon: <Wallet className="w-4 h-4" />, tip: "Investor-dependent payment is risky" },
-      { label: "Vague requirements", icon: <ExclamationTriangleIcon className="w-4 h-4" />, tip: "No clear specifications provided" }
+      { 
+        label: "Unclear acceptance criteria", 
+        icon: <AlertTriangle className="w-4 h-4" />, 
+        tip: "No measurable success metrics" 
+      },
+      { 
+        label: "Unpaid trial task", 
+        icon: <Wallet className="w-4 h-4" />, 
+        tip: "Requests free work before contract" 
+      },
+      { 
+        label: "Vague deliverables", 
+        icon: <ExclamationTriangleIcon className="w-4 h-4" />, 
+        tip: "Undefined scope leads to endless revisions" 
+      }
     ],
     badExample: "Looking for designer to create 50 screens for fitness app. Need unlimited revisions. Final payment after investor approval.",
     goodExample: "Reasonable budget: $5,000+ for MVP with defined scope (20 core screens, 2 revision rounds)"
@@ -63,7 +75,7 @@ export default function DemoSection({
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Toxic vs Safe Projects</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">Project Risk Analysis</h2>
         
         <div className="space-y-12">
           {projects.map((project, index) => (
@@ -75,58 +87,19 @@ export default function DemoSection({
               className="grid md:grid-cols-2 gap-8"
             >
               {/* Токсичный проект */}
-              <div className="bg-red-50/50 p-6 rounded-xl border-2 border-red-100">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                    <XCircleIcon className="w-5 h-5 text-red-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-red-800">Toxic Project</h3>
+              <div className="bg-blue-50/50 p-6 rounded-xl border-2 border-blue-200">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <XCircleIcon className="w-5 h-5 text-blue-600" />
                 </div>
-                <blockquote className="text-red-900 italic border-l-4 border-red-200 pl-4">
-                  "{project.badExample}"
-                </blockquote>
-                
-                {/* Риски */}
-                <div className="mt-6 grid gap-4">
-                  {project.redFlags.map((flag, i) => (
-                    <div key={i} className="bg-white p-4 rounded-lg flex items-start gap-3">
-                      <div className="w-6 h-6 bg-red-50 rounded-full flex items-center justify-center">
-                        {flag.icon}
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-red-800">{flag.label}</h4>
-                        <p className="text-sm text-red-700">{flag.tip}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <h3 className="text-xl font-bold text-blue-800 mt-4">High Risk Indicators</h3>
               </div>
 
               {/* Безопасная альтернатива */}
-              <div className="bg-green-50/50 p-6 rounded-xl border-2 border-green-100">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <CheckCircleIcon className="w-5 h-5 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-green-800">Safe Alternative</h3>
+              <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <CheckCircleIcon className="w-5 h-5 text-green-600" />
                 </div>
-                <div className="text-green-900">
-                  <p className="mb-4">"Reasonable project:"</p>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-2">
-                      <CurrencyDollarIcon className="w-5 h-5 text-green-600" />
-                      <span>Real project budget: ${Math.floor(5000 * 0.87)}</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <DevicePhoneMobileIcon className="w-5 h-5 text-green-600" />
-                      <span>MVP: 20 core screens</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <ArrowsRightLeftIcon className="w-5 h-5 text-green-600" />
-                      <span>Revisions: 2 rounds max</span>
-                    </li>
-                  </ul>
-                </div>
+                <h3 className="text-xl font-bold text-green-800 mt-4">Safe Project Criteria</h3>
               </div>
             </motion.div>
           ))}

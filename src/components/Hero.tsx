@@ -4,80 +4,106 @@ import Image from 'next/image'
 import { useState } from 'react';
 import { CheckBadgeIcon, ArrowRightIcon, ShieldCheckIcon, CurrencyDollarIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
-import { useScrollToSection } from '@/hooks/useScrollToSection';
+import { useScrollToSection } from '@/hooks/useScrollToWaitlist';
 import Link from 'next/link';
 import { METRICS } from '@/config/metrics';
 import ClientButton from './ClientButton';
 
 export default function Hero() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
+  const scrollToHowItWorks = useScrollToSection('how-it-works');
+  const scrollToPricing = useScrollToSection('pricing');
 
-  // Добавляем массив benefits для отображения "Доверительных элементов"
+  // Новый дизайн карточек
   const benefits = [
-    { icon: "🔒", text: "256-bit Encryption" },
-    { icon: "✅", text: "GDPR Compliant" },
-    // При необходимости можно добавить новые пункты, например:
-    // { icon: "⚡", text: "Fast Performance" },
+    { 
+      icon: "🔍", 
+      title: "Specs Analysis",
+      text: "50+ requirement patterns check",
+      color: "from-blue-100 to-blue-50",
+      border: "border-blue-200"
+    },
+    { 
+      icon: "⏱", 
+      title: "Deadline Audit", 
+      text: "Reality-based timeline estimation",
+      color: "from-blue-100 to-blue-50",
+      border: "border-blue-200"
+    },
+    { 
+      icon: "📑", 
+      title: "Contract Review",
+      text: "Payment terms & obligations check",
+      color: "from-blue-100 to-blue-50",
+      border: "border-blue-200"
+    }
   ];
 
   return (
     <section className="relative py-24 md:py-32 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8">
-          <span className="block mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 
-                          leading-[1.15] tracking-tight px-2">
-            Stop Client Nightmares
-          </span>
-          <span className="text-2xl md:text-3xl font-medium text-gray-600 mt-4">
-            AI-Powered Protection for Freelancers
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          <div className="mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 leading-tight">
+            <span className="block">Smart Client Protection</span>
+            <span className="block">for Freelancers</span>
+          </div>
+          <span className="text-xl md:text-2xl font-medium text-gray-600 mt-4 block">
+            AI-powered project analysis • Risk prevention • Secure contracts
           </span>
         </h1>
 
-        {/* Бейдж */}
-        <div className="mb-12">
-          <span className="inline-block bg-blue-50 text-blue-800 px-8 py-3 rounded-full 
-                         text-base font-medium border border-blue-100">
-            🛡️ Protected ${(METRICS.PROTECTED_AMOUNT / 1000).toFixed(0)}k+ Payments
-          </span>
+        {/* Обновленные метрики */}
+        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-12">
+          <div className="text-center p-4 bg-white rounded-xl border border-blue-100">
+            <div className="text-3xl font-bold text-blue-600">10k+</div>
+            <div className="text-sm text-gray-600">Protected Freelancers</div>
+          </div>
+          <div className="text-center p-4 bg-white rounded-xl border border-blue-100">
+            <div className="text-3xl font-bold text-blue-600">98%</div>
+            <div className="text-sm text-gray-600">Risk Detection</div>
+          </div>
+          <div className="text-center p-4 bg-white rounded-xl border border-blue-100">
+            <div className="text-3xl font-bold text-blue-600">15h+</div>
+            <div className="text-sm text-gray-600">Monthly Saved</div>
+          </div>
         </div>
 
         {/* Преимущества */}
-        <div className="max-w-5xl mx-auto mb-16">
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            {benefits.map((benefit, index) => (
-              <motion.li 
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 
-                          hover:border-blue-200 transition-all"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
-                    {benefit.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {benefit.text}
-                    </h3>
-                    <p className="text-gray-600 mt-2 text-sm leading-relaxed">
-                      {/* You can add a description here if needed */}
-                    </p>
-                  </div>
-                </div>
-              </motion.li>
-            ))}
-          </ul>
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          <div className="p-6 bg-white rounded-xl border border-purple-100">
+            <div className="text-2xl mb-2">🔍</div>
+            <h3 className="text-lg font-bold mb-2">AI Risk Scan</h3>
+            <p className="text-gray-600">3-second project check</p>
+          </div>
+          <div className="p-6 bg-white rounded-xl border border-blue-100">
+            <div className="text-2xl mb-2">💸</div>
+            <h3 className="text-lg font-bold mb-2">Payment Shield</h3>
+            <p className="text-gray-600">256-bit encryption</p>
+          </div>
+          <div className="p-6 bg-white rounded-xl border border-green-100">
+            <div className="text-2xl mb-2">⚡</div>
+            <h3 className="text-lg font-bold mb-2">Smart Insights</h3>
+            <p className="text-gray-600">Save 15+ hours/month</p>
+          </div>
         </div>
 
-        {/* Обновленная CTA с автоскроллом */}
-        <div className="flex justify-center gap-4 mt-12">
+        {/* Новая CTA */}
+        <div className="text-center space-y-4">
           <ClientButton 
             onClick={scrollToWaitlist}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-xl"
+            className="bg-gradient-to-r from-blue-600 to-blue-500 hover:to-blue-600 
+                     text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg
+                     transform hover:scale-105 transition-all"
           >
-            Join Now →
+            🚀 Get Early Access
           </ClientButton>
+          <p className="text-sm text-gray-500">
+            No credit card required • Cancel anytime
+          </p>
+          <div className="flex items-center justify-center gap-2 text-gray-500">
+            <ShieldCheckIcon className="w-5 h-5 text-green-500" />
+            <span>Trusted by Upwork Top Freelancers</span>
+          </div>
         </div>
 
         {/* Добавляем разделитель с отступами */}
@@ -108,16 +134,30 @@ export default function Hero() {
           {benefits.map((benefit, index) => (
             <motion.li 
               key={index}
-              className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm"
+              className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm group relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
             >
               <span>{benefit.icon}</span>
-              <span className="ml-2">{benefit.text}</span>
+              <span className="ml-2">{benefit.title}</span>
+              {benefit.text && (
+                <div className="absolute bottom-full mb-2 hidden group-hover:block 
+                               bg-gray-900 text-white text-xs px-2 py-1 rounded">
+                  {benefit.text}
+                  <div className="absolute w-2 h-2 bg-gray-900 rotate-45 -bottom-1 left-1/2 -ml-1"></div>
+                </div>
+              )}
             </motion.li>
           ))}
         </div>
+
+        <ClientButton 
+          onClick={scrollToHowItWorks}
+          className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-xl"
+        >
+          Learn More ↓
+        </ClientButton>
       </div>
     </section>
   )
