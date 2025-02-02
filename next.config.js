@@ -1,5 +1,5 @@
 module.exports = {
-  // Убедитесь что нет лишних правил
+  // Убрать assetPrefix для локальной разработки
   async headers() {
     return [
       {

@@ -40,9 +40,9 @@ export default function Hero() {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-blue-50 to-white">
+    <section className="relative pt-20 md:pt-24 bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 md:mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 md:mb-12 mt-6">
           <div className="mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 leading-tight">
             <span className="block">Smart Client Protection</span>
             <span className="block bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
