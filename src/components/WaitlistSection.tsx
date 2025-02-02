@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { METRICS } from '@/config/metrics';
 import { CheckCircle2 } from 'lucide-react';
+import Sentry from '@/lib/sentry';
 
 const API_URL = process.env.NODE_ENV === 'development' 
   ? '/api/tally-proxy' 
@@ -23,22 +24,23 @@ export default function WaitlistSection() {
     }
 
     try {
-      let targetUrl: URL;
+      let apiUrl: string;
       
       if (process.env.NEXT_PUBLIC_APP_ENV === 'production') {
         if (!process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL) {
           throw new Error('Google Script URL is not configured');
         }
-        targetUrl = new URL(process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL);
+        apiUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
       } else {
-        targetUrl = new URL('/api/tally-proxy', window.location.origin);
+        apiUrl = '/api/tally-proxy';
       }
 
-      targetUrl.searchParams.set('email', email);
+      const url = new URL(apiUrl);
+      url.searchParams.set('email', email);
 
-      console.log('Sending request to:', targetUrl.toString());
+      console.log('[Waitlist] Submitting to:', url.toString());
 
-      const response = await fetch(targetUrl.toString(), {
+      const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,22 +48,20 @@ export default function WaitlistSection() {
       });
 
       const result = await response.text();
-      
-      if (result === 'Email успешно добавлен') {
+      console.log('[Waitlist] Response:', result);
+
+      if (result.toLowerCase().includes('success')) {
         setIsSubmitted(true);
         setEmail('');
         setShowNotification(true);
         setTimeout(() => setShowNotification(false), 3000);
         (window as any).trackEvent?.('waitlist_submitted');
       } else {
-        throw new Error(result);
+        throw new Error(result || 'Unknown error occurred');
       }
     } catch (error) {
-      console.error('Submission Error:', {
-        error,
-        env: process.env.NEXT_PUBLIC_APP_ENV,
-        scriptUrl: process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL
-      });
+      console.error('[Waitlist] Submission Error:', error);
+      Sentry.captureException(error);
       alert('Failed to submit. Please try again later.');
     }
   };
