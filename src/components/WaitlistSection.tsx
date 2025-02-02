@@ -27,10 +27,10 @@ export default function WaitlistSection() {
       let apiUrl: string;
       
       if (process.env.NEXT_PUBLIC_APP_ENV === 'production') {
-        if (!process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL) {
-          throw new Error('Google Script URL is not configured');
+        apiUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL || '';
+        if (!apiUrl.startsWith('https://')) {
+          throw new Error('Invalid Google Script URL configuration');
         }
-        apiUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
       } else {
         apiUrl = '/api/tally-proxy';
       }

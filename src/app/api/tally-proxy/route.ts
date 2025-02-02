@@ -16,11 +16,12 @@ export async function GET(request: Request) {
     }
 
     const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
-    if (!scriptUrl) {
-      throw new Error('Google Script URL not configured');
-    }
+    if (!scriptUrl) throw new Error('Google Script URL not configured');
 
-    const response = await fetch(`${scriptUrl}?email=${encodeURIComponent(email)}`, {
+    const url = new URL(scriptUrl);
+    url.searchParams.set('email', email);
+
+    const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
