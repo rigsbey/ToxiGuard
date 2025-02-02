@@ -11,7 +11,7 @@ import ClientButton from './ClientButton';
 
 export default function Hero() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
-  const scrollToHowItWorks = useScrollToSection('how-it-works');
+  const scrollToHowItWorks = useScrollToSection('how-it-works-section');
   const scrollToPricing = useScrollToSection('pricing');
 
   // Новый дизайн карточек
@@ -40,20 +40,22 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative py-24 md:py-32 bg-gradient-to-b from-gray-50 to-white">
+    <section className="bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          <div className="mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 leading-tight">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 md:mb-12">
+          <div className="mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 leading-tight">
             <span className="block">Smart Client Protection</span>
-            <span className="block">for Freelancers</span>
+            <span className="block bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
+              for Freelancers
+            </span>
           </div>
-          <span className="text-xl md:text-2xl font-medium text-gray-600 mt-4 block">
+          <span className="text-lg md:text-xl font-medium text-gray-600 mt-3 block">
             AI-powered project analysis • Risk prevention • Secure contracts
           </span>
         </h1>
 
         {/* Обновленные метрики */}
-        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-12">
+        <div className="grid grid-cols-3 gap-3 max-w-2xl mx-auto mb-8 md:mb-12">
           <div className="text-center p-4 bg-white rounded-xl border border-blue-100">
             <div className="text-3xl font-bold text-blue-600">10k+</div>
             <div className="text-sm text-gray-600">Protected Freelancers</div>
@@ -69,55 +71,42 @@ export default function Hero() {
         </div>
 
         {/* Преимущества */}
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
-          <div className="p-6 bg-white rounded-xl border border-purple-100">
-            <div className="text-2xl mb-2">🔍</div>
-            <h3 className="text-lg font-bold mb-2">AI Risk Scan</h3>
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          <div className="p-6 bg-white rounded-xl border border-red-100">
+            <div className="text-2xl mb-2">🔴</div>
+            <h3 className="text-lg font-bold mb-2 text-gray-900">AI Risk Scan</h3>
             <p className="text-gray-600">3-second project check</p>
           </div>
           <div className="p-6 bg-white rounded-xl border border-blue-100">
             <div className="text-2xl mb-2">💸</div>
-            <h3 className="text-lg font-bold mb-2">Payment Shield</h3>
+            <h3 className="text-lg font-bold mb-2 text-gray-900">Payment Shield</h3>
             <p className="text-gray-600">256-bit encryption</p>
           </div>
-          <div className="p-6 bg-white rounded-xl border border-green-100">
+          <div className="p-6 bg-white rounded-xl border border-black/10">
             <div className="text-2xl mb-2">⚡</div>
-            <h3 className="text-lg font-bold mb-2">Smart Insights</h3>
+            <h3 className="text-lg font-bold mb-2 text-gray-900">Smart Insights</h3>
             <p className="text-gray-600">Save 15+ hours/month</p>
           </div>
         </div>
 
         {/* Новая CTA */}
-        <div className="text-center space-y-4">
+        <div className="flex flex-col md:flex-row justify-center gap-4 mt-12 md:mt-16">
           <ClientButton 
             onClick={scrollToWaitlist}
-            className="bg-gradient-to-r from-blue-600 to-blue-500 hover:to-blue-600 
-                     text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg
-                     transform hover:scale-105 transition-all"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all shadow-lg"
           >
-            🚀 Get Early Access
+            Join Now →
           </ClientButton>
-          <p className="text-sm text-gray-500">
-            No credit card required • Cancel anytime
-          </p>
-          <div className="flex items-center justify-center gap-2 text-gray-500">
-            <ShieldCheckIcon className="w-5 h-5 text-green-500" />
-            <span>Trusted by Upwork Top Freelancers</span>
-          </div>
-        </div>
-
-        {/* Добавляем разделитель с отступами */}
-        <div className="my-12 relative">
-          <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-gray-200/60"></div>
-          </div>
-          <div className="relative flex justify-center">
-            <span className="bg-white px-4 text-sm text-gray-500">Limited availability</span>
-          </div>
+          <ClientButton 
+            onClick={scrollToHowItWorks}
+            className="bg-gray-900 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg border-2 border-gray-800 hover:bg-gray-800 transition-all"
+          >
+            How It Works
+          </ClientButton>
         </div>
 
         {/* Обновленный Progress Bar с увеличенными отступами */}
-        <div className="max-w-md mx-auto mt-8 mb-12">
+        <div className="max-w-md mx-auto mt-8 mb-8">
           <div className="h-2 bg-gray-200 rounded-full">
             <div 
               className="h-full bg-blue-600 rounded-full transition-all duration-500" 
@@ -130,7 +119,7 @@ export default function Hero() {
         </div>
 
         {/* Доверительные элементы */}
-        <div className="flex flex-wrap justify-center gap-4 text-sm">
+        <div className="flex flex-wrap justify-center gap-3 text-sm mt-8">
           {benefits.map((benefit, index) => (
             <motion.li 
               key={index}
@@ -151,13 +140,6 @@ export default function Hero() {
             </motion.li>
           ))}
         </div>
-
-        <ClientButton 
-          onClick={scrollToHowItWorks}
-          className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-xl"
-        >
-          Learn More ↓
-        </ClientButton>
       </div>
     </section>
   )

@@ -73,11 +73,11 @@ export default function DemoSection({
   const scrollToWaitlist = useScrollToSection('waitlist-section');
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="bg-gradient-to-b from-white to-blue-50 py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Project Risk Analysis</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Project Risk Analysis</h2>
         
-        <div className="space-y-12">
+        <div className="space-y-16 md:space-y-20">
           {projects.map((project, index) => (
             <motion.div
               key={index}
@@ -91,7 +91,33 @@ export default function DemoSection({
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                   <XCircleIcon className="w-5 h-5 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-bold text-blue-800 mt-4">High Risk Indicators</h3>
+                <h3 className="text-xl font-bold text-blue-800 mt-4 mb-6">High Risk Indicators</h3>
+                
+                {/* Добавляем контент */}
+                <div className="space-y-4 text-left">
+                  <div className="text-red-600 font-medium">{project.content}</div>
+                  <ul className="space-y-3">
+                    {project.redFlags.map((flag, idx) => (
+                      <li key={idx} className="flex items-center gap-2 group relative">
+                        {flag.icon}
+                        <span className="text-gray-700">{flag.label}</span>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <InformationCircleIcon className="w-4 h-4 text-gray-400 ml-1" />
+                            </TooltipTrigger>
+                            <TooltipContent className="bg-gray-800 text-white px-3 py-2 rounded-lg text-sm">
+                              {flag.tip}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 p-4 bg-white rounded-lg border border-blue-200">
+                    <p className="text-sm text-gray-600">{project.badExample}</p>
+                  </div>
+                </div>
               </div>
 
               {/* Безопасная альтернатива */}
@@ -99,13 +125,34 @@ export default function DemoSection({
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                   <CheckCircleIcon className="w-5 h-5 text-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-green-800 mt-4">Safe Project Criteria</h3>
+                <h3 className="text-xl font-bold text-green-800 mt-4 mb-6">Safe Project Criteria</h3>
+                
+                {/* Добавляем контент */}
+                <div className="space-y-4 text-left">
+                  <div className="p-4 bg-white rounded-lg border border-green-200">
+                    <p className="text-sm text-gray-600">{project.goodExample}</p>
+                  </div>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-center gap-2">
+                      <CheckCircleIcon className="w-5 h-5 text-green-600" />
+                      Clear acceptance criteria
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircleIcon className="w-5 h-5 text-green-600" />
+                      Milestone-based payments
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircleIcon className="w-5 h-5 text-green-600" />
+                      Defined revision limits
+                    </li>
+                  </ul>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-20">
           <ClientButton 
             onClick={scrollToWaitlist}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"

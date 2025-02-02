@@ -50,11 +50,11 @@ export default function FAQSection() {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="bg-gray-50 py-20 md:py-32">
       <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Frequently Asked Questions</h2>
         
-        <div className="space-y-6">
+        <div className="space-y-8 md:space-y-10">
           {faqs.map((faq, index) => (
             <motion.div
               key={faq.question}
@@ -97,15 +97,6 @@ export default function FAQSection() {
             </motion.div>
           ))}
         </div>
-      </div>
-      <div className="text-center mt-16">
-        <h3 className="text-2xl font-bold mb-6">Still Have Questions?</h3>
-        <button 
-          onClick={scrollToWaitlist}
-          className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-        >
-          Contact Support →
-        </button>
       </div>
       <script
         type="application/ld+json"

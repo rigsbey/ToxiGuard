@@ -33,9 +33,9 @@ export default function HowItWorksSection() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
 
   return (
-    <section id="how-it-works-section" className="py-20 bg-white">
+    <section id="how-it-works-section" className="pt-8 bg-white">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             How We Protect Your Business
           </h2>
@@ -64,7 +64,7 @@ export default function HowItWorksSection() {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-20 text-center">
           <ClientButton
             onClick={scrollToWaitlist}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-xl"
