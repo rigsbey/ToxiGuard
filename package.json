@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_ENV=development NEXT_PUBLIC_APP_ENV=development next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "deploy:prod": "vercel deploy --prod --confirm --public",
-    "deploy:preview": "vercel deploy"
+    "deploy:preview": "vercel deploy",
+    "postinstall": "next telemetry disable"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

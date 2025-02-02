@@ -9,22 +9,22 @@ import { METRICS } from '@/config/metrics';
 const steps = [
   {
     title: "Risk Analysis",
-    icon: <DocumentMagnifyingGlassIcon className="w-8 h-8" />,
+    icon: <DocumentMagnifyingGlassIcon className="w-8 h-8 text-neutral-800" />,
     description: `${METRICS.RISK_ACCURACY * 100}% prediction accuracy`
   },
   {
     title: "Payment Protection",
-    icon: <CheckCircleIcon className="w-8 h-8" />,
+    icon: <CheckCircleIcon className="w-8 h-8 text-neutral-800" />,
     description: `$${(METRICS.PROTECTED_AMOUNT / 1000).toFixed(1)}k secured`
   },
   {
     title: "Time Savings",
-    icon: <UserGroupIcon className="w-8 h-8" />,
+    icon: <UserGroupIcon className="w-8 h-8 text-neutral-800" />,
     description: `${METRICS.AVG_HOURS_SAVED}h/month average time saved`
   },
   {
     title: "Dispute Resolution",
-    icon: <RocketLaunchIcon className="w-8 h-8" />,
+    icon: <RocketLaunchIcon className="w-8 h-8 text-neutral-800" />,
     description: `${(METRICS.DISPUTE_IMPROVEMENT * 100).toFixed(0)}% faster resolution`
   }
 ];

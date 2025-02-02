@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './public/**/*.html'
   ],
   important: true,
   corePlugins: {
@@ -11,13 +13,22 @@ module.exports = {
     extend: {
       colors: {
         'primary-blue': '#2A5CAA',
+        'neutral-800': '#2D2D2D',
+        'neutral-600': '#4A4A4A',
+        'accent-teal': '#00C4B8',
+        'accent-teal-dark': '#009688',
         'success-green': '#4CAF50',
-        'toxic-red': '#EF4444',
         'warning-orange': '#F59E0B',
-        primary: '#2A2A2A',
-        secondary: '#5E5E5E',
+        'amber-500': '#F59E0B',
+        'amber-600': '#D97706',
+        primary: '#2A5CAA',
+        secondary: '#00C4B8',
         accent: '#00C389',
-        'accent-dark': '#008C65'
+        'accent-dark': '#008C65',
+        'toxic-red': '#EF4444',
+        'toxic-red/10': 'rgba(239, 68, 68, 0.1)',
+        tertiary: '#F59E0B',
+        neutral: '#2D2D2D'
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

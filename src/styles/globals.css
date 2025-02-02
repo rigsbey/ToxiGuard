@@ -37,8 +37,8 @@
   }
 
   .primary-cta {
-    @apply bg-toxic-red text-white px-8 py-4 rounded-full font-bold 
-           hover:bg-red-600 transition-all transform hover:scale-105 
+    @apply bg-accent-teal text-white px-8 py-4 rounded-full font-bold 
+           hover:bg-accent-teal-dark transition-all transform hover:scale-105 
            shadow-lg hover:shadow-xl;
   }
 
@@ -473,4 +473,21 @@ h1 {
 /* Кастомные радиусы */
 .rounded-inner {
   border-radius: 20px;
+}
+
+.optimized-spacing {
+  @apply space-y-8; /* Вместо разрозненных margin/padding */
+}
+
+.unified-radius {
+  @apply rounded-lg; /* 8px */
+}
+
+@keyframes slide-in {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.notification-slide {
+  animation: slide-in 0.3s ease-out;
 } 

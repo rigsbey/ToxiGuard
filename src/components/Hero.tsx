@@ -93,7 +93,7 @@ export default function Hero() {
         <div className="flex flex-col md:flex-row justify-center gap-4 mt-12 md:mt-16">
           <ClientButton 
             onClick={scrollToWaitlist}
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all shadow-lg"
+            className="bg-warning-orange hover:bg-amber-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all shadow-lg"
           >
             Join Now →
           </ClientButton>

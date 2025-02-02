@@ -88,7 +88,7 @@ export default function DemoSection({
             >
               {/* Токсичный проект */}
               <div className="bg-blue-50/50 p-6 rounded-xl border-2 border-blue-200">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
                   <XCircleIcon className="w-5 h-5 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-bold text-blue-800 mt-4 mb-6">High Risk Indicators</h3>
@@ -122,8 +122,8 @@ export default function DemoSection({
 
               {/* Безопасная альтернатива */}
               <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <CheckCircleIcon className="w-5 h-5 text-green-600" />
+                <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                  <CheckCircleIcon className="w-5 h-5 text-accent-teal" />
                 </div>
                 <h3 className="text-xl font-bold text-green-800 mt-4 mb-6">Safe Project Criteria</h3>
                 
