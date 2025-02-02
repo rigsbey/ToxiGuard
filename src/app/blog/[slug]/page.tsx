@@ -10,9 +10,14 @@ type PageParams = {
   slug: string;
 }
 
+type SearchParams = {
+  [key: string]: string | string[] | undefined;
+}
+
+// Исправляем тип для обоих параметров
 type PageProps = {
   params: Promise<PageParams>;
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<SearchParams>;
 }
 
 const articles = {
@@ -59,9 +64,10 @@ const articles = {
 };
 
 export async function generateMetadata(
-  { params }: { params: PageParams }
+  { params }: { params: Promise<PageParams> }
 ): Promise<Metadata> {
-  const article = articles[params.slug as keyof typeof articles];
+  const resolvedParams = await params;
+  const article = articles[resolvedParams.slug as keyof typeof articles];
   
   return article
     ? {
@@ -77,13 +83,17 @@ export async function generateMetadata(
       };
 }
 
-// Обновляем компонент страницы для поддержки асинхронных параметров
+// Обновляем компонент страницы
 export default async function BlogArticlePage({ 
   params,
   searchParams 
 }: PageProps) {
-  // Вместо await Promise.resolve(params) просто ожидаем params
-  const resolvedParams = await params;
+  // Ожидаем разрешения обоих промисов
+  const [resolvedParams, resolvedSearchParams] = await Promise.all([
+    params,
+    searchParams ? searchParams : Promise.resolve({})
+  ]);
+
   const article = articles[resolvedParams.slug as keyof typeof articles];
 
   if (!article) {

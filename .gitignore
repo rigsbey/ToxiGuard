@@ -83,3 +83,4 @@ cypress/screenshots/**
 *.dll
 *.so
 *.dylib
+.vercel

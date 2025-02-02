@@ -11,7 +11,6 @@ import ClientButton from './ClientButton';
 
 export default function Hero() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
-  const scrollToHowItWorks = useScrollToSection('how-it-works-section');
 
   // Добавляем массив benefits для отображения "Доверительных элементов"
   const benefits = [
@@ -78,12 +77,6 @@ export default function Hero() {
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-xl"
           >
             Join Now →
-          </ClientButton>
-          <ClientButton 
-            onClick={scrollToHowItWorks}
-            className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg border-2 border-blue-100 hover:border-blue-200 transition-all cursor-pointer"
-          >
-            How It Works
           </ClientButton>
         </div>
 

@@ -37,7 +37,7 @@ export default function WaitlistSection() {
       if (result === 'Email successfully added') {
         setIsSubmitted(true);
         setEmail('');
-        window.trackEvent?.('waitlist_submitted');
+        (window as any).trackEvent?.('waitlist_submitted');
       } else {
         throw new Error(result);
       }

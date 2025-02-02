@@ -3,20 +3,27 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export default function ExitPopup() {
+interface ExitPopupProps {
+  onClose?: () => void;
+}
+
+export default function ExitPopup({ onClose }: ExitPopupProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    const handleMouseLeave = (e) => {
+    const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY < 0 && !isOpen) {
         setIsOpen(true);
       }
     };
 
     document.addEventListener('mouseleave', handleMouseLeave);
-    return () => document.removeEventListener('mouseleave', handleMouseLeave);
-  }, []);
+
+    return () => {
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
