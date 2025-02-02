@@ -23,10 +23,22 @@ export default function WaitlistSection() {
     }
 
     try {
-      const url = new URL(process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL);
-      url.searchParams.set('email', email);
+      let targetUrl: URL;
+      
+      if (process.env.NEXT_PUBLIC_APP_ENV === 'production') {
+        if (!process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL) {
+          throw new Error('Google Script URL is not configured');
+        }
+        targetUrl = new URL(process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL);
+      } else {
+        targetUrl = new URL('/api/tally-proxy', window.location.origin);
+      }
 
-      const response = await fetch(url.toString(), {
+      targetUrl.searchParams.set('email', email);
+
+      console.log('Sending request to:', targetUrl.toString());
+
+      const response = await fetch(targetUrl.toString(), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -45,11 +57,12 @@ export default function WaitlistSection() {
         throw new Error(result);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert(error instanceof Error 
-        ? error.message 
-        : 'Failed to submit. Please try again.'
-      );
+      console.error('Submission Error:', {
+        error,
+        env: process.env.NEXT_PUBLIC_APP_ENV,
+        scriptUrl: process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL
+      });
+      alert('Failed to submit. Please try again later.');
     }
   };
 
