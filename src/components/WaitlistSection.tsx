@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { METRICS } from '@/config/metrics';
 import { CheckCircle2 } from 'lucide-react';
-import Sentry from '@/lib/sentry';
+import { Sentry } from '@/lib/sentry';
 
 const API_URL = process.env.NODE_ENV === 'development' 
   ? '/api/tally-proxy' 

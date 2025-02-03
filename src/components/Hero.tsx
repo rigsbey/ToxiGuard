@@ -12,7 +12,6 @@ import ClientButton from './ClientButton';
 export default function Hero() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
   const scrollToHowItWorks = useScrollToSection('how-it-works-section');
-  const scrollToPricing = useScrollToSection('pricing');
 
   // Новый дизайн карточек
   const benefits = [

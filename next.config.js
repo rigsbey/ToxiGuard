@@ -1,8 +1,9 @@
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 module.exports = {
   output: 'standalone',
   productionBrowserSourceMaps: true,
   compress: true,
-  optimizeFonts: true,
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 86400,
@@ -15,7 +16,9 @@ module.exports = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: `default-src 'self'; script-src 'self' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' *.googleapis.com *.vercel.app; frame-src 'none';`
+            value: process.env.NODE_ENV === 'development' 
+              ? `default-src 'self' 'unsafe-eval' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' *.googleapis.com *.vercel.app; frame-src 'none';`
+              : `default-src 'self'; script-src 'self' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' *.googleapis.com *.vercel.app; frame-src 'none';`
           },
           { 
             key: 'CDN-Cache-Control', 
@@ -34,7 +37,9 @@ module.exports = {
   experimental: {
     serverActions: {
       allowedOrigins: ['toxiguard.site', '*.toxiguard.site']
-    }
+    },
+    cpus: isDevelopment ? 1 : 2,
+    disableCspInDev: true
   },
   async redirects() {
     return [];

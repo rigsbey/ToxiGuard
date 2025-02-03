@@ -15,9 +15,9 @@ export default function Home() {
       <ComingSoonBanner />
       <main>
         <Hero />
+        <DemoSection />
         <HowItWorksSection />
         <ProblemSection />
-        <DemoSection />
         <SuccessStories />
         <RoadmapSection />
         <ComingSoonSection />
