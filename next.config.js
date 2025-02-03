@@ -43,6 +43,14 @@ module.exports = {
   },
   async redirects() {
     return [];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/googlee5bfa023f20e3180.html',
+        destination: '/googlee5bfa023f20e3180.html',
+      },
+    ]
   }
 };
 
