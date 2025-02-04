@@ -23,12 +23,27 @@
     },
     {
       "src": "/(.*)",
+      "dest": "/$1",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
         "X-Frame-Options": "DENY",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "strict-origin-when-cross-origin"
       }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/",
+      "continue": true,
+      "has": [
+        {
+          "type": "host",
+          "value": "toxiguard\.site"
+        }
+      ]
     }
-  ]
+  ],
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://toxiguard.site"
+  }
 } 

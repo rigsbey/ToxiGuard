@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-  // Редирект только в продакшне
-  if (process.env.NODE_ENV === 'production') {
+  const host = request.headers.get('host');
+  if (process.env.NODE_ENV === 'production' && !host?.includes('toxiguard.site')) {
     return NextResponse.redirect('https://toxiguard.site');
   }
   return NextResponse.next();
