@@ -1,0 +1,14 @@
+{
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "has": [
+        {
+          "type": "host",
+          "value": "(toxiguard\\.site|www\\.toxiguard\\.site)"
+        }
+      ]
+    }
+  ]
+} 

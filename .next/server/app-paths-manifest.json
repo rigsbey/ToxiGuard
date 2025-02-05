@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/tally-proxy/route": "app/api/tally-proxy/route.js",
+  "/api/disabled/route": "app/api/disabled/route.js",
+  "/api/redirect/route": "app/api/redirect/route.js",
+  "/googlee5bfa023f20e3180/route": "app/googlee5bfa023f20e3180/route.js",
+  "/page": "app/page.js",
+  "/how-it-works/page": "app/how-it-works/page.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js"
+}

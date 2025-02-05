@@ -134,13 +134,13 @@ export default function BlogPost({ params }: Params) {
               "name": "ToxicGuard",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://toxiguard.com/logo.png"
+                "url": "https://toxiguard.site/logo.png"
               }
             },
             "description": article.seoDescription,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://toxiguard.com/blog/${params.slug}`
+              "@id": `https://toxiguard.site/blog/${params.slug}`
             }
           })
         }}

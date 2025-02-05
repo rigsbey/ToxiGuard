@@ -9,6 +9,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://toxiguard.site'),
   title: {
     default: 'ToxiGuard - AI Client Risk Detection for Freelancers',
     template: '%s | ToxiGuard Blog'
