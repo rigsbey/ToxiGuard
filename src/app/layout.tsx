@@ -9,7 +9,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://toxiguard.site'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: {
     default: 'ToxiGuard - AI Client Risk Detection for Freelancers',
     template: '%s | ToxiGuard Blog'
@@ -18,10 +18,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://toxiguard.com/',
+    url: 'https://www.toxiguard.site/',
     siteName: 'ToxiGuard',
     images: [{
-      url: 'https://toxiguard.com/og-default.jpg',
+      url: 'https://www.toxiguard.site/og-default.jpg',
       width: 1200,
       height: 630,
     }]

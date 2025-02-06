@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 type Params = {
   params: {
@@ -55,17 +56,18 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const article = articles[params.slug as keyof typeof articles];
   
   if (!article) {
-    return {
-      title: 'Article Not Found | ToxiGuard Blog',
-      description: 'The requested article does not exist',
-    }
+    notFound();
   }
 
   return {
     title: `${article.title} | ToxiGuard Blog`,
     description: article.seoDescription,
     openGraph: {
-      images: [article.image]
+      images: [{
+        url: new URL(article.image, process.env.NEXT_PUBLIC_SITE_URL).toString(),
+        width: 1200,
+        height: 630
+      }]
     }
   };
 }
@@ -117,7 +119,7 @@ export default function BlogPost({ params }: Params) {
         </Link>
       </section>
 
-      <script
+      {/* <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -134,17 +136,21 @@ export default function BlogPost({ params }: Params) {
               "name": "ToxicGuard",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://toxiguard.site/logo.png"
+                "url": "https://www.toxiguard.site/logo.png"
               }
             },
             "description": article.seoDescription,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://toxiguard.site/blog/${params.slug}`
+              "@id": `https://www.toxiguard.site/blog/${params.slug}`
             }
           })
         }}
-      />
+      /> */}
     </article>
   );
+}
+
+export async function generateStaticParams() {
+  return Object.keys(articles).map((slug) => ({ slug }));
 } 
