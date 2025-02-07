@@ -40,11 +40,12 @@ export default function WaitlistSection() {
 
       console.log('[Waitlist] Submitting to:', url.toString());
 
-      const response = await fetch(url.toString(), {
-        method: 'GET',
+      const response = await fetch(`https://script.google.com/macros/s/AKfycb.../exec`, {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ email }),
       });
 
       const result = await response.text();

@@ -30,8 +30,8 @@ module.exports = {
           {
             key: 'Content-Security-Policy',
             value: process.env.NODE_ENV === 'development' 
-              ? `default-src 'self' 'unsafe-eval' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' *.googleapis.com *.vercel.app *.toxiguard.site; frame-src 'none';`
-              : `default-src 'self'; script-src 'self' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' *.googleapis.com *.vercel.app *.toxiguard.site; frame-src 'none';`
+              ? `default-src 'self' 'unsafe-eval' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' *.googleapis.com *.vercel.app *.toxiguard.site script.google.com; frame-src 'none';`
+              : `default-src 'self'; script-src 'self' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' *.googleapis.com *.vercel.app *.toxiguard.site script.google.com; frame-src 'none';`
           },
           { 
             key: 'CDN-Cache-Control', 
