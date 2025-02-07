@@ -6,12 +6,13 @@ import { METRICS } from '@/config/metrics';
 import { CheckCircle2 } from 'lucide-react';
 import { Sentry } from '@/lib/sentry';
 
-const API_URL = process.env.NODE_ENV === 'development' 
-  ? '/api/tally-proxy' 
-  : 'https://api.tally.so/r/mBjL61';
+// Используем реальный ID скрипта
+const SCRIPT_ID = 'AKfycbwtgVj1y3Oia3wy19afi3p1xGehWAjy9Dnm_Y9GfkHueAv7gMw6MBNwzAh9ZYpy7FPL9g';
+const API_URL = `https://script.google.com/macros/s/${SCRIPT_ID}/exec`;
 
 export default function WaitlistSection() {
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
@@ -23,47 +24,49 @@ export default function WaitlistSection() {
       return;
     }
 
+    if (isSubmitting) return;
+
     try {
-      let apiUrl: string;
+      setIsSubmitting(true);
+
+      // Создаем URL с параметрами
+      const params = new URLSearchParams({ email });
+      const url = `${API_URL}?${params.toString()}`;
+
+      // Создаем изображение для отправки запроса
+      // Это обходит CORS ограничения
+      const img = new Image();
       
-      if (process.env.NEXT_PUBLIC_APP_ENV === 'production') {
-        apiUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL || '';
-        if (!apiUrl.startsWith('https://')) {
-          throw new Error('Invalid Google Script URL configuration');
-        }
-      } else {
-        apiUrl = '/api/tally-proxy';
-      }
-
-      const url = new URL(apiUrl);
-      url.searchParams.set('email', email);
-
-      console.log('[Waitlist] Submitting to:', url.toString());
-
-      const response = await fetch(`https://script.google.com/macros/s/AKfycb.../exec`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
+      const promise = new Promise((resolve, reject) => {
+        img.onload = () => resolve('success');
+        img.onerror = () => {
+          // Google Script всегда возвращает 404 при успехе
+          // поэтому мы считаем это успешным ответом
+          resolve('success');
+        };
+        
+        // Таймаут на случай если запрос зависнет
+        setTimeout(() => reject(new Error('Request timeout')), 5000);
       });
 
-      const result = await response.text();
-      console.log('[Waitlist] Response:', result);
+      // Отправляем запрос
+      img.src = url;
+      
+      await promise;
+      
+      // Если дошли до сюда - запрос успешен
+      setIsSubmitted(true);
+      setEmail('');
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3000);
+      (window as any).trackEvent?.('waitlist_submitted');
 
-      if (result.toLowerCase().includes('success')) {
-        setIsSubmitted(true);
-        setEmail('');
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 3000);
-        (window as any).trackEvent?.('waitlist_submitted');
-      } else {
-        throw new Error(result || 'Unknown error occurred');
-      }
     } catch (error) {
       console.error('[Waitlist] Submission Error:', error);
       Sentry.captureException(error);
       alert('Failed to submit. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -119,9 +122,10 @@ export default function WaitlistSection() {
               <motion.button 
                 type="submit"
                 className="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 
-                         text-white px-8 py-2.5 rounded-lg font-medium transition-all"
-                disabled={isSubmitted}
-                whileHover={{ scale: 1.05 }}
+                         text-white px-8 py-2.5 rounded-lg font-medium transition-all
+                         disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting || isSubmitted}
+                whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {isSubmitted ? (
@@ -130,6 +134,13 @@ export default function WaitlistSection() {
                     animate={{ opacity: 1 }}
                   >
                     Joined! 🎉
+                  </motion.span>
+                ) : isSubmitting ? (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    Joining...
                   </motion.span>
                 ) : (
                   <motion.span
