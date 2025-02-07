@@ -9,7 +9,7 @@
         "distDir": ".next",
         "includeFiles": [
           "public/**",
-          ".env.local"
+          "styles/**"
         ]
       }
     }
@@ -18,14 +18,14 @@
     {
       "src": "/_next/static/(.*)",
       "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Access-Control-Allow-Origin": "https://toxiguard.site"
       }
     },
     {
       "src": "/(.*)",
       "dest": "/$1",
       "headers": {
-        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
         "X-Frame-Options": "DENY",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "strict-origin-when-cross-origin"
@@ -38,7 +38,7 @@
       "has": [
         {
           "type": "host",
-          "value": "toxiguard\.site"
+          "value": "toxiguard.site"
         }
       ]
     },
