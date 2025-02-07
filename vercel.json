@@ -41,6 +41,12 @@
           "value": "toxiguard\.site"
         }
       ]
+    },
+    {
+      "src": "/sitemap.xml",
+      "headers": {
+        "Content-Type": "application/xml"
+      }
     }
   ],
   "env": {
