@@ -4,7 +4,12 @@
 
 @layer base {
   body {
-    @apply bg-[#FDF8F3] text-gray-900;
+    @apply text-gray-800; /* #18181B */
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3 {
+    @apply font-headings text-black; /* #000000 */
   }
   
   /* Добавить стили для улучшения читаемости текста */
@@ -37,13 +42,11 @@
   }
 
   .primary-cta {
-    @apply bg-accent-teal text-white px-8 py-4 rounded-full font-bold 
-           hover:bg-accent-teal-dark transition-all transform hover:scale-105 
-           shadow-lg hover:shadow-xl;
+    @apply bg-primary-blue text-white hover:bg-secondary-blue;
   }
 
   .secondary-cta {
-    @apply px-8 py-4 text-white/80 hover:text-white;
+    @apply border-gray-200 text-gray-800 hover:border-primary-purple;
   }
 
   .cyber-overlay {
@@ -129,11 +132,11 @@
 }
 
 :root {
-  --font-space-grotesk: 'Space Grotesk', sans-serif;
-  --primary: #1d4ed8;
-  --primary-hover: #1e40af;
-  --text: #1f2937;
-  --text-light: #4b5563;
+  --font-primary: 'Inter', sans-serif;
+  --color-primary: #2563eb;      /* Синий */
+  --color-accent: #f59e0b;       /* Приглушенный оранжевый */
+  --color-text: #1f2937;         /* Темно-серый */
+  --color-light: #f3f4f6;        /* Светло-серый */
 }
 
 /* Добавьте сюда ваши кастомные стили */
@@ -216,7 +219,8 @@
 
 /* Quote Styling */
 .testimonial-quote {
-  @apply pl-4 border-l-4 border-toxic-red italic text-gray-700;
+  @apply pl-4 border-l-4 border-toxic-red text-gray-700 font-normal not-italic;
+  font-family: 'Geist Sans', sans-serif;
 }
 
 /* Добавить адаптивные шрифты */
@@ -490,4 +494,41 @@ h1 {
 
 .notification-slide {
   animation: slide-in 0.3s ease-out;
+}
+
+/* Добавить после существующих стилей */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinkCursor {
+  from, to { border-color: transparent }
+  50% { border-color: rgba(96,165,250,0.8) }
+}
+
+.typing-effect {
+  border-right: 2px solid;
+  animation: blinkCursor 0.9s step-end infinite,
+             typing 0.8s steps(20) forwards;
+}
+
+.text-gradient-animated {
+  background-size: 200% auto;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift { 
+  0% { background-position: 0% center }
+  50% { background-position: 100% center }
+  100% { background-position: 0% center }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
 } 

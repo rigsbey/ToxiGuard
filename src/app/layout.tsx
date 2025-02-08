@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
+import { GeistSans } from 'geist/font/sans'
 import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,19 +13,24 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://toxiguard.site'),
   title: {
     default: 'ToxiGuard - AI Client Risk Detection for Freelancers',
-    template: '%s | ToxiGuard Blog'
+    template: '%s | ToxiGuard'
   },
   description: 'AI-powered protection against toxic clients and payment risks',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://toxiguard.site/',
     siteName: 'ToxiGuard',
-    images: [{
-      url: 'https://toxiguard.site/og-default.jpg',
-      width: 1200,
-      height: 630,
-    }]
+    images: [
+      {
+        url: '/og-blog.jpg',
+        width: 1200,
+        height: 630,
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@toxiguard',
   }
 }
 
@@ -49,7 +55,7 @@ export default function RootLayout({
           sizes="32x32"
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${GeistSans.className} bg-white`}>
         {children}
       </body>
     </html>

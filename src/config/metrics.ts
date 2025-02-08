@@ -1,19 +1,38 @@
 export const METRICS = {
-  TOTAL_SPOTS: 300,
-  CURRENT_SIGNUPS: 142,
-  PROTECTED_AMOUNT: 42_500,
-  AVG_HOURS_SAVED: 24,
-  PROJECTS_ANALYZED: 89,
-  RISK_ACCURACY: 0.88,
-  DISPUTE_IMPROVEMENT: 0.83,
+  // Основные метрики
+  PROTECTED_FREELANCERS: '10k+',
+  RISK_DETECTION_RATE: '98%',
+  MONTHLY_HOURS_SAVED: '15h+',
   
-  get filledSpots() {
-    return Math.min(this.TOTAL_SPOTS, this.CURRENT_SIGNUPS);
-  },
-  get remainingSpots() {
-    return this.TOTAL_SPOTS - this.filledSpots;
-  },
-  get progressPercentage() {
-    return (this.filledSpots / this.TOTAL_SPOTS) * 100;
+  // Дополнительные числовые значения
+  AVG_HOURS_SAVED: 50,
+  PROTECTED_AMOUNT: 15000,
+  RISK_ACCURACY: 0.92,
+  CURRENT_SIGNUPS: 8214,
+  
+  // Добавляем новую метрику
+  DISPUTE_RESOLUTION_RATE: '85%',
+  
+  // Добавим безопасные геттеры
+  getSafeNumber(value: number | undefined, fallback: number): number {
+    return Number(value) || fallback;
   }
-}; 
+};
+
+export const METRICS_LIST = [
+  {
+    id: 1,
+    value: '70%',
+    label: 'Freelancers Facing Payment Issues'
+  },
+  {
+    id: 2,
+    value: '40%',
+    label: 'Productivity Loss from Toxic Clients'
+  },
+  {
+    id: 3,
+    value: '92%',
+    label: 'Risk Detection Accuracy'
+  }
+]; 

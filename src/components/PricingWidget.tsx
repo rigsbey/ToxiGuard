@@ -20,9 +20,6 @@ export default function PricingWidget() {
         <h2 className="text-3xl font-bold mt-6 mb-4">
           Start Saving Time & Money Today
         </h2>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          91% users recover $7+ on every $1 invested in ToxiGuard
-        </p>
       </div>
       
       <div className="flex flex-col gap-8 md:hidden">
@@ -162,7 +159,7 @@ export default function PricingWidget() {
 
       <div className="mt-16 text-center">
         <p className="text-gray-600 mb-4">Still not sure? Try our free demo with no credit card required</p>
-        <button className="bg-toxic-red text-white px-8 py-4 rounded-full hover:shadow-lg transition-shadow">
+        <button className="bg-black text-white px-8 py-4 rounded-full hover:opacity-90 transition-opacity">
           Try Free Demo →
         </button>
       </div>

@@ -11,7 +11,8 @@ import {
   CheckCircleIcon,
   CurrencyDollarIcon,
   DevicePhoneMobileIcon,
-  ArrowsRightLeftIcon
+  ArrowsRightLeftIcon,
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip';
 import { AlertTriangle, Clock, Wallet, Edit3 } from 'lucide-react';
@@ -73,62 +74,59 @@ export default function DemoSection({
   const scrollToWaitlist = useScrollToSection('waitlist-section');
 
   return (
-    <section className="bg-gradient-to-b from-white to-blue-50 py-20 md:py-32">
+    <section 
+      id="demo-section"
+      className="bg-gradient-to-b from-white to-blue-50 py-40 md:py-56 lg:py-64"
+    >
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Project Risk Analysis</h2>
+        <h2 className="text-5xl md:text-7xl font-bold text-center mb-32 md:mb-40">
+          Project Risk Analysis
+          <span className="block mt-6 text-xl md:text-2xl text-gray-500 font-normal">
+            Side-by-Side Comparison
+          </span>
+        </h2>
         
-        <div className="space-y-16 md:space-y-20">
+        <div className="space-y-40 md:space-y-56">
           {projects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="grid md:grid-cols-2 gap-8"
+              className="grid md:grid-cols-2 gap-24 md:gap-32"
             >
               {/* Токсичный проект */}
-              <div className="bg-blue-50/50 p-6 rounded-xl border-2 border-blue-200">
-                <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
-                  <XCircleIcon className="w-5 h-5 text-blue-600" />
+              <div className="bg-red-50 p-8 md:p-12 rounded-xl border-2 border-red-200">
+                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                  <XCircleIcon className="w-5 h-5 text-red-600" />
                 </div>
-                <h3 className="text-xl font-bold text-blue-800 mt-4 mb-6">High Risk Indicators</h3>
+                <h3 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-red-800">
+                  High Risk Indicators
+                  <span className="block text-lg text-red-600 mt-2">Detected in 87% of toxic projects</span>
+                </h3>
                 
-                {/* Добавляем контент */}
-                <div className="space-y-4 text-left">
-                  <div className="text-red-600 font-medium">{project.content}</div>
-                  <ul className="space-y-3">
-                    {project.redFlags.map((flag, idx) => (
-                      <li key={idx} className="flex items-center gap-2 group relative">
-                        {flag.icon}
-                        <span className="text-gray-700">{flag.label}</span>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <InformationCircleIcon className="w-4 h-4 text-gray-400 ml-1" />
-                            </TooltipTrigger>
-                            <TooltipContent className="bg-gray-800 text-white px-3 py-2 rounded-lg text-sm">
-                              {flag.tip}
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-4 p-4 bg-white rounded-lg border border-blue-200">
-                    <p className="text-sm text-gray-600">{project.badExample}</p>
-                  </div>
+                <div className="space-y-6">
+                  {project.redFlags.map((flag, idx) => (
+                    <div key={idx} className="p-4 bg-white rounded-lg border border-red-200 shadow-sm">
+                      <div className="flex items-center gap-3">
+                        <span className="text-red-500">{flag.icon}</span>
+                        <span className="font-medium text-red-800">{flag.label}</span>
+                      </div>
+                      <p className="text-sm text-red-600 mt-2">{flag.tip}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               {/* Безопасная альтернатива */}
-              <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200">
+              <div className="bg-green-50 p-8 md:p-12 rounded-xl border-2 border-green-200">
                 <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
                   <CheckCircleIcon className="w-5 h-5 text-accent-teal" />
                 </div>
-                <h3 className="text-xl font-bold text-green-800 mt-4 mb-6">Safe Project Criteria</h3>
+                <h3 className="text-3xl md:text-4xl font-bold mb-12 md:mb-16">Safe Project Criteria</h3>
                 
                 {/* Добавляем контент */}
-                <div className="space-y-4 text-left">
+                <div className="space-y-8 md:space-y-12 text-left">
                   <div className="p-4 bg-white rounded-lg border border-green-200">
                     <p className="text-sm text-gray-600">{project.goodExample}</p>
                   </div>
@@ -152,13 +150,18 @@ export default function DemoSection({
           ))}
         </div>
 
-        <div className="text-center mt-20">
+        <div className="text-center mt-16">
           <ClientButton 
             onClick={scrollToWaitlist}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="animate-fade-in rounded-full border border-black bg-black px-8 py-4 text-sm text-white 
+                     transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200 inline-flex items-center"
           >
-            Get Early Access
+            Block Toxic Clients in 2 Minutes
+            <ArrowRightIcon className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" />
           </ClientButton>
+          <p className="text-sm text-gray-500 mt-4">
+            Protected $15M+ in freelance income since 2024
+          </p>
         </div>
       </div>
     </section>

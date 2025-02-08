@@ -17,7 +17,7 @@
 </head>
 <body>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero py-16 md:py-24 lg:py-32">
         <div class="cyber-overlay"></div>
         <div class="container">
             <div class="trust-badge">
@@ -38,10 +38,10 @@
     </section>
 
     <!-- Dynamic Pricing Widget -->
-    <section class="pricing-widget">
+    <section class="pricing-widget py-20 md:py-28 lg:py-36">
         <div class="container">
-            <h3>AI-Priced Project Calculator</h3>
-            <div class="calculator">
+            <h3 class="mb-8 md:mb-12 text-3xl md:text-4xl">AI-Priced Project Calculator</h3>
+            <div class="calculator space-y-6">
                 <input type="number" id="client-budget" placeholder="Client's budget ($)">
                 <button onclick="calculatePrice()">Get AI Recommendation</button>
                 <div id="price-result">
@@ -57,7 +57,7 @@
     <script src="app.js"></script>
 
     <!-- Добавляем новые секции перед закрывающим тегом body -->
-    <section class="cyber-analytics">
+    <section class="cyber-analytics pt-24 pb-32 md:py-40">
         <div class="matrix-scan"></div>
         <div class="grid-lines"></div>
     </section>

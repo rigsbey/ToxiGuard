@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { ClockIcon } from '@heroicons/react/24/outline';
@@ -15,7 +14,6 @@ const caseStudies = [
     id: 'elizabeth-ux',
     title: 'How Elizabeth Saved 50+ Hours/Month Using ToxicGuard to Avoid Toxic Clients',
     excerpt: 'UX designer used AI risk detection to spot unrealistic deadlines and low budgets. 3-second project scan saved 50 hours/month',
-    image: '/images/case-study-1.jpg',
     cta: 'Discover how ToxicGuard can save you 50+ hours/month →',
     stats: [
       { icon: '⏳', value: '50h saved/month' },
@@ -26,7 +24,6 @@ const caseStudies = [
     id: 'james-copywriter',
     title: 'How James Reduced Payment Delays by 87% with ToxicGuard Protection',
     excerpt: 'Freelance writer eliminated "pay after publish" risks using payment security features. Now earns $300 average per project',
-    image: '/images/case-study-2.jpg',
     cta: 'See how to secure your payments →',
     stats: [
       { icon: '💸', value: '87% fewer delays' },
@@ -57,7 +54,7 @@ export default function SuccessStories() {
             Real Results from Early Users
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Join {METRICS.CURRENT_SIGNUPS}+ professionals who transformed their client workflow
+            Join {METRICS.CURRENT_SIGNUPS.toLocaleString('en-US')}+ professionals who transformed their client workflow
           </p>
         </div>
 
@@ -72,7 +69,9 @@ export default function SuccessStories() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <span>Weekly hours saved</span>
-                <span className="font-bold text-blue-600">{Math.round(METRICS.AVG_HOURS_SAVED / 4)}h</span>
+                <span className="font-bold text-blue-600">
+                  {Math.round(METRICS.AVG_HOURS_SAVED / 4).toLocaleString('en-US')}h
+                </span>
               </div>
               <div className="h-2 bg-blue-100 rounded-full">
                 <div 
@@ -94,7 +93,7 @@ export default function SuccessStories() {
               <div className="flex justify-between items-center">
                 <span>Monthly protection</span>
                 <span className="font-bold text-green-600">
-                  ${(METRICS.PROTECTED_AMOUNT / 1000).toFixed(1)}k
+                  ${(METRICS.PROTECTED_AMOUNT / 1000).toLocaleString('en-US', {maximumFractionDigits: 1})}k
                 </span>
               </div>
               <div className="h-2 bg-green-100 rounded-full">

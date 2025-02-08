@@ -10,8 +10,17 @@ module.exports = {
     domains: [
       'toxiguard.site',
       'toxiguard.vercel.app',
-      'www.toxiguard.site'
+      'www.toxiguard.site',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com'
     ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+    ],
+    unoptimized: process.env.NODE_ENV === 'development' ? true : false,
   },
   async headers() {
     return [

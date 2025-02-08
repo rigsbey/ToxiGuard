@@ -35,7 +35,7 @@ export default function HowItWorksSection() {
   return (
     <section 
       id="how-it-works-section" 
-      className="py-20 bg-gradient-to-b from-blue-50 to-white"
+      className="py-16 bg-gray-50"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
