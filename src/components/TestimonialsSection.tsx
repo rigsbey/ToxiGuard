@@ -134,6 +134,10 @@ const TestimonialCard = ({
 );
 
 export default function TestimonialsSection() {
+  // Разделяем массив на 2 уникальные группы
+  const topTestimonials = testimonials.slice(0, 4);
+  const bottomTestimonials = testimonials.slice(4);
+
   return (
     <section className="py-16 bg-gradient-to-b from-blue-50 to-white overflow-hidden">
       <div className="max-w-6xl mx-auto px-4">
@@ -148,42 +152,38 @@ export default function TestimonialsSection() {
 
         <div className="relative h-[400px] md:h-[520px] overflow-x-hidden group">
           <motion.div 
-            className="absolute top-0 left-0 flex gap-4 md:gap-6 w-[300%] md:w-[200%]"
+            className="absolute top-0 left-0 flex gap-4 md:gap-6 w-[200%]"
             animate={{ x: ['0%', '-100%'] }}
             transition={{ 
-              duration: 80, 
+              duration: 40,
               repeat: Infinity, 
-              ease: 'linear',
-              delay: 0
+              ease: 'linear'
             }}
           >
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={`top-${index}`} testimonial={testimonial} />
-            ))}
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={`top-dup-${index}`} testimonial={testimonial} />
+            {[...topTestimonials, ...topTestimonials].map((testimonial, index) => (
+              <TestimonialCard 
+                key={`top-${index}-${testimonial.nickname}`} 
+                testimonial={testimonial} 
+              />
             ))}
           </motion.div>
 
           <motion.div 
-            className="absolute top-[180px] md:top-[240px] left-0 flex gap-4 md:gap-6 w-[300%] md:w-[200%]"
+            className="absolute top-[180px] md:top-[240px] left-0 flex gap-4 md:gap-6 w-[200%]"
             animate={{ x: ['-100%', '0%'] }}
             transition={{ 
-              duration: 80, 
+              duration: 40,
               repeat: Infinity, 
-              ease: 'linear',
-              delay: 0
+              ease: 'linear'
             }}
           >
-            {[...testimonials]
-              .sort(() => Math.random() - 0.5)
-              .map((testimonial, index) => (
-                <TestimonialCard 
-                  key={`bottom-${index}`}
-                  testimonial={testimonial} 
-                  variant="reverse" 
-                />
-              ))}
+            {[...bottomTestimonials, ...bottomTestimonials].map((testimonial, index) => (
+              <TestimonialCard 
+                key={`bottom-${index}-${testimonial.nickname}`}
+                testimonial={testimonial} 
+                variant="reverse" 
+              />
+            ))}
           </motion.div>
         </div>
 
