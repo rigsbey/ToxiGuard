@@ -23,12 +23,6 @@ export default function HowItWorksSection() {
       title: "Time Savings",
       value: `${METRICS.AVG_HOURS_SAVED}h`,
       description: "monthly average saved"
-    },
-    {
-      icon: <Scale className="w-8 h-8 text-orange-600" />,
-      title: "Dispute Resolution",
-      value: `${(METRICS.DISPUTE_IMPROVEMENT * 100).toFixed(0)}%`,
-      description: "faster resolution"
     }
   ];
 
@@ -45,7 +39,7 @@ export default function HowItWorksSection() {
           </p>
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {protections.map((protection, index) => (
             <motion.div
               key={index}

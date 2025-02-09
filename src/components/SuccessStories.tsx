@@ -40,72 +40,8 @@ const itemVariants = {
 const stories = [{
   title: "Web Development Project",
   content: `Avoided $${(12000).toLocaleString('en-US')} loss with ${METRICS.RISK_ACCURACY * 100}% risk prediction accuracy`
-}, {
-  title: "Mobile App Contract",
-  content: `Saved ${METRICS.AVG_HOURS_SAVED} hours on contract negotiations`
 }];
 
 export default function SuccessStories() {
-  return (
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Real Results from Early Users
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Join {METRICS.CURRENT_SIGNUPS.toLocaleString('en-US')}+ professionals who transformed their client workflow
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-blue-50 p-8 rounded-2xl">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl">
-                ⏳
-              </div>
-              <h3 className="text-xl font-bold">Time Saved</h3>
-            </div>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span>Weekly hours saved</span>
-                <span className="font-bold text-blue-600">
-                  {Math.round(METRICS.AVG_HOURS_SAVED / 4).toLocaleString('en-US')}h
-                </span>
-              </div>
-              <div className="h-2 bg-blue-100 rounded-full">
-                <div 
-                  className="h-full bg-blue-600 rounded-full" 
-                  style={{ width: `${(METRICS.AVG_HOURS_SAVED / 40) * 100}%` }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-green-50 p-8 rounded-2xl">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-2xl">
-                💸
-              </div>
-              <h3 className="text-xl font-bold">Earnings Protected</h3>
-            </div>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span>Monthly protection</span>
-                <span className="font-bold text-green-600">
-                  ${(METRICS.PROTECTED_AMOUNT / 1000).toLocaleString('en-US', {maximumFractionDigits: 1})}k
-                </span>
-              </div>
-              <div className="h-2 bg-green-100 rounded-full">
-                <div 
-                  className="h-full bg-green-600 rounded-full" 
-                  style={{ width: `${(METRICS.PROTECTED_AMOUNT / 100_000) * 100}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return null;
 } 
