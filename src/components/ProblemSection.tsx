@@ -73,12 +73,7 @@ export default function ProblemSection() {
                 <span className="bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6 inline-block">
                   Live Demo
                 </span>
-                <h3 className="text-3xl font-bold mb-4">
-                  Project Risk Scanner
-                </h3>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Real-time analysis of project requirements
-                </p>
+                
               </div>
               <ProjectAnalysisOverlay />
             </div>

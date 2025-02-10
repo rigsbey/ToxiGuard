@@ -46,12 +46,12 @@ export default function ProjectAnalysisOverlay() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900">
-          Analyze Freelance Projects with AI
+      <div className="text-center mb-6 md:mb-8">
+        <h2 className="text-xl md:text-3xl font-bold text-gray-900 px-4">
+          Instant Risk Scanner
         </h2>
-        <p className="text-gray-500 mt-2">
-          Click to reveal risks and client details
+        <p className="text-gray-500 mt-1 md:mt-2 text-sm md:text-base">
+          AI-powered analysis of project requirements
         </p>
       </div>
 

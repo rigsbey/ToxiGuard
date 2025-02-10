@@ -11,6 +11,7 @@ import { BlogPreview } from '@/components/BlogSection'
 import MetricsSection from '@/components/MetricsSection'
 import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
@@ -35,6 +36,7 @@ export default function Home() {
         <FAQSection />
         <WaitlistSection />
       </main>
+      <Footer />
     </>
   )
 } 

@@ -2,6 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { ShareIcon, LinkIcon } from '@heroicons/react/24/outline';
+import { SocialButton } from '@/components/SocialButton';
 
 type Params = {
   params: {
@@ -13,165 +16,655 @@ const articles = {
   'elizabeth-ux': {
     title: 'How ToxicGuard Saved 50+ Freelance Hours/Month: UX Designer Case Study',
     content: `
-      <div class="prose lg:prose-xl">
-        <h2>The Challenge: Toxic Client Red Flags</h2>
-        <div class="bg-red-50 p-4 rounded-lg my-6">
-          <h3 class="text-red-600 font-bold mb-2">🚩 5 Critical Red Flags</h3>
-          <ul class="list-disc pl-6">
-            <li>Unrealistic deadline</li>
-            <li>Below-market budget</li>
-            <li>High payment risk score (92/100)</li>
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
           </ul>
-        </div>
 
-        <h2>The Result: Time & Money Saved</h2>
-        <div class="grid md:grid-cols-2 gap-6 my-8">
-          <div class="bg-green-50 p-6 rounded-xl">
-            <div class="text-3xl mb-2">⏳ 50h</div>
-            <div class="font-medium">Monthly time saved</div>
-          </div>
-          <div class="bg-blue-50 p-6 rounded-xl">
-            <div class="text-3xl mb-2">💰 $1300+</div>
-            <div class="font-medium">Additional monthly income</div>
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
           </div>
         </div>
       </div>
     `,
-    seoDescription: 'Learn how UX designer saved 50+ hours/month avoiding toxic clients using ToxicGuard AI risk detection'
+    seoDescription: 'Learn how UX designer saved 50+ hours/month avoiding toxic clients using ToxicGuard AI risk detection',
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Essentials' }
+    ]
   },
   '10-priznakov-toksichnogo-klienta': {
     title: '10 Признаков Токсичного Клиента: Как Фрилансерам Избежать Проблем',
     seoDescription: 'Полное руководство по выявлению токсичных клиентов с практическими советами и решениями от ToxicGuard',
     content: `
-      <div class="prose lg:prose-xl max-w-4xl mx-auto">
-        <div class="bg-blue-50 p-6 rounded-xl mb-8">
-          <p class="font-semibold text-lg">📌 Ключевые выводы:</p>
-          <ul class="list-disc pl-6 mt-2">
-            <li>${(0.7 * 100).toLocaleString('ru-RU')}% фрилансеров сталкиваются с неоплатой</li>
-            <li>5 главных красных флагов токсичных клиентов</li>
-            <li>3 рабочих инструмента защиты</li>
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
           </ul>
-        </div>
 
-        <h2 class="text-3xl font-bold mt-12 mb-6">Признаки токсичного клиента</h2>
-        
-        <div class="grid md:grid-cols-2 gap-6 mb-12">
-          ${[1,2,3,4,5,6,7,8].map(i => `
-            <div class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-              <div class="text-2xl mb-2">${i}.</div>
-              <h3 class="text-xl font-semibold mb-2">${['Нереалистичные ожидания','Отсутствие ТЗ','Задержки оплаты'][i%3]}</h3>
-              <p class="text-gray-600">Пример из практики и объяснение рисков</p>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="bg-red-50 p-6 rounded-xl my-8">
-          <h3 class="text-red-600 font-bold text-xl mb-4">🚨 Важно!</h3>
-          <p>Токсичные клиенты снижают продуктивность на ${(0.4 * 100).toLocaleString('ru-RU')}% по данным нашего исследования</p>
-        </div>
-
-        <h2 class="text-3xl font-bold mt-12 mb-6">Как защититься?</h2>
-        
-        <div class="space-y-6">
-          ${['Контракты','Предоплата','ToxicGuard'].map((item, idx) => `
-            <div class="flex gap-4 items-start">
-              <div class="bg-blue-100 p-3 rounded-lg">${idx+1}.</div>
-              <div>
-                <h3 class="text-xl font-semibold">${item}</h3>
-                <p class="text-gray-600 mt-2">Подробное описание метода защиты</p>
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
               </div>
-            </div>
-          `).join('')}
+            `).join('')}
+          </div>
         </div>
-
-        <div class="mt-12 text-center">
-          <a href="/waitlist" class="inline-block bg-black text-white px-8 py-3 rounded-full text-lg hover:opacity-90 transition-opacity">
-            Попробуйте ToxicGuard Бесплатно
-          </a>
-        </div>
-
-        <section class="mt-16 bg-blue-50 p-8 rounded-xl text-center">
-          <p class="mb-6">Присоединяйтесь к ${(8214).toLocaleString('ru-RU')}+ профессионалам, использующим ToxicGuard</p>
-        </section>
       </div>
-    `
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'how-to-avoid-unpaid-work', title: 'Avoiding Unpaid Work Strategies' },
+      { slug: 'client-negotiation-tactics', title: 'Client Negotiation Tactics' }
+    ]
   },
   '10-signs-toxic-client': {
     title: '10 Signs of a Toxic Client: How Freelancers Can Avoid Pitfalls',
     seoDescription: 'Complete guide to identifying toxic clients with practical solutions from ToxicGuard',
     content: `
-      <div class="prose lg:prose-xl max-w-4xl mx-auto">
-        <div class="bg-blue-50 p-6 rounded-xl mb-8">
-          <p class="font-semibold text-lg">🔑 Key Takeaways:</p>
-          <ul class="list-disc pl-6 mt-2">
-            <li>70% of freelancers face payment issues</li>
-            <li>5 major red flags of toxic clients</li>
-            <li>3 proven protection tools</li>
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
           </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'how-to-avoid-unpaid-work', title: 'Avoiding Unpaid Work Strategies' },
+      { slug: 'client-negotiation-tactics', title: 'Client Negotiation Tactics' }
+    ]
+  },
+  'how-to-avoid-unpaid-work': {
+    title: 'Как избежать неоплаты: 7 стратегий защиты для фрилансеров',
+    seoDescription: 'Практическое руководство по защите от неоплаты с использованием AI-анализа ToxicGuard',
+    content: `
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
+          </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Essentials' }
+    ]
+  },
+  'freelance-contract-guide': {
+    title: 'Идеальный контракт для фрилансера: 5 обязательных пунктов',
+    seoDescription: 'Составление безопасного договора с использованием AI-ассистента ToxicGuard',
+    content: `
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
+          </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-clauses', title: 'Freelance Contract Essentials' }
+    ]
+  },
+  'client-negotiation-tactics': {
+    title: '7 психологических приемов в переговорах с клиентами',
+    seoDescription: 'Как защитить свои интересы используя техники переговоров и AI-анализ ToxicGuard',
+    content: `
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
+          </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Essentials' }
+    ]
+  },
+  'client-proposal-red-flags': {
+    title: "How to Spot Red Flags in Client Proposals: A Freelancer's Survival Guide",
+    seoDescription: "Learn to detect toxic projects early using AI analysis. 5 critical questions + ToxicGuard scanning workflow.",
+    content: `
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
+          </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Essentials' }
+    ]
+  },
+  'freelance-contract-clauses': {
+    title: "Freelancer Contracts 101: 7 AI-Approved Clauses to Prevent Scope Creep",
+    seoDescription: "Legally-binding contract templates with AI risk analysis. Download free checklist + integration guide.",
+    content: `
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
+          </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Essentials' }
+    ]
+  },
+  'toxic-client-psychology': {
+    title: "The Psychology of Toxic Clients: Why They Target Freelancers",
+    seoDescription: "Behavioral analysis of toxic client patterns + AI detection methods. Case studies and protection strategies.",
+    content: `
+      <div className="max-w-2xl mx-auto">
+        <div className="prose prose-blue">
+          <h2>Key Insights</h2>
+          <ul>
+            <li>82% freelancers face payment issues</li>
+            <li>5 critical client red flags</li>
+          </ul>
+
+          <h2>Practical Strategies</h2>
+          <div className="space-y-4">
+            ${[1,2,3].map(i => `
+              <div key="${i}" className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-lg font-semibold">Strategy ${i}</h3>
+                <p className="text-gray-600 mt-1 text-sm">
+                  Actionable steps with real examples
+                </p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Case Studies',
+    sections: [
+      { title: 'Problem Statement', id: 'section-0' },
+      { title: 'Solution Approach', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'client-proposal-red-flags', title: 'How to Spot Red Flags in Client Proposals' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Essentials' }
+    ]
+  },
+  'toxic-client-red-flags': {
+    title: '10 Signs of a Toxic Client: Complete Detection Guide',
+    seoDescription: 'Learn to identify dangerous client patterns with real case studies and AI analysis',
+    content: `
+      <div class="max-w-4xl mx-auto px-4">
+        <!-- Hero Section -->
+        <div class="text-center py-16">
+          <h1 class="text-4xl font-bold mb-6">70% of freelancers lose money</h1>
+          <p class="text-xl text-gray-600">Due to collaboration with toxic clients</p>
         </div>
 
-        <h2 class="text-3xl font-bold mt-12 mb-6">Signs of a Toxic Client</h2>
-        
-        <div class="grid md:grid-cols-2 gap-6 mb-12">
-          ${[1,2,3,4,5,6,7,8].map(i => `
-            <div class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-              <div class="text-2xl mb-2">${i}.</div>
-              <h3 class="text-xl font-semibold mb-2">${['Unrealistic Expectations','No Clear Scope','Payment Delays'][i%3]}</h3>
-              <p class="text-gray-600">Real-world examples and risk analysis</p>
-            </div>
-          `).join('')}
+        <!-- Key Stats -->
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+          <div class="bg-red-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-red-600">$7.2k</p>
+            <p class="text-gray-700 mt-2">Average annual losses</p>
+          </div>
+          <div class="bg-yellow-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-yellow-600">23+</p>
+            <p class="text-gray-700 mt-2">Risk patterns</p>
+          </div>
+          <div class="bg-green-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-green-600">92%</p>
+            <p class="text-gray-700 mt-2">Detection effectiveness</p>
+          </div>
         </div>
 
-        <div class="bg-red-50 p-6 rounded-xl my-8">
-          <h3 class="text-red-600 font-bold text-xl mb-4">⚠️ Important!</h3>
-          <p>Toxic clients reduce productivity by 40% according to our research</p>
-        </div>
-
-        <h2 class="text-3xl font-bold mt-12 mb-6">Protection Strategies</h2>
-        
-        <div class="space-y-6">
-          ${['Contracts','Advance Payment','ToxicGuard'].map((item, idx) => `
-            <div class="flex gap-4 items-start">
-              <div class="bg-blue-100 p-3 rounded-lg">${idx+1}.</div>
+        <!-- Red Flags List -->
+        <div class="space-y-12">
+          ${[1,2,3,4,5,6,7,8,9,10].map(i => `
+            <div class="group flex gap-6 items-start p-6 hover:bg-gray-50 rounded-xl transition-colors">
+              <div class="flex-shrink-0 w-14 h-14 bg-red-100 text-red-600 rounded-xl flex items-center justify-center text-2xl font-bold">
+                ${i}
+              </div>
               <div>
-                <h3 class="text-xl font-semibold">${item}</h3>
-                <p class="text-gray-600 mt-2">Detailed protection method explanation</p>
+                <h3 class="text-xl font-bold mb-3">${[
+                  'Unrealistic deadlines',
+                  'Vague requirements',
+                  'Demand for free work',
+                  'Aggressive communication',
+                  'Refusal of written contract',
+                  'Constant changes',
+                  'Inadequate budget',
+                  'Negative reviews',
+                  'Hidden tasks',
+                  'Discount pressure'
+                ][i-1]}</h3>
+                <div class="prose">
+                  <p class="text-gray-600 mb-4">
+                    ${[
+                      'Require two weeks of work per week. "It\'s just buttons!"',
+                      '"Do it like Apple, but your way" - without specific TZs',
+                      '"Show me first that you can, then we\'ll discuss payment"',
+                      'Insults, threats, switching to personal attacks in communication',
+                      '"Trust me, I won\'t disappear" - refusal of formal contract',
+                      'Constant new requests after TZ approval',
+                      'Offer 10% of the market value of the work',
+                      'Many negative reviews from other executors',
+                      'Unmentioned initial additional tasks',
+                      '"Make a discount, and I\'ll recommend you"'
+                    ][i-1]}
+                  </p>
+                  <div class="bg-gray-100 p-4 rounded-lg">
+                    <p class="font-medium text-sm text-red-600 mb-2">How to detect:</p>
+                    <p class="text-sm">${[
+                      'Compare the deadline with similar projects through ToxicGuard',
+                      'Use the requirements template from our generator',
+                      'Check the client history in the database',
+                      'Analyze the tone of messages with AI assistant',
+                      'Generate a contract automatically',
+                      'Set up scope change notifications',
+                      'Compare with market prices in analytics',
+                      'Check the reputation rating',
+                      'Activate scope change monitoring',
+                      'Calculate fair price through calculator'
+                    ][i-1]}</p>
+                  </div>
+                </div>
               </div>
             </div>
           `).join('')}
         </div>
 
-        <div class="mt-12 text-center">
-          <a href="/waitlist" class="inline-block bg-black text-white px-8 py-3 rounded-full text-lg hover:opacity-90 transition-opacity">
-            Try ToxicGuard Free
-          </a>
+        <!-- Protection Section -->
+        <div class="my-16 p-8 bg-blue-50 rounded-2xl">
+          <h2 class="text-2xl font-bold mb-6">Protection with ToxicGuard</h2>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                🔍
+              </div>
+              <h3 class="font-bold mb-2">AI Project Analysis</h3>
+              <p class="text-gray-600 text-sm">Real-time risk pattern detection</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                📑
+              </div>
+              <h3 class="font-bold mb-2">Smart Contracts</h3>
+              <p class="text-gray-600 text-sm">Automatic protection conditions</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                📊
+              </div>
+              <h3 class="font-bold mb-2">Risk Analytics</h3>
+              <p class="text-gray-600 text-sm">Visualization of hidden threats</p>
+            </div>
+          </div>
         </div>
       </div>
     `,
+    category: 'Safety',
+    sections: [
+      { title: 'Key Risks', id: 'section-0' },
+      { title: 'Protection Methods', id: 'section-1' }
+    ],
+    relatedArticles: [
+      { slug: 'how-to-avoid-unpaid-work', title: 'How to Avoid Unpaid Work' },
+      { slug: 'client-negotiation-tactics', title: 'Client Negotiation Tactics' },
+      { slug: 'freelance-contract-guide', title: 'Freelance Contract Guide' }
+    ]
   },
-  // Add other articles
+  'contract-protection': {
+    title: 'Freelance Contract Protection: Essential Guide for 2024',
+    seoDescription: 'Learn how to create bulletproof freelance contracts with AI-powered analysis and real-world examples',
+    content: `
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center py-16">
+          <h1 class="text-4xl font-bold mb-6">73% of Contract Disputes are Preventable</h1>
+          <p class="text-xl text-gray-600">AI-verified contract templates and protection strategies</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+          <div class="bg-blue-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-blue-600">50+</p>
+            <p class="text-gray-700 mt-2">Legal-verified clauses</p>
+          </div>
+          <div class="bg-green-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-green-600">92%</p>
+            <p class="text-gray-700 mt-2">Dispute win rate</p>
+          </div>
+          <div class="bg-purple-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-purple-600">24h</p>
+            <p class="text-gray-700 mt-2">Average savings/contract</p>
+          </div>
+        </div>
+
+        <div class="space-y-12">
+          <h2 class="text-3xl font-bold mb-8">7 Essential Contract Elements</h2>
+          ${[1,2,3,4,5,6,7].map(i => `
+            <div class="group flex gap-6 items-start p-6 hover:bg-gray-50 rounded-xl transition-colors">
+              <div class="flex-shrink-0 w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl font-bold">
+                ${i}
+              </div>
+              <div>
+                <h3 class="text-xl font-bold mb-3">${[
+                  'Scope Definition',
+                  'Payment Terms',
+                  'Intellectual Property',
+                  'Revision Policy',
+                  'Termination Clauses',
+                  'Dispute Resolution',
+                  'Confidentiality'
+                ][i-1]}</h3>
+                <div class="prose prose-lg text-gray-600">
+                  ${[
+                    'Clear project boundaries and deliverables definition',
+                    'Milestone-based payments with upfront deposit',
+                    'Copyright transfer conditions and usage rights',
+                    'Number of revisions and additional cost structure',
+                    'Project cancellation terms and final payment',
+                    'Mediation process and jurisdiction choice',
+                    'NDA terms and data protection guidelines'
+                  ][i-1]}
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="my-16 p-8 bg-blue-50 rounded-2xl">
+          <h2 class="text-2xl font-bold mb-6">ToxicGuard Contract Protection</h2>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                ⚡️
+              </div>
+              <h3 class="font-bold mb-2">AI Contract Review</h3>
+              <p class="text-gray-600 text-sm">Real-time clause analysis</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                🔒
+              </div>
+              <h3 class="font-bold mb-2">Legal Templates</h3>
+              <p class="text-gray-600 text-sm">Industry-specific contracts</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                📊
+              </div>
+              <h3 class="font-bold mb-2">Risk Analysis</h3>
+              <p class="text-gray-600 text-sm">Clause-by-clause scoring</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Legal',
+    sections: [
+      { title: 'Contract Elements', id: 'elements' },
+      { title: 'Protection Tools', id: 'tools' }
+    ],
+    relatedArticles: [
+      { slug: 'toxic-client-red-flags', title: '10 Signs of a Toxic Client' },
+      { slug: 'scope-management', title: 'Effective Scope Management' }
+    ]
+  },
+  'scope-management': {
+    title: 'Scope Management: Preventing Project Creep and Overwork',
+    seoDescription: 'Master project scope management with AI-powered tracking and automated change detection',
+    content: `
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center py-16">
+          <h1 class="text-4xl font-bold mb-6">68% of Projects Suffer from Scope Creep</h1>
+          <p class="text-xl text-gray-600">AI-powered solutions for maintaining project boundaries</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-16">
+          <div class="bg-red-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-red-600">+47%</p>
+            <p class="text-gray-700 mt-2">Average project overrun</p>
+          </div>
+          <div class="bg-green-50 p-6 rounded-xl">
+            <p class="text-3xl font-bold text-green-600">94%</p>
+            <p class="text-gray-700 mt-2">Prevention rate with AI</p>
+          </div>
+        </div>
+
+        <div class="space-y-12">
+          <h2 class="text-3xl font-bold mb-8">5 Scope Management Strategies</h2>
+          ${[1,2,3,4,5].map(i => `
+            <div class="group flex gap-6 items-start p-6 hover:bg-gray-50 rounded-xl transition-colors">
+              <div class="flex-shrink-0 w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-2xl font-bold">
+                ${i}
+              </div>
+              <div>
+                <h3 class="text-xl font-bold mb-3">${[
+                  'Clear Initial Documentation',
+                  'Change Request System',
+                  'Regular Progress Tracking',
+                  'Boundary Enforcement',
+                  'Client Communication'
+                ][i-1]}</h3>
+                <div class="prose prose-lg text-gray-600">
+                  ${[
+                    'Detailed project requirements and limitations',
+                    'Formal process for scope modifications',
+                    'Milestone-based progress monitoring',
+                    'Firm project boundaries and extra cost policy',
+                    'Regular updates and expectation management'
+                  ][i-1]}
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="my-16 p-8 bg-purple-50 rounded-2xl">
+          <h2 class="text-2xl font-bold mb-6">ToxicGuard Scope Protection</h2>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                🔍
+              </div>
+              <h3 class="font-bold mb-2">Change Detection</h3>
+              <p class="text-gray-600 text-sm">Automated scope monitoring</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                📝
+              </div>
+              <h3 class="font-bold mb-2">Requirements Doc</h3>
+              <p class="text-gray-600 text-sm">AI-generated templates</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-xl">
+                ⚖️
+              </div>
+              <h3 class="font-bold mb-2">Cost Calculator</h3>
+              <p class="text-gray-600 text-sm">Fair pricing for changes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    category: 'Project Management',
+    sections: [
+      { title: 'Scope Strategies', id: 'strategies' },
+      { title: 'AI Tools', id: 'tools' }
+    ],
+    relatedArticles: [
+      { slug: 'contract-protection', title: 'Freelance Contract Protection' },
+      { slug: 'toxic-client-red-flags', title: '10 Signs of a Toxic Client' }
+    ]
+  },
 };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const article = articles[params.slug];
   
-  if (!article) {
-    notFound();
-  }
+  if (!article) notFound();
 
   return {
-    title: `${params.slug.replace(/-/g, ' ')} | IllustraAI Blog`,
+    title: article.title,
     description: article.seoDescription,
     openGraph: {
+      title: article.title,
+      description: article.seoDescription,
+      type: 'article',
+      locale: 'en_US',
+      siteName: 'ToxicGuard',
       images: [{
-        url: article.image,
+        url: '/og-blog-en.png',
         width: 1200,
         height: 630,
-        alt: article.title,
       }],
-      type: 'article',
-      publishedTime: new Date('2024-03-15').toISOString(),
-      authors: ['ToxicGuard Team'],
     },
     alternates: {
       canonical: `/blog/${params.slug}`,
@@ -179,98 +672,56 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default function BlogPost({ params }: Params) {
+export default function PostPage({ params }: { params: { slug: string } }) {
   const article = articles[params.slug as keyof typeof articles];
 
   if (!article) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-4xl font-bold mb-6">Article Not Found</h1>
-        <p className="text-gray-600 mb-6">The requested article does not exist.</p>
+        <h1 className="text-4xl font-bold mb-6">Статья не найдена</h1>
         <Link
           href="/blog"
-          className="bg-primary-blue text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-primary-blue/90 transition-all"
+          className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-blue-700 transition-all"
         >
-          View All Articles
+          Все статьи
         </Link>
       </div>
     )
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4 capitalize">{article.title}</h1>
-        <div className="flex items-center gap-4 text-gray-600">
-          <span>about 4 hours ago</span>
-          <span>•</span>
-          <span className="capitalize">black-and-white</span>
+    <div className="max-w-7xl mx-auto px-4 py-12 space-y-12">
+      <article className="prose lg:prose-xl max-w-4xl mx-auto">
+        <div dangerouslySetInnerHTML={{ __html: article.content }} />
+        
+        <div className="mt-16 bg-blue-50 p-8 rounded-2xl text-center">
+          <h2 className="text-2xl font-bold mb-6">Ready for AI Protection?</h2>
+          <Link
+            href="/demo"
+            className="bg-black text-white px-8 py-3 rounded-full text-lg hover:opacity-90 transition-opacity"
+          >
+            Try Free Analysis →
+          </Link>
         </div>
-      </div>
+      </article>
 
-      <div className="relative aspect-square size-40 sm:size-56 mx-auto mb-12">
-        <Image
-          src={`/blog-images/${params.slug}.jpg`}
-          alt={article.title}
-          fill
-          className="object-cover rounded-lg"
-        />
-      </div>
-
-      <article 
-        dangerouslySetInnerHTML={{ __html: article.content }}
-        className="prose lg:prose-xl max-w-none"
-      />
-
-      <section className="mt-16 bg-blue-50 p-8 rounded-xl text-center">
-        <h2 className="text-2xl font-bold mb-4">Ready to Protect Your Business?</h2>
-        <p className="mb-6">Join 8,214+ professionals using ToxiGuard for client risk detection</p>
-        <Link
-          href="/waitlist"
-          className="bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:opacity-90 transition-opacity"
-        >
-          Get Early Access Now
-        </Link>
-      </section>
-
-      <section className="mt-16 border-t pt-12">
-        <h3 className="text-2xl font-bold mb-8">Read Next</h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <article className="bg-white p-6 rounded-xl border hover:shadow-md transition-shadow">
-            <Link 
-              href="/blog/elizabeth-ux" 
-              className="text-lg font-semibold hover:text-primary-blue"
-            >
-              How ToxicGuard Saved 50+ Hours/Month
-            </Link>
-          </article>
-          
-          <article className="bg-white p-6 rounded-xl border hover:shadow-md transition-shadow">
-            <Link 
-              href="/blog/10-signs-toxic-client" 
-              className="text-lg font-semibold hover:text-primary-blue"
-            >
-              10 Signs of a Toxic Client
-            </Link>
-          </article>
-        </div>
-      </section>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": article.title,
-            "datePublished": "2024-03-15T08:00:00+00:00",
-            "author": {
-              "@type": "Organization",
-              "name": "ToxicGuard"
-            }
-          })
-        }}
-      />
+      {article.relatedArticles?.length > 0 && (
+        <section className="max-w-4xl mx-auto">
+          <h3 className="text-2xl font-bold mb-6">Recommended Reading</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {article.relatedArticles.map((related) => (
+              <Link
+                key={related.slug}
+                href={`/blog/${related.slug}`}
+                className="p-6 bg-white rounded-xl border border-gray-200 hover:border-blue-200 transition-colors"
+              >
+                <h4 className="text-lg font-semibold mb-2">{related.title}</h4>
+                <p className="text-gray-600 text-sm">Read Guide →</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

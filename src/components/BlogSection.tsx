@@ -1,34 +1,77 @@
+'use client';
+
 import Link from "next/link";
+import { expertResources } from "../data/resources";
+import { ScaleIcon, CurrencyDollarIcon, ShieldExclamationIcon, ArrowRightIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import dynamic from 'next/dynamic';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+
+// Инициализация модулей
+SwiperCore.use([Navigation, Pagination]);
+
+// Динамический импорт Swiper компонентов
+const Swiper = dynamic(() => import('swiper/react').then(mod => mod.Swiper), { ssr: false });
+const SwiperSlide = dynamic(() => import('swiper/react').then(mod => mod.SwiperSlide), { ssr: false });
+
+// Импорт стилей
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+function getIconByType(iconType: string) {
+  switch (iconType) {
+    case 'shield':
+      return <ShieldExclamationIcon className="w-6 h-6 text-blue-600" />;
+    case 'scale':
+      return <ScaleIcon className="w-6 h-6 text-red-600" />;
+    case 'currency':
+      return <CurrencyDollarIcon className="w-6 h-6 text-green-600" />;
+    default:
+      return <DocumentIcon className="w-6 h-6 text-gray-600" />;
+  }
+}
 
 export function BlogPreview() {
   return (
-    <section id="blog-section" className="py-16 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Expert Resources</h2>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <article className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-            <div className="relative h-48 overflow-hidden rounded-t-xl">
-              <div className="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent" />
-              <div className="p-6 relative">
-                <h3 className="text-xl font-semibold mb-3">10 Signs of a Toxic Client</h3>
-                <p className="text-gray-600 line-clamp-3">
-                  Learn to identify red flags like unrealistic deadlines, 
-                  payment delays, and scope creep before they cost you time and money.
-                </p>
-              </div>
-            </div>
-            <div className="p-6 border-t">
-              <Link
-                href="/blog/10-signs-toxic-client"
-                className="text-primary-blue hover:underline font-medium"
-              >
-                Read Full Guide →
-              </Link>
-            </div>
-          </article>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            Expert Resources
+          </h2>
+          <p className="text-gray-600">
+            Concise guides for smarter freelancing
+          </p>
+        </div>
 
-          {/* Повторить для других статей */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {expertResources.map(resource => (
+            <article 
+              key={resource.slug}
+              className="group border rounded-xl p-5 hover:border-blue-200 transition-colors"
+            >
+              <div className="flex flex-col h-full">
+                <div className="mb-4">
+                  <span className="text-sm font-medium text-blue-600">
+                    {resource.category}
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  {resource.title}
+                </h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  {resource.description}
+                </p>
+                <Link
+                  href={`/blog/${resource.slug}`}
+                  className="mt-auto text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1.5 group"
+                >
+                  Read Guide
+                  <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

@@ -1,28 +1,32 @@
-export function Footer() {
+'use client';
+
+import Link from 'next/link';
+import { useScrollToSection } from '@/hooks/useScrollToSection';
+
+export default function Footer() {
+  const scrollToFAQ = useScrollToSection('faq-section');
+
   return (
-    <footer className="border-t bg-gray-50 mt-24">
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8 text-sm">
-          {/* Logo and description */}
+    <footer className="bg-gray-100 text-gray-800 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Logo and Description */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-bold">ToxicGuard</span>
-            </div>
-            <p className="text-gray-600">
-              AI protection for freelancers and agencies
-            </p>
-            <p className="text-gray-500 text-xs">
-              © {new Date().getFullYear()} ToxicGuard. All rights reserved
-            </p>
+            <h2 className="text-2xl font-bold">ToxiGuard</h2>
+            <p className="text-gray-600">AI-powered protection against toxic clients and payment risks.</p>
+            <p className="text-gray-500 text-xs">© {new Date().getFullYear()} ToxiGuard. All rights reserved.</p>
           </div>
 
-          {/* Product */}
+          {/* Products */}
           <div className="space-y-3">
-            <h3 className="font-semibold mb-2">Product</h3>
+            <h3 className="font-semibold mb-2">Products</h3>
             <nav className="space-y-2">
-              <a href="/how-it-works" className="block hover:text-blue-600">How It Works</a>
-              <a href="/blog" className="block hover:text-blue-600">Blog</a>
-              <a href="/faq" className="block hover:text-blue-600">FAQ</a>
+              <button 
+                onClick={scrollToFAQ} 
+                className="block hover:underline text-left"
+              >
+                FAQ
+              </button>
             </nav>
           </div>
 
@@ -32,7 +36,7 @@ export function Footer() {
             <nav className="space-y-2">
               <a 
                 href="mailto:toxiguard.post@gmail.com" 
-                className="block hover:text-blue-600"
+                className="block hover:underline"
               >
                 toxiguard.post@gmail.com
               </a>
@@ -43,15 +47,10 @@ export function Footer() {
           <div className="space-y-3">
             <h3 className="font-semibold mb-2">Legal</h3>
             <nav className="space-y-2">
-              <a href="/terms" className="block hover:text-blue-600">Terms of Service</a>
-              <a href="/privacy" className="block hover:text-blue-600">Privacy Policy</a>
+              <Link href="/terms" className="block hover:underline">Terms</Link>
+              <Link href="/privacy" className="block hover:underline">Privacy</Link>
             </nav>
           </div>
-        </div>
-
-        {/* Mobile copyright */}
-        <div className="mt-8 md:hidden text-center text-gray-500 text-xs">
-          <p>Built with ❤️ by ToxicGuard Team</p>
         </div>
       </div>
     </footer>
