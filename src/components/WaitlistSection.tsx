@@ -6,7 +6,7 @@ import { METRICS } from '@/config/metrics';
 import { CheckCircle2 } from 'lucide-react';
 import { Sentry } from '@/lib/sentry';
 
-// Используем реальный ID скрипта
+// Using the real script ID
 const SCRIPT_ID = 'AKfycbwtgVj1y3Oia3wy19afi3p1xGehWAjy9Dnm_Y9GfkHueAv7gMw6MBNwzAh9ZYpy7FPL9g';
 const API_URL = `https://script.google.com/macros/s/${SCRIPT_ID}/exec`;
 
@@ -29,32 +29,32 @@ export default function WaitlistSection() {
     try {
       setIsSubmitting(true);
 
-      // Создаем URL с параметрами
+      // Create URL with parameters
       const params = new URLSearchParams({ email });
       const url = `${API_URL}?${params.toString()}`;
 
-      // Создаем изображение для отправки запроса
-      // Это обходит CORS ограничения
+      // Create an image to send the request
+      // This bypasses CORS restrictions
       const img = new Image();
       
       const promise = new Promise((resolve, reject) => {
         img.onload = () => resolve('success');
         img.onerror = () => {
-          // Google Script всегда возвращает 404 при успехе
-          // поэтому мы считаем это успешным ответом
+          // Google Script always returns 404 on success
+          // so we consider this a successful response
           resolve('success');
         };
         
-        // Таймаут на случай если запрос зависнет
+        // Timeout in case the request hangs
         setTimeout(() => reject(new Error('Request timeout')), 5000);
       });
 
-      // Отправляем запрос
+      // Send the request
       img.src = url;
       
       await promise;
       
-      // Если дошли до сюда - запрос успешен
+      // If we reach here, the request was successful
       setIsSubmitted(true);
       setEmail('');
       setShowNotification(true);
@@ -86,7 +86,7 @@ export default function WaitlistSection() {
             <span className="text-blue-600"> Early Adopters</span>
           </h2>
           
-          {/* Статистика */}
+          {/* Statistics */}
           <div className="grid grid-cols-3 gap-4 mb-12">
             {[
               { value: `${METRICS.PROJECTS_ANALYZED?.toLocaleString() ?? '10k+'}`, label: 'Projects Analyzed', icon: '📊' },
@@ -107,7 +107,7 @@ export default function WaitlistSection() {
             ))}
           </div>
 
-          {/* Форма */}
+          {/* Form */}
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-xl p-8 shadow-2xl border border-blue-100">
               <h3 className="text-3xl font-bold text-center mb-6">
@@ -116,17 +116,38 @@ export default function WaitlistSection() {
               </h3>
               
               <form onSubmit={handleSubmit} className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full py-4 px-6 rounded-xl border-2 border-blue-200 
-                           focus:ring-4 focus:ring-blue-200 focus:border-blue-500 
-                           placeholder-gray-400 text-gray-900 bg-white/95
-                           shadow-lg shadow-blue-100/50"
-                  placeholder="Your professional email"
-                  required
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full py-4 px-6 rounded-xl border-2 border-blue-200 
+                              focus:ring-4 focus:ring-blue-200 focus:border-blue-500 
+                              placeholder-gray-400 text-gray-900 bg-white/95
+                              shadow-lg shadow-blue-100/50"
+                    placeholder="Your professional email"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-6 py-4 bg-black text-white rounded-xl font-medium
+                              hover:bg-gray-800 transition-colors disabled:opacity-50
+                              disabled:cursor-not-allowed shadow-lg shadow-blue-100/50"
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Sending...
+                      </span>
+                    ) : (
+                      'Join'
+                    )}
+                  </button>
+                </div>
               </form>
             </div>
           </div>

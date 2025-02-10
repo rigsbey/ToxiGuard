@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { ShareIcon, LinkIcon } from '@heroicons/react/24/outline';
 import { SocialButton } from '@/components/SocialButton';
+import { EnvelopeIcon } from '@heroicons/react/24/outline';
 
 type Params = {
   params: {
@@ -668,6 +669,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     },
     alternates: {
       canonical: `/blog/${params.slug}`,
+      languages: {
+        'ru-RU': `/ru/blog/${params.slug}`,
+        'x-default': `/blog/${params.slug}`,
+      },
     },
   };
 }
@@ -695,13 +700,35 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <div dangerouslySetInnerHTML={{ __html: article.content }} />
         
         <div className="mt-16 bg-blue-50 p-8 rounded-2xl text-center">
-          <h2 className="text-2xl font-bold mb-6">Ready for AI Protection?</h2>
-          <Link
-            href="/demo"
-            className="bg-black text-white px-8 py-3 rounded-full text-lg hover:opacity-90 transition-opacity"
+          <h2 className="text-2xl font-bold mb-6">Join 8,214 Freelancers Who Blocked $15k+ Losses Last Month</h2>
+          
+          <form 
+            action="/api/subscribe" 
+            method="POST"
+            className="max-w-md mx-auto flex gap-4"
           >
-            Try Free Analysis →
-          </Link>
+            <input type="hidden" name="cta_type" value="blog_signup" />
+            
+            <div className="flex-1 relative">
+              <EnvelopeIcon className="w-5 h-5 text-gray-400 absolute left-4 top-3.5" />
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Your professional email"
+                className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+            >
+              Protect Me <span aria-hidden="true">→</span>
+            </button>
+          </form>
+          
+          <p className="text-sm text-gray-600 mt-4">Zero spam. Unsubscribe anytime</p>
         </div>
       </article>
 
@@ -722,9 +749,28 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </div>
         </section>
       )}
+
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Blog",
+            "item": "https://toxiguard.site/blog"
+          }, {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "${article.title}",
+          }]
+        })}
+      </script>
     </div>
   );
 }
+
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({ slug }));
