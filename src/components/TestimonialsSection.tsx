@@ -146,7 +146,7 @@ export default function TestimonialsSection() {
             What Our Community Says
           </h2>
           <p className="text-gray-600 text-lg">
-            Trusted by {((METRICS.CURRENT_SIGNUPS ?? 8200) || 8200).toLocaleString('en-US')}+ professionals worldwide
+            Trusted by 1,200+ professionals worldwide
           </p>
         </div>
 

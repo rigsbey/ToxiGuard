@@ -52,4 +52,10 @@ export default function DemoSection({ projects = [] }: DemoSectionProps) {
       ]
     }
   }
+
+  return (
+    <section>
+      {/* JSX-разметка */}
+    </section>
+  );
 } 

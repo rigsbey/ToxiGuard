@@ -65,7 +65,7 @@ export default function Hero() {
           <ArrowRightIcon className="lucide lucide-arrow-right ml-3 size-4 sm:size-5 transition-transform group-hover:translate-x-1" />
         </ClientButton>
         <p className="text-xs text-gray-500 mt-4 flex items-center">
-          Trusted by 4,000+ freelancers
+          Trusted by 1,200+ freelancers
         </p>
       </section>
 

@@ -81,7 +81,7 @@ export default function WaitlistSection() {
       <div className="max-w-4xl mx-auto px-4 text-center">
         <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 border border-gray-200">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Join {METRICS.CURRENT_SIGNUPS}+ 
+            Join 8,214+ 
             <span className="text-blue-600"> Early Adopters</span>
           </h2>
           
@@ -157,7 +157,7 @@ export default function WaitlistSection() {
 
           <div className="mt-12">
             <h3 className="text-lg font-semibold text-gray-700 mb-6">
-              Trusted by 850+ professionals from:
+              Trusted by 1,200+ professionals from:
             </h3>
             <div className="flex flex-wrap justify-center gap-6 opacity-75">
               {['Upwork', 'Fiverr', 'Toptal', 'LinkedIn', 'Dribbble'].map((platform) => (
