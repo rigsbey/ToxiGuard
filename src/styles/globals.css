@@ -116,6 +116,16 @@
       stroke-dashoffset: 0;
     }
   }
+
+  .stats-container {
+    @apply grid gap-3 md:gap-4;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .stats-card {
+    @apply p-3 md:p-4 bg-white rounded-xl border border-gray-200 hover:border-blue-200 transition-colors;
+    min-width: 150px;
+  }
 }
 
 @layer utilities {
@@ -131,6 +141,51 @@
   }
   .hover\:bg-toxic-red:hover {
     background-color: #ff4d4f;
+  }
+
+  /* Скрываем скроллбар, но оставляем функциональность */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Учитываем нижнюю панель навигации на iOS */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  /* Исправляем перекрытие контента */
+  .content-wrapper {
+    padding-bottom: 160px;
+  }
+  
+  /* Стили для горизонтального скролла */
+  .risk-scroll-container {
+    @apply flex gap-3 overflow-x-auto pb-4;
+  }
+  
+  .risk-card-mobile {
+    @apply flex-shrink-0 w-[85vw] p-4 rounded-xl;
+    min-width: 300px;
+  }
+  
+  /* Фиксируем кнопку CTA */
+  .fixed-bottom-cta {
+    @apply fixed bottom-0 left-0 right-0 bg-white;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+  
+  /* Исправляем обрезку текста */
+  .text-overflow-safe {
+    @apply overflow-hidden text-ellipsis break-words;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 }
 
@@ -302,7 +357,12 @@
   }
   
   .risk-panel {
-    @apply grid-cols-1 gap-4;
+    position: relative !important;
+    width: 100% !important;
+    right: auto !important;
+    left: auto !important;
+    margin-top: 2rem;
+    padding: 1rem;
   }
   
   .screenshot-connector {
@@ -310,11 +370,90 @@
   }
   
   .risk-card {
-    @apply p-3 text-sm;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
   }
 
   .risk-connectors {
     display: none;
+  }
+
+  .project-analysis-image {
+    max-width: 100%;
+    height: auto;
+    margin: 0 -1rem;
+  }
+  
+  .risk-card-mobile {
+    @apply flex-col gap-2 p-3;
+  }
+  
+  .risk-content {
+    width: 100%;
+  }
+  
+  .risk-title {
+    @apply text-base line-clamp-1;
+  }
+  
+  .risk-description {
+    @apply text-sm line-clamp-2;
+  }
+  
+  .content-wrapper {
+    padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 180px);
+  }
+  
+  .fixed-bottom-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .risk-scroll-area {
+    max-height: 50vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Карточки рисков */
+  .risk-card {
+    @apply flex-shrink-0 w-full;
+    max-width: calc(100vw - 32px);
+  }
+  
+  /* Изображение проекта */
+  .project-screenshot {
+    @apply aspect-video w-full object-cover rounded-xl;
+    max-height: 200px;
+  }
+  
+  /* Нижняя панель */
+  .bottom-panel {
+    @apply fixed bottom-0 left-0 right-0 bg-white;
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  .risk-panel-mobile {
+    position: relative !important;
+    width: 100% !important;
+    right: auto !important;
+    left: auto !important;
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .risk-card {
+    @apply flex-col items-start gap-2;
+  }
+  
+  .risk-icon {
+    @apply w-8 h-8;
   }
 }
 
@@ -713,4 +852,129 @@ h1 {
 
 .exit-animation {
   animation: slideOut 0.3s ease-in forwards;
+}
+
+/* Анимации для мобильной панели */
+.panel-enter {
+  transform: translateY(100%);
+}
+
+.panel-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms ease-out;
+}
+
+.panel-exit {
+  transform: translateY(0);
+}
+
+.panel-exit-active {
+  transform: translateY(100%);
+  transition: transform 300ms ease-in;
+}
+
+/* Исправляем z-index для мобильной навигации */
+.md\:absolute {
+  z-index: 10;
+}
+
+.main-content {
+  @apply pb-24 md:pb-0;
+}
+
+/* Адаптивные стили для изображения */
+.project-screenshot {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Медиа-запросы для мобильных */
+@media (max-width: 768px) {
+  .risk-panel {
+    position: relative !important;
+    width: 100% !important;
+    right: auto !important;
+    left: auto !important;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+  
+  .risk-card {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .risk-content {
+    width: 100%;
+  }
+}
+
+/* Анимации для плавного появления */
+.risk-panel-enter {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.risk-panel-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.3s ease-out;
+}
+
+.risk-panel-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.risk-panel-exit-active {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.2s ease-in;
+}
+
+/* Добавляем стили для скролла в модальном окне */
+.report-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #e5e7eb;
+  -webkit-overflow-scrolling: touch; /* Для плавного скролла на iOS */
+}
+
+.report-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.report-scroll::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.report-scroll::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 3px;
+}
+
+/* Предотвращаем скролл body при открытом модальном окне */
+.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Добавляем стили для плавного скролла */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Стили для мобильной кнопки */
+@media (max-width: 768px) {
+  .early-access-form {
+    scroll-margin-top: 1rem; /* Добавляем отступ для скролла */
+  }
+}
+
+/* Обеспечиваем видимость кнопки над модальным окном */
+.fixed-cta-button {
+  z-index: 60; /* Больше чем z-index модального окна */
 } 

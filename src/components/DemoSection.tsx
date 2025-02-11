@@ -321,6 +321,17 @@ export default function DemoSection({ projects = {} }: DemoSectionProps) {
           </motion.div>
         ))}
       </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        <div className="p-4 bg-gradient-to-b from-blue-50 to-white rounded-xl border border-blue-100">
+          <div className="text-xl sm:text-2xl mb-2">📊</div>
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900 break-words">
+            $15.0k
+          </div>
+          <div className="text-sm text-gray-600">Protected</div>
+        </div>
+        {/* Повторить для других карточек */}
+      </div>
     </div>
   );
 } 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { CurrencyDollarIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -8,6 +8,7 @@ import { CurrencyDollarIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from
 export default function ProjectAnalysisOverlay() {
   const [isAnalysisVisible, setIsAnalysisVisible] = useState(false);
   const [isReportVisible, setIsReportVisible] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
   
   const risks = [
     {
@@ -43,6 +44,32 @@ export default function ProjectAnalysisOverlay() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  const scrollToForm = () => {
+    if (formRef.current) {
+      const element = formRef.current;
+      const offset = element.offsetTop - 100; // 100px отступ сверху
+      
+      document.body.classList.remove('modal-open');
+      document.documentElement.style.scrollBehavior = 'smooth';
+      
+      setTimeout(() => {
+        window.scrollTo({
+          top: offset,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  };
+
+  const handleEarlyAccessClick = () => {
+    if (isReportVisible) {
+      setIsReportVisible(false);
+      setTimeout(scrollToForm, 400);
+    } else {
+      scrollToForm();
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -90,13 +117,13 @@ export default function ProjectAnalysisOverlay() {
         <AnimatePresence>
           {isAnalysisVisible && (
             <motion.div
-              className="absolute right-0 top-0 w-1/3 h-full"
+              className="w-full md:absolute md:right-0 md:top-0 md:w-1/3 md:pl-6"
               initial={{ x: '100%', opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '100%', opacity: 0 }}
               transition={{ type: 'spring', damping: 25 }}
             >
-              <div className="bg-white h-full p-6 rounded-l-xl shadow-lg border-l border-gray-100 relative">
+              <div className="bg-white h-full p-4 md:p-6 rounded-xl shadow-lg border border-gray-100 mt-4 md:mt-0">
                 <button
                   onClick={() => setIsAnalysisVisible(false)}
                   className="absolute top-4 right-4 p-1 hover:bg-gray-100 rounded-full transition-colors"
@@ -110,8 +137,8 @@ export default function ProjectAnalysisOverlay() {
                   {risks.map((risk, index) => (
                     <motion.div
                       key={risk.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.15 }}
                       className={`p-4 rounded-lg ${
                         risk.severity === 'high' ? 'bg-red-50' : 'bg-yellow-50'
@@ -150,118 +177,123 @@ export default function ProjectAnalysisOverlay() {
       <AnimatePresence>
         {isReportVisible && (
           <motion.div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start justify-center overflow-y-auto p-4 md:items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsReportVisible(false)}
           >
             <motion.div
-              className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full overflow-hidden relative"
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl my-4 md:my-8 relative"
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Кнопка закрытия */}
               <button
                 onClick={() => setIsReportVisible(false)}
-                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
+                className="absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
               >
                 <XMarkIcon className="w-6 h-6 text-gray-500" />
               </button>
 
-              <div className="p-8 bg-gradient-to-br from-blue-50 to-white">
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Full Risk Report</h2>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">High Risk Project</span>
-                      <span className="text-gray-500">Upwork Job #021888015058</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                  {/* Risk Metrics */}
-                  <div className="space-y-4">
-                    <div className="p-4 bg-white rounded-xl shadow-sm">
-                      <h3 className="text-lg font-semibold mb-3">Risk Factors</h3>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span>Budget Risk</span>
-                          <span className="text-red-600 font-medium">9.5/10</span>
-                        </div>
-                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div className="w-full h-full bg-red-500 animate-pulse" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-4 bg-white rounded-xl shadow-sm">
-                      <h3 className="text-lg font-semibold mb-3">Client Stats</h3>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div className="flex items-center gap-2">
-                          <CurrencyDollarIcon className="w-5 h-5 text-green-600" />
-                          <span>$2.4K spent</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <ClockIcon className="w-5 h-5 text-blue-600" />
-                          <span>73 jobs posted</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <QuestionMarkCircleIcon className="w-5 h-5 text-yellow-600" />
-                          <span>25% hire rate</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="w-5 h-5 text-purple-600">★</span>
-                          <span>4.9/5 rating</span>
-                        </div>
+              {/* Контент с прокруткой */}
+              <div className="p-6 overflow-y-auto max-h-[80vh] report-scroll">
+                <h2 className="text-2xl font-bold mb-6 pr-12">Full Risk Report</h2>
+                {/* Остальной контент отчета */}
+                <div className="space-y-6">
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">High Risk Project</span>
+                        <span className="text-gray-500">Upwork Job #021888015058</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Detailed Analysis */}
-                  <div className="space-y-4">
-                    <div className="p-4 bg-red-50 rounded-xl">
-                      <h3 className="text-lg font-semibold mb-2 text-red-800">Critical Issues</h3>
-                      <ul className="list-disc pl-5 space-y-2 text-sm">
-                        <li>Budget 85% below market rate ($30 fixed)</li>
-                        <li>Vague scraping requirements</li>
-                        <li>"ASAP" deadline without clear timeline</li>
-                        <li>Complex legal data handling</li>
-                      </ul>
-                    </div>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {/* Risk Metrics */}
+                    <div className="space-y-4">
+                      <div className="p-4 bg-white rounded-xl shadow-sm">
+                        <h3 className="text-lg font-semibold mb-3">Risk Factors</h3>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span>Budget Risk</span>
+                            <span className="text-red-600 font-medium">9.5/10</span>
+                          </div>
+                          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="w-full h-full bg-red-500 animate-pulse" />
+                          </div>
+                        </div>
+                      </div>
 
-                    <div className="p-4 bg-yellow-50 rounded-xl">
-                      <h3 className="text-lg font-semibold mb-2 text-yellow-800">Client Pattern Alert</h3>
-                      <p className="text-sm">
-                        37 hires with 9 active - possible job fragmentation. 
-                        High turnover (4.94/5 rating but 25% hire rate).
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Recommendations */}
-                <div className="mt-6 p-4 bg-blue-50 rounded-xl">
-                  <h3 className="text-lg font-semibold mb-3 text-blue-800">Our Recommendation</h3>
-                  <div className="grid gap-3 text-sm">
-                    <div className="flex items-start gap-2">
-                      <span>⚠️</span>
-                      <div>
-                        <p className="font-medium">Not Recommended for New Freelancers</p>
-                        <p className="text-gray-600">High risk of underpayment and scope creep</p>
+                      <div className="p-4 bg-white rounded-xl shadow-sm">
+                        <h3 className="text-lg font-semibold mb-3">Client Stats</h3>
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div className="flex items-center gap-2">
+                            <CurrencyDollarIcon className="w-5 h-5 text-green-600" />
+                            <span>$2.4K spent</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <ClockIcon className="w-5 h-5 text-blue-600" />
+                            <span>73 jobs posted</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <QuestionMarkCircleIcon className="w-5 h-5 text-yellow-600" />
+                            <span>25% hire rate</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="w-5 h-5 text-purple-600">★</span>
+                            <span>4.9/5 rating</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <span>💡</span>
-                      <div>
-                        <p className="font-medium">If Applying:</p>
-                        <ul className="list-disc pl-5 mt-1">
-                          <li>Request detailed requirements</li>
-                          <li>Propose milestone-based payment</li>
-                          <li>Verify data legality aspects</li>
+
+                    {/* Detailed Analysis */}
+                    <div className="space-y-4">
+                      <div className="p-4 bg-red-50 rounded-xl">
+                        <h3 className="text-lg font-semibold mb-2 text-red-800">Critical Issues</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm">
+                          <li>Budget 85% below market rate ($30 fixed)</li>
+                          <li>Vague scraping requirements</li>
+                          <li>"ASAP" deadline without clear timeline</li>
+                          <li>Complex legal data handling</li>
                         </ul>
+                      </div>
+
+                      <div className="p-4 bg-yellow-50 rounded-xl">
+                        <h3 className="text-lg font-semibold mb-2 text-yellow-800">Client Pattern Alert</h3>
+                        <p className="text-sm">
+                          37 hires with 9 active - possible job fragmentation. 
+                          High turnover (4.94/5 rating but 25% hire rate).
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recommendations */}
+                  <div className="mt-6 p-4 bg-blue-50 rounded-xl">
+                    <h3 className="text-lg font-semibold mb-3 text-blue-800">Our Recommendation</h3>
+                    <div className="grid gap-3 text-sm">
+                      <div className="flex items-start gap-2">
+                        <span>⚠️</span>
+                        <div>
+                          <p className="font-medium">Not Recommended for New Freelancers</p>
+                          <p className="text-gray-600">High risk of underpayment and scope creep</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span>💡</span>
+                        <div>
+                          <p className="font-medium">If Applying:</p>
+                          <ul className="list-disc pl-5 mt-1">
+                            <li>Request detailed requirements</li>
+                            <li>Propose milestone-based payment</li>
+                            <li>Verify data legality aspects</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -271,6 +303,36 @@ export default function ProjectAnalysisOverlay() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Обновляем форму, добавляя реальный контент */}
+      <div 
+        ref={formRef} 
+        id="early-access-form"
+        className="early-access-form bg-white p-6 rounded-xl shadow-lg my-8 min-h-[200px]"
+      >
+        <h3 className="text-2xl font-bold mb-4">Get Early Access</h3>
+        <p className="text-gray-600 mb-6">
+          Join our waitlist to be among the first to try ToxiGuard
+        </p>
+        <div className="space-y-4">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+          <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            Join Waitlist
+          </button>
+        </div>
+      </div>
+
+      {/* Обновляем кнопку, добавляя z-index */}
+      <button
+        onClick={handleEarlyAccessClick}
+        className="md:hidden fixed bottom-4 left-4 right-4 bg-blue-600 text-white py-3 rounded-lg font-medium shadow-lg z-50"
+      >
+        Get Early Access
+      </button>
     </div>
   );
 } 

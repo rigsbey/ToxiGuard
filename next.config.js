@@ -1,24 +1,23 @@
 const isDevelopment = process.env.NODE_ENV === 'development';
+const path = require('path');
 
-module.exports = {
-  output: 'standalone',
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
   productionBrowserSourceMaps: true,
   compress: true,
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 86400,
-    domains: [
-      'toxiguard.site',
-      'toxiguard.vercel.app',
-      'www.toxiguard.site',
-      'lh3.googleusercontent.com',
-      'avatars.githubusercontent.com'
-    ],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
+        hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.upwork.com',
+      }
     ],
     unoptimized: process.env.NODE_ENV === 'development' ? true : false,
   },
@@ -47,6 +46,15 @@ module.exports = {
             value: 'public, s-maxage=3600, stale-while-revalidate=300' 
           }
         ]
+      },
+      {
+        source: '/_next/image',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          }
+        ],
       }
     ]
   },
@@ -61,6 +69,7 @@ module.exports = {
       allowedOrigins: ['toxiguard.site', '*.toxiguard.site']
     },
     cpus: isDevelopment ? 1 : 2,
+    outputFileTracingRoot: path.join(__dirname, '../../'),
   },
   async redirects() {
     return [];
@@ -80,4 +89,6 @@ console.log('ENV DEBUG:', {
   NODE_ENV: process.env.NODE_ENV,
   VERCEL_ENV: process.env.VERCEL_ENV,
   CI: process.env.CI
-}); 
+});
+
+module.exports = nextConfig; 
