@@ -72,9 +72,6 @@ export default function ProblemSection() {
             <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100">
               <div className="text-center mb-12">
                 <div className="flex items-center gap-4">
-                  <span className="text-sm text-gray-600">
-                    Live Demo
-                  </span>
                   <TimeSavingsMetric />
                 </div>
               </div>

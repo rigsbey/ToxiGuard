@@ -1,7 +1,7 @@
 export const METRICS = {
   // Фиксированные значения
   RISK_ACCURACY: 0.98,
-  PROTECTED_AMOUNT: 15000,
+  PROTECTED_AMOUNT: 500000, // например, $500k+ total secured
   MONTHLY_HOURS_SAVED: 50,
   
   // Обновленный форматтер
