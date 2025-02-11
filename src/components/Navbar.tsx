@@ -24,8 +24,8 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl">🔗</span>
-            <span className="text-xl font-medium">IllustraAI</span>
+            <span className="text-xl">🛡️</span>
+            <span className="text-xl font-medium">ToxiGuard</span>
           </Link>
 
           <div className="bg-white/75 backdrop-blur-lg border border-gray-200 rounded-full px-2 py-0.5 flex items-center shadow-sm">

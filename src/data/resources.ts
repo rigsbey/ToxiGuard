@@ -50,7 +50,7 @@ export const expertResources = [
       <div class="max-w-4xl mx-auto px-4 relative pb-20 md:pb-0">
         <div class="text-center py-8 md:py-16">
           <h1 class="text-2xl md:text-4xl font-bold mb-4 md:mb-6">70% фрилансеров теряют деньги</h1>
-          <p class="text-lg md:text-xl text-gray-600">Из-за сотрудничества с токсичными клиентами</p>
+          <p class="text-lg md:text-xl text-gray-600">Copy</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-16">

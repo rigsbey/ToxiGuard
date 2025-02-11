@@ -10,7 +10,7 @@ export const METRICS = {
   },
 
   // Обновленные метрики
-  PROTECTED_USERS: '10k+',
+  PROTECTED_USERS: '500+',
   DETECTION_ACCURACY: '98%',
   RESPONSE_TIME: '<1h',
   
