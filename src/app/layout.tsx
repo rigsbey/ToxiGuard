@@ -54,6 +54,8 @@ export default function RootLayout({
           href="/favicon.png"
           sizes="32x32"
         />
+        <link rel="canonical" href="https://www.toxiguard.site/" />
+        <meta name="robots" content="index, follow" />
       </head>
       <body className={`${inter.className} ${GeistSans.className} bg-white`}>
         {children}

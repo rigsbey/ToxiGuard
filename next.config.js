@@ -1,5 +1,6 @@
 const isDevelopment = process.env.NODE_ENV === 'development';
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -9,6 +10,26 @@ const nextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  trailingSlash: true,
+  exportPathMap: async function(defaultPathMap) {
+    return {
+      ...defaultPathMap,
+      '/googlee5bfa023f20e3180.html': { page: '/google-verification' }
+    };
+  },
+  webpack: (config) => {
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: 'public/googlee5bfa023f20e3180.html',
+            to: 'out/'
+          }
+        ]
+      })
+    );
+    return config;
   }
 };
 
