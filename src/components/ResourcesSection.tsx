@@ -3,10 +3,19 @@
 import { expertResources } from '@/data/resources';
 import { SECTIONS } from '@/constants/sections';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function ResourcesSection() {
+  useEffect(() => {
+    console.log('Resources section mounted with ID:', SECTIONS.RESOURCES);
+  }, []);
+
   return (
-    <section id={SECTIONS.RESOURCES} className="py-32 bg-gray-50">
+    <section 
+      id={SECTIONS.RESOURCES}
+      data-section={SECTIONS.RESOURCES}
+      className="py-32 bg-gray-50 scroll-mt-[120px]"
+    >
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-16">
           Expert Resources

@@ -5,7 +5,8 @@ export const SECTIONS = {
   FEATURES: 'features',
   TESTIMONIALS: 'testimonials',
   RESOURCES: 'resources',
-  WAITLIST: 'waitlist'
+  WAITLIST: 'waitlist',
+  RISK_SCANNER: 'risk-scanner'
 } as const;
 
 export const SCROLL_OFFSET = -80; // Учитываем высоту header 

@@ -977,4 +977,20 @@ html {
 /* Обеспечиваем видимость кнопки над модальным окном */
 .fixed-cta-button {
   z-index: 60; /* Больше чем z-index модального окна */
+}
+
+#resources {
+  scroll-margin-top: 120px; /* Высота header + дополнительный отступ */
+}
+
+/* Добавьте в конец файла */
+body.menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.mobile-menu-overlay {
+  @apply fixed inset-0 bg-black/20 backdrop-blur-sm;
+  z-index: 40;
 } 

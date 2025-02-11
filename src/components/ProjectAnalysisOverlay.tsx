@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { CurrencyDollarIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { SECTIONS } from '@/constants/sections';
 
 export default function ProjectAnalysisOverlay() {
   const [isAnalysisVisible, setIsAnalysisVisible] = useState(false);
@@ -72,7 +73,7 @@ export default function ProjectAnalysisOverlay() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto" id={SECTIONS.RISK_SCANNER}>
       <div className="text-center mb-6 md:mb-8">
         <h2 className="text-xl md:text-3xl font-bold text-gray-900 px-4">
           Instant Risk Scanner

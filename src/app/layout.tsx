@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import '@/styles/globals.css'
+import NavigationProvider from '@/components/NavigationProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 const spaceGrotesk = Space_Grotesk({
@@ -34,6 +35,10 @@ export const metadata: Metadata = {
   }
 }
 
+function ScrollHandler() {
+  return null;
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -58,7 +63,9 @@ export default function RootLayout({
         <meta name="robots" content="index, follow" />
       </head>
       <body className={`${inter.className} ${GeistSans.className} bg-white`}>
-        {children}
+        <NavigationProvider>
+          {children}
+        </NavigationProvider>
       </body>
     </html>
   )

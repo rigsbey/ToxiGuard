@@ -1,16 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import { useScrollToSection } from '@/hooks/useScrollToWaitlist';
+import { useScrollToSection } from '@/hooks/useScrollToSection';
+import { ArrowRightIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { SECTIONS } from '@/constants/sections';
+import { useState } from 'react';
 
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollToFAQ = useScrollToSection('faq-section');
   const scrollToHowItWorks = useScrollToSection('how-it-works-section');
-  const scrollToDemo = useScrollToSection('demo-section');
-  const scrollToBlog = useScrollToSection('blog-section');
+  const scrollToRiskScanner = useScrollToSection(SECTIONS.RISK_SCANNER);
+  const scrollToResources = useScrollToSection(SECTIONS.RESOURCES);
+  const scrollToWaitlist = useScrollToSection('waitlist-section');
+
+  const menuItems = [
+    { label: 'How It Works', onClick: scrollToHowItWorks },
+    { label: 'Examples', onClick: scrollToRiskScanner },
+    { label: 'Resources', onClick: scrollToResources },
+    { label: 'FAQ', onClick: scrollToFAQ },
+  ];
 
   return (
-    <div className="w-full fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-lg">
+    <nav className="w-full fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-lg border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex h-14 items-center justify-between">
           <a className="grow basis-0 font-semibold flex items-center gap-2" href="/">
@@ -23,47 +35,57 @@ export default function Navbar() {
               <div className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-full border border-gray-200 drop-shadow-sm transition-all bg-white/75 backdrop-blur-lg" />
             </div>
             
-            <a 
-              className="block rounded-md px-3 py-1.5 text-sm text-gray-900/60 hover:text-gray-900/80 transition-colors ease-out cursor-pointer"
-              onClick={scrollToHowItWorks}
-            >
-              How It Works
-            </a>
-            <a 
-              className="block rounded-md px-3 py-1.5 text-sm text-gray-900/60 hover:text-gray-900/80 transition-colors ease-out cursor-pointer"
-              onClick={scrollToDemo}
-            >
-              Examples
-            </a>
-            <a 
-              className="block rounded-md px-3 py-1.5 text-sm text-gray-900/60 hover:text-gray-900/80 transition-colors ease-out cursor-pointer"
-              onClick={scrollToBlog}
-            >
-              Resources
-            </a>
-            <a 
-              className="block rounded-md px-3 py-1.5 text-sm text-gray-900/60 hover:text-gray-900/80 transition-colors ease-out cursor-pointer"
-              onClick={scrollToFAQ}
-            >
-              FAQ
-            </a>
+            {menuItems.map((item) => (
+              <button 
+                key={item.label}
+                className="block rounded-md px-3 py-1.5 text-sm text-gray-900/60 hover:text-gray-900/80 transition-colors ease-out cursor-pointer"
+                onClick={item.onClick}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
 
-          <div className="hidden grow basis-0 justify-end lg:flex">
-            <a className="animate-fade-in rounded-full border border-black bg-black px-4 py-1.5 text-sm text-white transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200" href="/signin">
-              Try for free
-            </a>
-          </div>
-
-          <button className="lg:hidden p-2 rounded-full hover:bg-gray-200 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu h-5 w-5 text-gray-600">
-              <line x1="4" x2="20" y1="12" y2="12"/>
-              <line x1="4" x2="20" y1="6" y2="6"/>
-              <line x1="4" x2="20" y1="18" y2="18"/>
-            </svg>
+          <button
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <XMarkIcon className="w-6 h-6" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
-    </div>
+
+      {isMenuOpen && (
+        <div className="lg:hidden absolute top-[56px] left-0 right-0 bg-white border-b border-gray-100 shadow-lg">
+          <div className="px-4 py-2 space-y-1">
+            {menuItems.map((item) => (
+              <button
+                key={item.label}
+                className="w-full text-left px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => {
+                  item.onClick();
+                  setIsMenuOpen(false);
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              className="w-full mt-2 px-4 py-2 bg-toxic-red text-white rounded-lg hover:bg-red-600 transition-colors"
+              onClick={() => {
+                scrollToWaitlist();
+                setIsMenuOpen(false);
+              }}
+            >
+              Get Early Access
+            </button>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 } 

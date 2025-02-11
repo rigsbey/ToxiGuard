@@ -1,16 +1,20 @@
 'use client';
 
 import { SECTIONS } from '@/constants/sections';
-import { useSmoothScroll } from '@/hooks/useSmooth';
+import { useScrollToSection } from '@/hooks/useScrollToSection';
 
 export default function Navigation() {
-  const scrollToSection = useSmoothScroll();
+  const scrollToResources = useScrollToSection(SECTIONS.RESOURCES);
+  const scrollToDemo = useScrollToSection(SECTIONS.DEMO);
+  const scrollToProblem = useScrollToSection(SECTIONS.PROBLEM);
+  const scrollToFeatures = useScrollToSection(SECTIONS.FEATURES);
+  const scrollToWaitlist = useScrollToSection(SECTIONS.WAITLIST);
 
   const navItems = [
-    { id: SECTIONS.PROBLEM, label: 'The Problem' },
-    { id: SECTIONS.DEMO, label: 'Live Demo' },
-    { id: SECTIONS.FEATURES, label: 'Features' },
-    { id: SECTIONS.RESOURCES, label: 'Resources' },
+    { id: SECTIONS.PROBLEM, label: 'The Problem', onClick: scrollToProblem },
+    { id: SECTIONS.DEMO, label: 'Live Demo', onClick: scrollToDemo },
+    { id: SECTIONS.FEATURES, label: 'Features', onClick: scrollToFeatures },
+    { id: SECTIONS.RESOURCES, label: 'Resources', onClick: scrollToResources },
   ];
 
   return (
@@ -18,14 +22,14 @@ export default function Navigation() {
       {navItems.map(item => (
         <button
           key={item.id}
-          onClick={() => scrollToSection(item.id)}
+          onClick={item.onClick}
           className="text-gray-600 hover:text-toxic-red transition-colors"
         >
           {item.label}
         </button>
       ))}
       <button
-        onClick={() => scrollToSection(SECTIONS.WAITLIST)}
+        onClick={scrollToWaitlist}
         className="bg-toxic-red text-white px-6 py-2 rounded-full hover:bg-red-600 transition-colors"
       >
         Join Waitlist

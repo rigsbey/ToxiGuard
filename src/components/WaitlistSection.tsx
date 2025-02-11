@@ -74,13 +74,12 @@ export default function WaitlistSection() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
       id="waitlist-section"
-      className="py-24 md:py-32 lg:py-48 bg-gradient-to-b from-white to-blue-50"
+      className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-blue-50"
     >
       <div className="max-w-4xl mx-auto px-4 text-center">
         <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 border border-gray-200">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Join 8,214+ 
-            <span className="text-blue-600"> Early Adopters</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">
+            Join 8,214+ Early Adopters
           </h2>
           
           {/* Statistics */}
