@@ -1,0 +1,1 @@
+export const API_URL = process.env.NEXT_PUBLIC_WAITLIST_API_URL || 'https://script.google.com/macros/s/your-default-script-id/exec'; 

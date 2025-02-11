@@ -29,32 +29,30 @@ export default function WaitlistSection() {
     try {
       setIsSubmitting(true);
 
-      // Create URL with parameters
+      // Создаем URL с параметрами
       const params = new URLSearchParams({ email });
       const url = `${API_URL}?${params.toString()}`;
 
-      // Create an image to send the request
-      // This bypasses CORS restrictions
+      // Возвращаемся к проверенному методу с Image
       const img = new Image();
       
       const promise = new Promise((resolve, reject) => {
         img.onload = () => resolve('success');
         img.onerror = () => {
-          // Google Script always returns 404 on success
-          // so we consider this a successful response
+          // Google Script всегда возвращает 404 при успехе
           resolve('success');
         };
         
-        // Timeout in case the request hangs
-        setTimeout(() => reject(new Error('Request timeout')), 5000);
+        // Увеличиваем таймаут до 10 секунд
+        setTimeout(() => reject(new Error('Request timeout')), 10000);
       });
 
-      // Send the request
+      // Отправляем запрос
       img.src = url;
       
       await promise;
       
-      // If we reach here, the request was successful
+      // Если дошли до сюда - запрос успешен
       setIsSubmitted(true);
       setEmail('');
       setShowNotification(true);
