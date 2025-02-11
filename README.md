@@ -8,12 +8,9 @@ AI-powered protection system for freelancers against toxic projects and payment 
 ![Project Preview](public/images/red-flags.svg)
 
 ## Features ✨
-- 🚨 Real-time AI analysis of project requirements
-- 🔍 Detection of 27+ red flags in project descriptions
-- 📊 Comparative analysis of toxic vs safe projects
-- 💼 Platform API integrations
-- 🔒 GDPR-compliant data protection
-- 📈 Real-time risk visualization dashboard
+- 🚨 Real-time AI analysis
+- 🔍 Advanced pattern detection
+- 🔒 GDPR-compliant protection
 - ✅ Production-ready deployment
 
 ## Installation ⚙️

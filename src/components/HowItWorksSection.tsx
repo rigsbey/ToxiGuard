@@ -21,7 +21,7 @@ export default function HowItWorksSection() {
     {
       icon: <Clock className="w-8 h-8 text-purple-600" />,
       title: "Time Savings",
-      value: `${METRICS.AVG_HOURS_SAVED}h`,
+      value: `${METRICS.MONTHLY_HOURS_SAVED}h`,
       description: "monthly average saved"
     }
   ];

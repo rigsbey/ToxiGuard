@@ -1,35 +1,48 @@
 export const METRICS = {
-  // Основные метрики
-  PROTECTED_FREELANCERS: '10k+',
-  RISK_DETECTION_RATE: '98%',
-  MONTHLY_HOURS_SAVED: '15h+',
-  
-  // Дополнительные числовые значения
-  AVG_HOURS_SAVED: 50,
+  // Фиксированные значения
+  RISK_ACCURACY: 0.98,
   PROTECTED_AMOUNT: 15000,
-  RISK_ACCURACY: 0.92,
-  CURRENT_SIGNUPS: 8214,
+  MONTHLY_HOURS_SAVED: 50,
   
-  // Добавляем новую метрику
-  DISPUTE_RESOLUTION_RATE: '85%',
+  // Обновленный форматтер
+  formatProtectedAmount(): string {
+    return `$${(this.PROTECTED_AMOUNT / 1000).toFixed(0)}k`;
+  },
+
+  // Обновленные метрики
+  PROTECTED_USERS: '10k+',
+  DETECTION_ACCURACY: '98%',
+  RESPONSE_TIME: '<1h',
   
-  // Добавим безопасные геттеры
+  // Улучшенный форматтер
+  formatNumber(value: string | number, locale = 'ru-RU'): string {
+    if (typeof value === 'string') return value;
+    
+    // Добавляем проверку на NaN/undefined
+    if (typeof value !== 'number' || isNaN(value)) {
+      return 'N/A';
+    }
+    
+    // Форматирование для денежных значений
+    if (value >= 1000) {
+      return `$${(value/1000).toFixed(1)}k`;
+    }
+    
+    return value.toLocaleString(locale);
+  },
+
+  // Остальные методы
   getSafeNumber(value: number | undefined, fallback: number): number {
     return Number(value) || fallback;
+  },
+
+  // Метод для форматирования времени экономии
+  formatTimeSavings(hours?: number): string {
+    return hours ? `${hours}h` : '50h'; // Fallback значение
   }
 };
 
 export const METRICS_LIST = [
-  {
-    id: 1,
-    value: '70%',
-    label: 'Freelancers Facing Payment Issues'
-  },
-  {
-    id: 2,
-    value: '40%',
-    label: 'Productivity Loss from Toxic Clients'
-  },
   {
     id: 3,
     value: '92%',

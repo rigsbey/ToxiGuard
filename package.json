@@ -16,7 +16,6 @@
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-tooltip": "^1.1.7",
-    "@sentry/nextjs": "^8.5.3",
     "@uidotdev/usehooks": "^2.4.1",
     "classnames": "^2.5.1",
     "framer-motion": "^12.4.1",
@@ -27,12 +26,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.33.5",
-    "swiper": "^8.4.7"
+    "swiper": "^11.2.2"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.0",
+    "@types/react-dom": "^18.2.8",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",

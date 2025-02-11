@@ -19,7 +19,7 @@ export default function ResourcesSection() {
           {expertResources.map(resource => (
             <Link 
               key={resource.slug}
-              href={`/blog/${resource.slug}`}
+              href={`/resources/${resource.slug}`}
               className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all"
             >
               <span className="text-sm text-toxic-red font-medium">

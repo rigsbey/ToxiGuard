@@ -84,3 +84,6 @@ cypress/screenshots/**
 *.so
 *.dylib
 .vercel
+
+# Исключаем верификационные файлы
+/googlee5bfa023f20e3180.html

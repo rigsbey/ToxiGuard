@@ -7,6 +7,7 @@ import {
   UserGroupIcon,
   BookOpenIcon
 } from '@heroicons/react/24/outline';
+import { METRICS } from '@/config/metrics';
 
 // Добавляем интерфейс для рисков
 interface Risk {
@@ -18,12 +19,6 @@ interface Risk {
 
 // Добавляем перед export const expertResources
 const risks: Risk[] = [
-  {
-    type: 'error',
-    title: 'Нереальный бюджет',
-    description: 'Бюджет $30.00, что на 85% ниже рыночной ставки',
-    icon: 'money'
-  },
   {
     type: 'warning',
     title: 'Сроки выполнения',
@@ -95,11 +90,11 @@ export const expertResources = [
           <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Защита с ToxicGuard</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div class="bg-white p-4 md:p-6 rounded-xl">
-              <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-3 md:mb-4 text-lg md:text-xl">
-                🔍
+              <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-3 md:mb-4 text-xl">
+                🔒
               </div>
-              <h3 class="font-bold mb-2">AI Анализ Проекта</h3>
-              <p class="text-sm text-gray-600">Обнаружение рисков в реальном времени</p>
+              <h3 class="font-bold mb-2">Risk Analytics</h3>
+              <p class="text-sm text-gray-600">Visualization of hidden threats</p>
             </div>
             <!-- Other features translated -->
           </div>
@@ -306,6 +301,11 @@ export const expertResources = [
             </div>
             <!-- Добавьте еще преимущества -->
           </div>
+        </div>
+
+        <div class="bg-purple-50 p-6 rounded-xl">
+          <p class="text-2xl font-bold text-purple-600">50h</p>
+          <p class="text-sm text-gray-600">Ежемесячная экономия</p>
         </div>
       </div>
     `

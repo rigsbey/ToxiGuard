@@ -70,21 +70,7 @@ export default function Hero() {
       </section>
 
       <div className="stats-container w-full mb-8">
-        <div className="stats-card flex flex-col items-center text-center">
-          <div className="text-xl sm:text-2xl mb-2">📊</div>
-          <div className="text-2xl sm:text-3xl font-bold text-gray-900">10k+</div>
-          <div className="text-sm text-gray-600">Projects Analyzed</div>
-        </div>
-        <div className="stats-card flex flex-col items-center text-center">
-          <div className="text-xl sm:text-2xl mb-2">🛡️</div>
-          <div className="text-2xl sm:text-3xl font-bold text-gray-900">$15.0k</div>
-          <div className="text-sm text-gray-600">Protected</div>
-        </div>
-        <div className="stats-card flex flex-col items-center text-center">
-          <div className="text-xl sm:text-2xl mb-2">⏳</div>
-          <div className="text-2xl sm:text-3xl font-bold text-gray-900">50h</div>
-          <div className="text-sm text-gray-600">Monthly Saved</div>
-        </div>
+        
       </div>
     </div>
   )

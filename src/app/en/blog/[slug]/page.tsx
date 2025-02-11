@@ -1,6 +1,15 @@
 import { notFound } from 'next/navigation';
 
-const englishPosts = {
+// Добавляем интерфейс для поста
+interface BlogPost {
+  title: string;
+  content: string;
+  seoDescription?: string;
+  category?: string;
+}
+
+// Явно типизируем объект с постами
+const englishPosts: Record<string, BlogPost> = {
   'freelancer-safety-guide': {
     title: 'Freelancer Safety Guide: Protecting Yourself From Toxic Clients',
     content: `
@@ -35,8 +44,23 @@ const englishPosts = {
   // ... другие статьи
 };
 
-export default function PostPage({ params }: { params: { slug: string } }) {
-  const post = englishPosts[params.slug];
+export async function generateStaticParams() {
+  return Object.keys(englishPosts).map(slug => ({ 
+    slug 
+  }));
+}
+
+interface BlogPageProps {
+  params: { 
+    slug: keyof typeof englishPosts // Указываем допустимые ключи
+  }
+}
+
+export default function BlogPage({ params }: BlogPageProps) {
+  // Добавляем проверку типа
+  const post = params.slug in englishPosts 
+    ? englishPosts[params.slug]
+    : undefined;
   
   if (!post) return notFound();
 

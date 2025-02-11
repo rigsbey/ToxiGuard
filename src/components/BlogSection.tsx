@@ -4,7 +4,8 @@ import Link from "next/link";
 import { expertResources } from "../data/resources";
 import { ScaleIcon, CurrencyDollarIcon, ShieldExclamationIcon, ArrowRightIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
+import SwiperCore from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 
 // Инициализация модулей
 SwiperCore.use([Navigation, Pagination]);

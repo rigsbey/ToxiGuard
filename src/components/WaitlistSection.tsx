@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { METRICS } from '@/config/metrics';
 import { CheckCircle2 } from 'lucide-react';
-import { Sentry } from '@/lib/sentry';
+import ClientButton from './ClientButton';
 
 // Using the real script ID
 const SCRIPT_ID = 'AKfycbwtgVj1y3Oia3wy19afi3p1xGehWAjy9Dnm_Y9GfkHueAv7gMw6MBNwzAh9ZYpy7FPL9g';
@@ -63,7 +63,6 @@ export default function WaitlistSection() {
 
     } catch (error) {
       console.error('[Waitlist] Submission Error:', error);
-      Sentry.captureException(error);
       alert('Failed to submit. Please try again later.');
     } finally {
       setIsSubmitting(false);
@@ -87,22 +86,26 @@ export default function WaitlistSection() {
           </h2>
           
           {/* Statistics */}
-          <div className="grid grid-cols-3 gap-4 mb-12">
+          <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 md:mb-12">
             {[
-              { value: `${METRICS.PROJECTS_ANALYZED?.toLocaleString() ?? '10k+'}`, label: 'Projects Analyzed', icon: '📊' },
+              { value: '1.2k', label: 'Projects Analyzed', icon: '📊' },
               { value: `$${(Number(METRICS.PROTECTED_AMOUNT || 15000) / 1000).toFixed(1)}k`, label: 'Protected', icon: '🛡️' },
-              { value: `${METRICS.AVG_HOURS_SAVED ? `${METRICS.AVG_HOURS_SAVED}h` : '50h+'}`, label: 'Monthly Saved', icon: '⏳' }
+              { value: '50h+', label: 'Monthly Saved', icon: '⏳' }
             ].map((metric, idx) => (
               <motion.div 
                 key={metric.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="p-4 bg-gradient-to-b from-blue-50 to-white rounded-xl border border-blue-100"
+                className="p-2 md:p-4 bg-gradient-to-b from-blue-50 to-white rounded-lg md:rounded-xl border border-blue-100 min-h-[100px] md:min-h-[120px] flex flex-col items-center justify-center"
               >
-                <div className="text-2xl mb-2">{metric.icon}</div>
-                <div className="text-3xl font-bold text-gray-900">{metric.value}</div>
-                <div className="text-sm text-gray-600">{metric.label}</div>
+                <div className="text-xl md:text-2xl mb-1 md:mb-2">{metric.icon}</div>
+                <div className="text-xl md:text-3xl font-bold text-gray-900 leading-tight">
+                  {metric.value}
+                </div>
+                <div className="text-xs md:text-sm text-gray-600 leading-tight">
+                  {metric.label}
+                </div>
               </motion.div>
             ))}
           </div>

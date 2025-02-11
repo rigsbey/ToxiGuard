@@ -1,14 +1,13 @@
 export default function ArticleCTA() {
   return (
-    <section className="mt-16 bg-blue-50 p-8 rounded-xl text-center">
-      <h2 className="text-2xl font-bold mb-4">Ready for AI Protection?</h2>
-      <p className="mb-6">Join ${(8214).toLocaleString('ru-RU')}+ freelancers using ToxicGuard</p>
-      <a 
-        href="/demo" 
-        className="bg-black text-white px-8 py-3 rounded-full text-lg hover:opacity-90 transition-opacity"
-      >
-        Try Free Analysis →
-      </a>
-    </section>
-  )
+    <div className="mt-16 p-8 bg-blue-50 rounded-xl text-center">
+      <h3 className="text-2xl font-bold mb-4">Need Personalized Help?</h3>
+      <p className="text-gray-600 mb-6">
+        Get AI-powered client risk analysis and contract recommendations
+      </p>
+      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+        Start Free Analysis
+      </button>
+    </div>
+  );
 } 

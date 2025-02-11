@@ -3,85 +3,12 @@ const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
-  productionBrowserSourceMaps: true,
-  compress: true,
+  output: 'export',
   images: {
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 86400,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.upwork.com',
-      }
-    ],
-    unoptimized: process.env.NODE_ENV === 'development' ? true : false,
-  },
-  async headers() {
-    return [
-      {
-        source: '/sitemap.xml',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/xml',
-          },
-        ],
-      },
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: process.env.NODE_ENV === 'development' 
-              ? `default-src 'self' 'unsafe-eval' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' *.googleapis.com *.vercel.app *.toxiguard.site script.google.com; frame-src 'none';`
-              : `default-src 'self'; script-src 'self' 'unsafe-inline' *.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' *.googleapis.com *.vercel.app *.toxiguard.site script.google.com; frame-src 'none';`
-          },
-          { 
-            key: 'CDN-Cache-Control', 
-            value: 'public, s-maxage=3600, stale-while-revalidate=300' 
-          }
-        ]
-      },
-      {
-        source: '/_next/image',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          }
-        ],
-      }
-    ]
-  },
-  typescript: {
-    ignoreBuildErrors: true,
+    unoptimized: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
-  },
-  experimental: {
-    serverActions: {
-      allowedOrigins: ['toxiguard.site', '*.toxiguard.site']
-    },
-    cpus: isDevelopment ? 1 : 2,
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-  },
-  async redirects() {
-    return [];
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: `https://toxiguard.site/:path*`,
-        has: [{ type: 'host', value: 'toxiguard.site' }]
-      }
-    ]
   }
 };
 

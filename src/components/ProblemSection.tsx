@@ -3,6 +3,7 @@ import React from 'react';
 import AnimatedSection from './AnimatedSection';
 import ProjectAnalysisOverlay from './ProjectAnalysisOverlay';
 import { SECTIONS } from '@/constants/sections';
+import TimeSavingsMetric from './TimeSavingsMetric';
 
 export default function ProblemSection() {
   return (
@@ -73,7 +74,7 @@ export default function ProblemSection() {
                 <span className="bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6 inline-block">
                   Live Demo
                 </span>
-                
+                <TimeSavingsMetric />
               </div>
               <ProjectAnalysisOverlay />
             </div>

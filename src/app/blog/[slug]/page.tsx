@@ -7,13 +7,18 @@ import { ShareIcon, LinkIcon } from '@heroicons/react/24/outline';
 import { SocialButton } from '@/components/SocialButton';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 
-type Params = {
-  params: {
-    slug: string
-  }
+// Определяем интерфейс для статьи
+interface BlogPost {
+  title: string;
+  content: string;
+  seoDescription?: string;
+  category?: string;
+  sections?: Array<{ title: string; id: string }>;
+  relatedArticles?: Array<{ slug: string; title: string }>;
 }
 
-const articles = {
+// Типизируем объект с постами
+const articles: Record<string, BlogPost> = {
   'elizabeth-ux': {
     title: 'How ToxicGuard Saved 50+ Freelance Hours/Month: UX Designer Case Study',
     content: `
@@ -647,6 +652,10 @@ const articles = {
   },
 };
 
+interface Params {
+  params: { slug: string }
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const article = articles[params.slug];
   
@@ -654,10 +663,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   return {
     title: article.title,
-    description: article.seoDescription,
+    description: article.seoDescription || article.title,
     openGraph: {
       title: article.title,
-      description: article.seoDescription,
+      description: article.seoDescription || article.title,
       type: 'article',
       locale: 'en_US',
       siteName: 'ToxicGuard',
@@ -677,8 +686,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default function PostPage({ params }: { params: { slug: string } }) {
-  const article = articles[params.slug as keyof typeof articles];
+export default function PostPage({ params }: Params) {
+  const article = articles[params.slug];
 
   if (!article) {
     return (
@@ -693,6 +702,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       </div>
     )
   }
+
+  const hasRelatedArticles = Array.isArray(article.relatedArticles) && article.relatedArticles.length > 0;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 space-y-12">
@@ -732,11 +743,11 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         </div>
       </article>
 
-      {article.relatedArticles?.length > 0 && (
+      {hasRelatedArticles && (
         <section className="max-w-4xl mx-auto">
           <h3 className="text-2xl font-bold mb-6">Recommended Reading</h3>
           <div className="grid md:grid-cols-2 gap-6">
-            {article.relatedArticles.map((related) => (
+            {article.relatedArticles!.map((related) => (
               <Link
                 key={related.slug}
                 href={`/blog/${related.slug}`}

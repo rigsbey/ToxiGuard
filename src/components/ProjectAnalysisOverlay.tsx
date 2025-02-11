@@ -304,29 +304,6 @@ export default function ProjectAnalysisOverlay() {
         )}
       </AnimatePresence>
 
-      {/* Обновляем форму, добавляя реальный контент */}
-      <div 
-        ref={formRef} 
-        id="early-access-form"
-        className="early-access-form bg-white p-6 rounded-xl shadow-lg my-8 min-h-[200px]"
-      >
-        <h3 className="text-2xl font-bold mb-4">Get Early Access</h3>
-        <p className="text-gray-600 mb-6">
-          Join our waitlist to be among the first to try ToxiGuard
-        </p>
-        <div className="space-y-4">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            Join Waitlist
-          </button>
-        </div>
-      </div>
-
-      {/* Обновляем кнопку, добавляя z-index */}
       <button
         onClick={handleEarlyAccessClick}
         className="md:hidden fixed bottom-4 left-4 right-4 bg-blue-600 text-white py-3 rounded-lg font-medium shadow-lg z-50"
