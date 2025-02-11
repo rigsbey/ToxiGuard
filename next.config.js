@@ -12,12 +12,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   trailingSlash: true,
-  exportPathMap: async function(defaultPathMap) {
-    return {
-      ...defaultPathMap,
-      '/googlee5bfa023f20e3180.html': { page: '/google-verification' }
-    };
-  },
   webpack: (config) => {
     config.plugins.push(
       new CopyPlugin({
