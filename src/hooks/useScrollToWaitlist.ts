@@ -1,3 +1,7 @@
+'use client';
+
+import { SECTIONS } from '@/constants/sections';
+
 // Переименуем хук для универсального использования
 export function useScrollToSection(sectionId: string) {
   return () => {
