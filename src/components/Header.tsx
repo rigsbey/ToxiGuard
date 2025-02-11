@@ -11,22 +11,6 @@ const Header = () => {
             <span className="font-bold text-xl">ToxiGuard</span>
           </Link>
 
-          {/* Навигационные ссылки */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/create" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Analyze
-            </Link>
-            <Link href="/explore" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Pricing
-            </Link>
-            <Link href="/faq" className="text-gray-600 hover:text-gray-900 transition-colors">
-              FAQ
-            </Link>
-          </div>
-
           {/* Кнопка Join Waitlist */}
           <Link 
             href="/waitlist" 

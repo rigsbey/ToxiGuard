@@ -13,9 +13,9 @@ export default function Navbar() {
   const scrollToWaitlist = useScrollToSection('waitlist-section');
 
   const menuItems = [
-    { label: 'Create', onClick: scrollToHowItWorks },
-    { label: 'Explore', onClick: scrollToRiskScanner },
-    { label: 'Pricing', onClick: scrollToResources },
+    { label: 'How it works', onClick: scrollToHowItWorks },
+    { label: 'Demo', onClick: scrollToRiskScanner },
+    { label: 'Resources', onClick: scrollToResources },
     { label: 'FAQ', onClick: scrollToFAQ },
   ];
 
