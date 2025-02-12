@@ -7,12 +7,10 @@ import DemoSection from '@/components/DemoSection'
 import WaitlistSection from '@/components/WaitlistSection'
 import SuccessStories from '@/components/SuccessStories'
 import HowItWorksSection from '@/components/HowItWorksSection'
-import { BlogPreview } from '@/components/BlogSection'
 import MetricsSection from '@/components/MetricsSection'
 import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import ResourcesSection from '@/components/ResourcesSection'
 
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
@@ -29,8 +27,6 @@ export default function Home() {
         <HowItWorksSection />
         <ProblemSection />
         <SuccessStories />
-        <ResourcesSection />
-        <BlogPreview />
         <RoadmapSection />
         <MetricsSection />
         <TestimonialsSection />
