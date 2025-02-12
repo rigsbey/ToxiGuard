@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export default function ResourcesPage() {
-  // Так как раздел экспертных ресурсов удалён, перенаправляем на страницу "не найдено"
-  notFound();
+  // Так как раздел экспертных ресурсов удалён, перенаправляем посетителей в блог
+  redirect('/blog');
   return null;
 } 
