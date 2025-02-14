@@ -11,6 +11,22 @@ const Header = () => {
             <span className="font-bold text-xl">ToxiGuard</span>
           </Link>
 
+          {/* Добавить Product Hunt бейдж */}
+          <a 
+            href="https://www.producthunt.com/posts/toxiguard?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-toxiguard" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hidden md:block hover:scale-105 transition-transform"
+          >
+            <img 
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=878779&theme=light&t=1739570380193" 
+              alt="ToxiGuard - AI-Powered Risk Scanner for Freelancers | Product Hunt"
+              style={{ width: '250px', height: '54px' }}
+              width="250"
+              height="54"
+            />
+          </a>
+
           {/* Кнопка Join Waitlist */}
           <Link 
             href="/waitlist" 
