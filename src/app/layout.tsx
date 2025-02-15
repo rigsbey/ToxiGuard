@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import '@/styles/globals.css'
 import NavigationProvider from '@/components/NavigationProvider';
+import CanonicalLink from '@/components/CanonicalLink';
 
 const inter = Inter({ subsets: ['latin'] })
 const spaceGrotesk = Space_Grotesk({
@@ -63,7 +64,7 @@ export default function RootLayout({
           href="/favicon.png"
           sizes="32x32"
         />
-        <link rel="canonical" href={`https://toxiguard.site${pathname}`} />
+        <CanonicalLink />
         <meta name="robots" content="index, follow" />
       </head>
       <body className={`${inter.className} ${GeistSans.className} bg-white`}>

@@ -18,4 +18,14 @@ run: |
 name: SEO Health Check
 run: |
   npm install -g seo-checker
-  seo-check https://toxiguard.site --rules=canonical,meta-tags,structured-data 
+  seo-check https://toxiguard.site --rules=canonical,meta-tags,structured-data
+
+name: Build Check
+run: |
+  npm run build || (
+    echo "Build failed. Common issues:"
+    echo "1. Check for missing dependencies"
+    echo "2. Verify all imports exist"
+    echo "3. Check for undefined variables"
+    exit 1
+  ) 
