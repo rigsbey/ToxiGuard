@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.toxiguard.site/</loc>
+    <loc>https://toxiguard.site/</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/terms</loc>
+    <loc>https://toxiguard.site/terms</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/privacy</loc>
+    <loc>https://toxiguard.site/privacy</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/blog/toxic-client-red-flags</loc>
+    <loc>https://toxiguard.site/blog/toxic-client-red-flags</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/blog/contract-protection</loc>
+    <loc>https://toxiguard.site/blog/contract-protection</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/blog/scope-management</loc>
+    <loc>https://toxiguard.site/blog/scope-management</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
