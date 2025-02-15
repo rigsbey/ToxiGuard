@@ -7,4 +7,7 @@ Disallow: /api/
 Disallow: /_next/
 Disallow: /404
 Disallow: /www/
-Disallow: /*?* 
+Disallow: /*?*
+Disallow: /how-it-works
+Disallow: /waitlist
+Disallow: /blog 

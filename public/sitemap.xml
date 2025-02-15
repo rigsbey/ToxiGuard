@@ -7,21 +7,15 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/blog</loc>
-    <lastmod>2024-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.toxiguard.site/how-it-works</loc>
+    <loc>https://toxiguard.site/terms</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.toxiguard.site/waitlist</loc>
+    <loc>https://toxiguard.site/privacy</loc>
     <lastmod>2024-03-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
 </urlset> 

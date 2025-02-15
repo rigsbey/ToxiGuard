@@ -24,6 +24,31 @@ const nextConfig = {
       })
     );
     return config;
+  },
+  async redirects() {
+    return [
+      {
+        source: '/:path*', 
+        has: [
+          {
+            type: 'host',
+            value: 'www.toxiguard.site',
+          },
+        ],
+        permanent: true,
+        destination: 'https://toxiguard.site/:path*',
+      },
+      {
+        source: '/how-it-works',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/blog',
+        destination: '/',
+        permanent: true,
+      }
+    ]
   }
 };
 

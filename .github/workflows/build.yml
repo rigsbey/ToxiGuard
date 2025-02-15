@@ -1,0 +1,16 @@
+name: Check for www links
+run: |
+  if grep -rnw 'www\.toxiguard' ./src; then
+    echo "❌ Found forbidden www links!"
+    exit 1
+  fi
+
+name: Check for removed pages
+run: |
+  forbidden_paths=("how-it-works" "waitlist" "blog")
+  for path in "${forbidden_paths[@]}"; do
+    if [ -d "src/app/${path}" ]; then
+      echo "❌ Found forbidden directory: src/app/${path}"
+      exit 1
+    fi
+  done 
