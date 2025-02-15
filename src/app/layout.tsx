@@ -27,11 +27,15 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
       }
-    ]
+    ],
+    url: 'https://toxiguard.site'
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@toxiguard',
+  },
+  alternates: {
+    canonical: 'https://toxiguard.site'
   }
 }
 

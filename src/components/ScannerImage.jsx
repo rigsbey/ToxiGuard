@@ -10,6 +10,8 @@ export default function ScannerImage() {
         width={1200}
         height={800}
         className="object-cover"
+        priority={true}
+        sizes="(max-width: 768px) 100vw, 50vw"
       />
       <figcaption className="text-sm text-gray-500 mt-2">
         <meta itemProp="description" content="Визуализация работы AI-сканера ToxiGuard" />

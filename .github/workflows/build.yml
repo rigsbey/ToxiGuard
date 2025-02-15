@@ -13,4 +13,9 @@ run: |
       echo "❌ Found forbidden directory: src/app/${path}"
       exit 1
     fi
-  done 
+  done
+
+name: SEO Health Check
+run: |
+  npm install -g seo-checker
+  seo-check https://toxiguard.site --rules=canonical,meta-tags,structured-data 
