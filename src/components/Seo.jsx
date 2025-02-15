@@ -1,0 +1,2 @@
+<link rel="alternate" hreflang="ru" href="https://toxiguard.site/ru/blog/10-priznakov-toksichnogo-klienta/" />
+<link rel="alternate" hreflang="x-default" href="https://toxiguard.site/blog/10-priznakov-toksichnogo-klienta/" /> 
