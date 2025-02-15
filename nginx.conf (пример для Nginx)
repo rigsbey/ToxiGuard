@@ -1,0 +1,20 @@
+# Перенаправляем все www-запросы на основную версию
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name www.toxiguard.site;
+    
+    ssl_certificate /path/to/ssl/cert;
+    ssl_certificate_key /path/to/ssl/key;
+    
+    return 301 https://toxiguard.site$request_uri;
+}
+
+# Основной сервер
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name toxiguard.site;
+    
+    # Остальные настройки...
+} 

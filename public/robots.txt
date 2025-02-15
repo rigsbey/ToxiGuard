@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://toxiguard.site/sitemap.xml
+Sitemap: https://www.toxiguard.site/sitemap.xml
 
 # Блокируем служебные пути
 Disallow: /api/
