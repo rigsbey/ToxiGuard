@@ -31,6 +31,25 @@ const nextConfig = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
+  async redirects() {
+    return [
+      {
+        source: '/how-it-works',
+        destination: '/',
+        permanent: true
+      },
+      {
+        source: '/blog',
+        destination: '/',
+        permanent: true
+      },
+      {
+        source: '/waitlist',
+        destination: '/',
+        permanent: true
+      }
+    ]
+  },
   async headers() {
     return [
       {
@@ -39,8 +58,25 @@ const nextConfig = {
           key: 'Content-Type', 
           value: 'application/xml' 
         }]
+      },
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          }
+        ]
       }
-    ];
+    ]
   }
 };
 

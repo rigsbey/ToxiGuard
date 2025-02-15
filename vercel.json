@@ -6,51 +6,13 @@
       "src": "package.json",
       "use": "@vercel/next",
       "config": {
-        "distDir": ".next",
-        "includeFiles": [
-          "public/**",
-          "styles/**"
-        ]
+        "distDir": ".next"
       }
     }
   ],
   "env": {
     "NEXT_PUBLIC_SITE_URL": "https://toxiguard.site"
   },
-  "buildCommand": "next build",
-  "outputDirectory": "out",
   "framework": "nextjs",
-  "regions": ["fra1"],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(robots\\.txt|sitemap\\.xml)",
-      "dest": "/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    {
-      "src": "/_next/static/(.*)",
-      "dest": "/_next/static/$1"
-    }
-  ]
+  "regions": ["fra1"]
 } 
