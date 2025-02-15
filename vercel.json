@@ -39,5 +39,18 @@
         }
       ]
     }
+  ],
+  "routes": [
+    {
+      "src": "/(robots\\.txt|sitemap\\.xml)",
+      "dest": "/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "src": "/_next/static/(.*)",
+      "dest": "/_next/static/$1"
+    }
   ]
 } 

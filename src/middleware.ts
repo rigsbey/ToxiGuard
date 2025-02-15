@@ -7,26 +7,9 @@ export function middleware(request: NextRequest) {
   
   // Проверяем, что мы в production среде
   if (process.env.NODE_ENV === 'production') {
-    // Редирект с www на non-www (если хост начинается с www)
-    if (host.startsWith('www.')) {
-      return NextResponse.redirect(
-        `https://toxiguard.site${url.pathname}${url.search}`,
-        { 
-          status: 301,
-          headers: {
-            'Cache-Control': 'public, max-age=31536000',
-            'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
-          }
-        }
-      );
-    }
-    
-    // Редирект с HTTP на HTTPS (если протокол http)
+    // Только HTTPS редирект
     if (url.protocol === 'http:') {
-      return NextResponse.redirect(
-        `https://toxiguard.site${url.pathname}${url.search}`,
-        { status: 301 }
-      );
+      return NextResponse.redirect(`https://toxiguard.site${url.pathname}`);
     }
   }
 

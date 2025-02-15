@@ -4,14 +4,14 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  trailingSlash: true,
   images: {
-    unoptimized: true,
+    unoptimized: false,
+    domains: ['toxiguard.site'],
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
-  trailingSlash: true,
   env: {
     NEXT_EXPORT_MODE: 'true',
   },
@@ -31,6 +31,17 @@ const nextConfig = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
+  async headers() {
+    return [
+      {
+        source: '/sitemap.xml',
+        headers: [{ 
+          key: 'Content-Type', 
+          value: 'application/xml' 
+        }]
+      }
+    ];
+  }
 };
 
 console.log('ENV DEBUG:', {

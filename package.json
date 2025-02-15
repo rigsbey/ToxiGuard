@@ -4,14 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "NODE_ENV=development NEXT_PUBLIC_APP_ENV=development next dev",
-    "build": "next build",
+    "build": "node scripts/generate-sitemap.js && next build",
     "start": "next start",
     "lint": "next lint",
     "deploy:prod": "vercel deploy --prod --confirm --public",
     "deploy:preview": "vercel deploy",
     "postinstall": "next telemetry disable",
     "ci:install": "npm install --force --legacy-peer-deps",
-    "seo-check": "npx seo-checker 'src/**/*.html' --title --description --headings --alt --keywords=5 --no-robots"
+    "seo-check": "npx seo-checker 'src/**/*.html' --title --description --headings --alt --keywords=5 --no-robots",
+    "postbuild": "cp public/sitemap.xml .next/static/ && cp public/robots.txt .next/static/",
+    "prebuild": "mkdir -p scripts && touch scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
