@@ -1,10 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
+
 Sitemap: https://toxiguard.site/sitemap.xml
 
 # Блокируем служебные пути
-Disallow: /api/
-Disallow: /_next/
 Disallow: /404
 Disallow: /www/
 Disallow: /*?*

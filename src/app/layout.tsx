@@ -66,6 +66,21 @@ export default function RootLayout({
         />
         <CanonicalLink />
         <meta name="robots" content="index, follow" />
+        <link 
+          rel="canonical" 
+          href={`https://toxiguard.site${pathname}`} 
+        />
+        {/* Альтернативные языковые версии */}
+        <link 
+          rel="alternate" 
+          hrefLang="ru" 
+          href={`https://toxiguard.site/ru${pathname}`} 
+        />
+        <link 
+          rel="alternate" 
+          hrefLang="x-default" 
+          href={`https://toxiguard.site${pathname}`} 
+        />
       </head>
       <body className={`${inter.className} ${GeistSans.className} bg-white`}>
         <NavigationProvider>

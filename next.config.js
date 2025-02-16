@@ -47,6 +47,16 @@ const nextConfig = {
         source: '/waitlist',
         destination: '/',
         permanent: true
+      },
+      {
+        source: '/resources',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/resources/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
       }
     ]
   },
@@ -75,7 +85,16 @@ const nextConfig = {
             value: '1; mode=block'
           }
         ]
-      }
+      },
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, must-revalidate',
+          },
+        ],
+      },
     ]
   }
 };
