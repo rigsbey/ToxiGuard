@@ -3,16 +3,8 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
-  const host = request.headers.get('host');
+  const host = request.headers.get('host') || '';
   
-  // Редирект www → non-www
-  if (host?.startsWith('www.')) {
-    return NextResponse.redirect(
-      `https://toxiguard.site${url.pathname}`,
-      { status: 301 }
-    );
-  }
-
   // Проверяем, что мы в production среде
   if (process.env.NODE_ENV === 'production') {
     // Только HTTPS редирект
