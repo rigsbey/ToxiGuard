@@ -1,14 +1,13 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { ShareIcon, LinkIcon } from '@heroicons/react/24/outline';
 import { SocialButton } from '@/components/SocialButton';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import { headers } from 'next/headers';
+import Link from 'next/link';
 
-// Определяем интерфейс для статьи
+// Интерфейс для статьи
 interface BlogPost {
   title: string;
   content: string;
@@ -18,7 +17,7 @@ interface BlogPost {
   relatedArticles?: Array<{ slug: string; title: string }>;
 }
 
-// Типизируем объект с постами
+// Объект с постами
 const articles: Record<string, BlogPost> = {
   'elizabeth-ux': {
     title: 'How ToxicGuard Saved 50+ Freelance Hours/Month: UX Designer Case Study',
@@ -653,53 +652,18 @@ const articles: Record<string, BlogPost> = {
   },
 };
 
-interface Params {
+// Используем async для страницы и правильно типизируем props
+export default async function BlogPost({
+  params,
+}: {
   params: { slug: string }
-}
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const article = articles[params.slug];
+}) {
+  const { slug } = params;
   
-  if (!article) notFound();
-
-  return {
-    title: article.title,
-    description: article.seoDescription || article.title,
-    openGraph: {
-      title: article.title,
-      description: article.seoDescription || article.title,
-      type: 'article',
-      locale: 'en_US',
-      siteName: 'ToxicGuard',
-      images: [{
-        url: '/og-blog-en.png',
-        width: 1200,
-        height: 630,
-      }],
-    },
-    alternates: {
-      canonical: `/blog/${params.slug}`,
-      languages: {
-        'ru-RU': `/ru/blog/${params.slug}`,
-        'x-default': `/blog/${params.slug}`,
-      },
-    },
-  };
-}
-
-export default function PostPage({ params }: Params) {
-  const article = articles[params.slug];
+  const article = articles[slug];
 
   if (!article) {
-    if (typeof window === 'undefined') {
-      headers().set('X-Status-Code', '410');
-    }
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold mb-4">Страница удалена</h1>
-        <p>К сожалению, запрошенный контент больше не доступен.</p>
-      </div>
-    )
+    notFound();
   }
 
   const hasRelatedArticles = Array.isArray(article.relatedArticles) && article.relatedArticles.length > 0;
@@ -778,6 +742,22 @@ export default function PostPage({ params }: Params) {
       </script>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const article = articles[params.slug];
+  
+  if (!article) {
+    return {
+      title: 'Article Not Found',
+      description: 'The requested article could not be found'
+    };
+  }
+
+  return {
+    title: article.title,
+    description: article.seoDescription
+  };
 }
 
 export const dynamicParams = false;

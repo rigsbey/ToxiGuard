@@ -57,13 +57,15 @@ export default function Hero() {
       </section>
 
       <section className="flex flex-col items-center pb-8 sm:pb-12">
-        <ClientButton 
+        <button 
           onClick={scrollToWaitlist}
-          className="animate-fade-in rounded-full border border-black bg-black px-8 py-4 text-sm text-white transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200 inline-flex items-center"
+          className="animate-fade-in rounded-full border border-black bg-black px-8 py-4 text-sm text-white transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200 inline-flex items-center whitespace-nowrap"
         >
           Start Protecting Now
-          <ArrowRightIcon className="lucide lucide-arrow-right ml-3 size-4 sm:size-5 transition-transform group-hover:translate-x-1" />
-        </ClientButton>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" className="lucide lucide-arrow-right ml-3 w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+          </svg>
+        </button>
         <p className="text-xs text-gray-500 mt-4 flex items-center">
           Trusted by 8,214+ Active Freelancers
         </p>

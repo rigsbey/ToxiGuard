@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 // Определяем, работает ли приложение в режиме static export
 const isExportMode = process.env.NEXT_EXPORT_MODE === 'true';
 
+export const dynamic = 'force-static'; // Убираем условное выражение
+
 export async function GET(request: Request) {
   if (isExportMode) {
     // В режиме экспорта API routes не поддерживаются – возвращаем 404
@@ -15,7 +17,4 @@ export async function GET(request: Request) {
     }
     return NextResponse.next();
   }
-}
-
-// Если режим экспорта – force-static, иначе force-dynamic
-export const dynamic = isExportMode ? 'force-static' : 'force-dynamic'; 
+} 

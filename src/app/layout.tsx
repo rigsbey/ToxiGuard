@@ -1,19 +1,29 @@
-'use client';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-import '../styles/globals.css';
-import { Space_Grotesk } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'] });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk'
-});
+export const metadata: Metadata = {
+  title: 'ToxiGuard',
+  description: 'AI-Powered Risk Scanner for Freelancers',
+};
 
-// Удалён экспорт metadata, так как клиентские компоненты не поддерживают metadata
+// Клиентский компонент для провайдеров
+function ClientLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={spaceGrotesk.variable}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className={inter.className}>
+        <main>{children}</main>
+      </body>
     </html>
   );
 } 

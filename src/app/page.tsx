@@ -6,12 +6,15 @@ import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
 import WaitlistSection from '@/components/WaitlistSection'
 import SuccessStories from '@/components/SuccessStories'
+import BlogPreview from '@/components/BlogSection'
 import HowItWorksSection from '@/components/HowItWorksSection'
 import MetricsSection from '@/components/MetricsSection'
 import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Script from 'next/script'
+import Link from 'next/link'
+import TestimonialsSection from '@/components/TestimonialsSectionWrapper'
 
 // Обновленные SEO-метаданные на английском языке
 export const metadata = {
@@ -29,11 +32,6 @@ export const metadata = {
   ],
 };
 
-const TestimonialsSection = dynamic(
-  () => import('@/components/TestimonialsSection'),
-  { ssr: false }
-);
-
 export default function Home() {
   return (
     <>
@@ -44,6 +42,7 @@ export default function Home() {
         <HowItWorksSection />
         <ProblemSection />
         <SuccessStories />
+        <BlogPreview />
         <RoadmapSection />
         <MetricsSection />
         <TestimonialsSection />
@@ -53,10 +52,6 @@ export default function Home() {
       </main>
       <Footer />
 
-      {/*
-        Компонент Script добавляет структурированные данные для поисковых систем.
-        Здесь применяется разметка Schema.org для продукта ToxiGuard с агрегированным рейтингом.
-      */}
       <Script id="structured-data" type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",

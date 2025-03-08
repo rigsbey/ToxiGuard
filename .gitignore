@@ -87,3 +87,7 @@ cypress/screenshots/**
 
 # Исключаем верификационные файлы
 /googlee5bfa023f20e3180.html
+
+# Firebase
+.firebase/
+.firebaserc

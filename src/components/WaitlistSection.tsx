@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { METRICS } from '@/config/metrics';
 import { CheckCircle2 } from 'lucide-react';
-import ClientButton from './ClientButton';
+import Link from 'next/link';
 
 // Using the real script ID
 const SCRIPT_ID = 'AKfycbwtgVj1y3Oia3wy19afi3p1xGehWAjy9Dnm_Y9GfkHueAv7gMw6MBNwzAh9ZYpy7FPL9g';
@@ -107,7 +107,7 @@ export default function WaitlistSection() {
             ))}
           </div>
 
-          {/* Form */}
+          {/* Main Content */}
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-xl p-8 shadow-2xl border border-blue-100">
               <h3 className="text-3xl font-bold text-center mb-6">
@@ -115,40 +115,16 @@ export default function WaitlistSection() {
                 <span className="block text-blue-600 mt-2">$15k+ Losses Last Month</span>
               </h3>
               
-              <form onSubmit={handleSubmit} className="relative">
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full py-4 px-6 rounded-xl border-2 border-blue-200 
-                              focus:ring-4 focus:ring-blue-200 focus:border-blue-500 
-                              placeholder-gray-400 text-gray-900 bg-white/95
-                              shadow-lg shadow-blue-100/50"
-                    placeholder="Your professional email"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-6 py-4 bg-black text-white rounded-xl font-medium
-                              hover:bg-gray-800 transition-colors disabled:opacity-50
-                              disabled:cursor-not-allowed shadow-lg shadow-blue-100/50"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                        </svg>
-                        Sending...
-                      </span>
-                    ) : (
-                      'Join'
-                    )}
-                  </button>
-                </div>
-              </form>
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center w-full px-6 py-4 bg-blue-600 text-white rounded-xl font-medium
+                          hover:bg-blue-700 transition-colors shadow-lg shadow-blue-100/50 text-lg"
+              >
+                Sign Up Now
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
             </div>
           </div>
 

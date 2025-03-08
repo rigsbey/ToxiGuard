@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
   <url>
     <loc>https://toxiguard.site/</loc>
-    <lastmod>2024-03-15</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://toxiguard.site/terms</loc>
-    <lastmod>2024-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://toxiguard.site/privacy</loc>
-    <lastmod>2024-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://toxiguard.site/blog/toxic-client-red-flags</loc>
-    <lastmod>2024-03-15</lastmod>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
   <url>
-    <loc>https://toxiguard.site/blog/contract-protection</loc>
-    <lastmod>2024-03-15</lastmod>
+    <loc>https://toxiguard.site/how-it-works</loc>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
   <url>
-    <loc>https://toxiguard.site/blog/scope-management</loc>
-    <lastmod>2024-03-15</lastmod>
+    <loc>https://toxiguard.site/resources</loc>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-</urlset> 
+  
+  <url>
+    <loc>https://toxiguard.site/blog</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+</urlset>

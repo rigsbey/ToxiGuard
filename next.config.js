@@ -4,10 +4,10 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: false,
-    domains: ['toxiguard.site'],
+    unoptimized: true
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -29,54 +29,6 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
-  async redirects() {
-    return [
-      {
-        source: '/how-it-works',
-        destination: '/',
-        permanent: true
-      },
-      {
-        source: '/blog',
-        destination: '/',
-        permanent: true
-      },
-      {
-        source: '/waitlist',
-        destination: '/',
-        permanent: true
-      }
-    ]
-  },
-  async headers() {
-    return [
-      {
-        source: '/sitemap.xml',
-        headers: [{ 
-          key: 'Content-Type', 
-          value: 'application/xml' 
-        }]
-      },
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          }
-        ]
-      }
-    ]
   }
 };
 
