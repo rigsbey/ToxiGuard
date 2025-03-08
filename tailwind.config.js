@@ -40,7 +40,7 @@ module.exports = {
         'warning-orange': '#F59E0B',
         'amber-500': '#F59E0B',
         'amber-600': '#D97706',
-        primary: '#2A5CAA',
+        primary: '#0070f3',
         secondary: '#00C4B8',
         accent: '#00C389',
         'accent-dark': '#008C65',
