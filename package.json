@@ -12,8 +12,6 @@
     "postinstall": "next telemetry disable",
     "ci:install": "npm install --force --legacy-peer-deps",
     "seo-check": "npx seo-checker 'src/**/*.html' --title --description --headings --alt --keywords=5 --no-robots",
-    "postbuild": "cp public/sitemap.xml .next/static/ && cp public/robots.txt .next/static/",
-    "prebuild": "mkdir -p scripts && touch scripts/generate-sitemap.js",
     "export": "next build"
   },
   "dependencies": {
