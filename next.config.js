@@ -4,16 +4,12 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: true
+    domains: ['toxiguard.site'],
   },
   eslint: {
     ignoreDuringBuilds: true,
-  },
-  env: {
-    NEXT_EXPORT_MODE: 'true',
   },
   webpack: (config) => {
     config.plugins.push(
@@ -21,7 +17,7 @@ const nextConfig = {
         patterns: [
           {
             from: 'public/googlee5bfa023f20e3180.html',
-            to: 'out/'
+            to: '.'
           }
         ]
       })
