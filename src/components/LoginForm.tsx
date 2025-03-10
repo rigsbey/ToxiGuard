@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,8 +23,8 @@ export default function RegisterForm() {
     setError('');
     
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Successful registration:', userCredential.user);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Successful login:', userCredential.user);
       
       // Get Firebase ID token
       const idToken = await userCredential.user.getIdToken();
@@ -53,27 +53,29 @@ export default function RegisterForm() {
 
   const handleFirebaseError = (error: any) => {
     const errorCode = error.code || 'auth/unknown-error';
-    const errorMessage = error.message || 'Server error';
-    console.error('Firebase Error:', errorCode, errorMessage);
+    console.error('Firebase Error:', errorCode, error.message);
 
     switch (errorCode) {
-      case 'auth/email-already-in-use':
-        setError('This email is already registered');
-        break;
       case 'auth/invalid-email':
-        setError('Invalid email format');
+        setError('Invalid email address');
         break;
-      case 'auth/weak-password':
-        setError('Password must be at least 6 characters');
+      case 'auth/user-disabled':
+        setError('This account has been disabled');
+        break;
+      case 'auth/user-not-found':
+        setError('No account found with this email');
+        break;
+      case 'auth/wrong-password':
+        setError('Incorrect password');
         break;
       default:
-        setError(`Registration error: ${errorMessage}`);
+        setError('Login failed. Please try again.');
     }
   };
 
   return (
     <div className="max-w-md mx-auto p-8 bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.1)]">
-      <h2 className="text-3xl font-bold text-center mb-10">Sign Up</h2>
+      <h2 className="text-3xl font-bold text-center mb-10">Sign In</h2>
       {error && <p className="text-red-500 mb-6 text-center text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
       
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -106,17 +108,17 @@ export default function RegisterForm() {
           disabled={isLoading}
           className="w-full bg-blue-600 text-white py-3.5 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 font-medium text-base mt-4"
         >
-          {isLoading ? 'Signing up...' : 'Sign Up'}
+          {isLoading ? 'Signing in...' : 'Sign In'}
         </button>
       </form>
 
       <p className="text-center mt-8 text-gray-600">
-        Already have an account?{' '}
+        Don't have an account?{' '}
         <Link 
-          href={`/login${redirectUrl ? `?redirect_to=${encodeURIComponent(redirectUrl)}${source ? `&source=${encodeURIComponent(source)}` : ''}` : ''}`}
+          href={`/register${redirectUrl ? `?redirect_to=${encodeURIComponent(redirectUrl)}${source ? `&source=${encodeURIComponent(source)}` : ''}` : ''}`}
           className="text-blue-600 hover:underline font-medium"
         >
-          Sign In
+          Sign Up
         </Link>
       </p>
     </div>

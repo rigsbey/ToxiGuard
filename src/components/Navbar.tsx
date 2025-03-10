@@ -9,11 +9,13 @@ import { SECTIONS } from '@/constants/sections';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter, usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const chromeStoreUrl = 'https://chromewebstore.google.com/detail/toxiguard/icijbieljniejiicoddalgfkdkadknnn';
   
   const scrollToFAQ = useScrollToSection('faq-section');
   const scrollToHowItWorks = useScrollToSection('how-it-works-section');
@@ -43,14 +45,6 @@ export default function Navbar() {
     onClick();
     setMobileMenuOpen(false);
   };
-
-  const navigation = [
-    { name: 'Features', href: '#features' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'About', href: '/about' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'Blog', href: '/blog' }
-  ];
 
   return (
     <nav className="fixed w-full bg-white/80 backdrop-blur-lg shadow-sm z-50 top-0 left-0">
@@ -86,16 +80,42 @@ export default function Navbar() {
               </div>
 
               <div className="hidden md:flex items-center gap-4">
-                <button 
-                  onClick={scrollToWaitlist}
+                <Link
+                  href={chromeStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  <img 
+                    src="/images/chrome-logo.svg" 
+                    alt="Chrome" 
+                    className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" 
+                  />
+                  Install
+                </Link>
+                <Link 
+                  href="/login"
                   className="bg-black text-white px-6 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors"
                 >
-                  Try for free
-                </button>
+                  Sign in
+                </Link>
               </div>
             </>
           ) : (
             <div className="flex items-center gap-4">
+              <Link
+                href={chromeStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <img 
+                  src="/images/chrome-logo.svg" 
+                  alt="Chrome" 
+                  className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" 
+                />
+                Install
+              </Link>
               <button
                 onClick={handleLogout}
                 className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
@@ -119,6 +139,27 @@ export default function Navbar() {
                 {item.label}
               </button>
             ))}
+            <Link
+              href={chromeStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <img 
+                src="/images/chrome-logo.svg" 
+                alt="Chrome" 
+                className="w-4 h-4" 
+              />
+              Install Extension
+            </Link>
+            <Link
+              href="/login"
+              className="flex items-center justify-center px-3 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Sign in
+            </Link>
           </div>
         </div>
       )}
