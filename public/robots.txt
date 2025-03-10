@@ -5,11 +5,10 @@ Disallow: /_next/
 
 Sitemap: https://toxiguard.site/sitemap.xml
 
-# Block service paths
+# Блокируем служебные пути
 Disallow: /404
+Disallow: /www/
 Disallow: /*?*
-
-# These pages are redirected to the homepage
-Disallow: /how-it-works/
-Disallow: /waitlist/
-Disallow: /blog/ 
+Disallow: /how-it-works
+Disallow: /waitlist
+Disallow: /blog 

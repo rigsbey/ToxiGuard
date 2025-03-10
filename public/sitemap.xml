@@ -5,27 +5,6 @@
     <loc>https://toxiguard.site/</loc>
     <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
-    <loc>https://toxiguard.site/login/</loc>
-    <lastmod>2025-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://toxiguard.site/register/</loc>
-    <lastmod>2025-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://toxiguard.site/profile/</loc>
-    <lastmod>2025-03-08</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
