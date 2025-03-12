@@ -2,9 +2,11 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useScrollToSection } from '@/hooks/useScrollToSection';
 
 export default function HeroSection() {
   const chromeStoreUrl = 'https://chromewebstore.google.com/detail/toxiguard/icijbieljniejiicoddalgfkdkadknnn';
+  const scrollToHowItWorks = useScrollToSection('how-it-works-section');
   
   return (
     <div className="relative overflow-hidden bg-white">
@@ -27,7 +29,7 @@ export default function HeroSection() {
                 href={chromeStoreUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200"
+                className="group flex items-center gap-2 bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded-lg"
               >
                 <img 
                   src="/images/chrome-logo.svg" 
@@ -36,12 +38,12 @@ export default function HeroSection() {
                 />
                 Установить для Chrome
               </Link>
-              <Link
-                href="/how-it-works"
+              <button
+                onClick={scrollToHowItWorks}
                 className="text-base font-semibold leading-7 text-gray-900 hover:text-blue-600 transition-colors duration-200"
               >
                 Подробнее <span aria-hidden="true">→</span>
-              </Link>
+              </button>
             </div>
             <div className="mt-4 text-sm text-gray-500 flex items-center gap-2">
               <span className="flex items-center">

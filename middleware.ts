@@ -16,21 +16,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
-  // 3. Обработка языковых редиректов
-  const locale = request.cookies.get('NEXT_LOCALE')?.value;
-  const isDefaultLocale = locale === 'en' || !locale;
-  
-  if (isDefaultLocale && url.pathname.startsWith('/en/')) {
-    url.pathname = url.pathname.replace('/en/', '/');
-    return NextResponse.redirect(url, 308);
-  }
-
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
     // Исключаем статические файлы
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }; 

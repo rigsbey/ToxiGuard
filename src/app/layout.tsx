@@ -5,7 +5,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '🛡️ToxiGuard',
+  title: '🛡️ ToxiGuard',
   description: 'AI-Powered Risk Scanner for Freelancers',
 };
 

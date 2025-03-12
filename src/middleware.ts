@@ -3,7 +3,6 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
-  const host = request.headers.get('host') || '';
   
   // Проверяем, что мы в production среде
   if (process.env.NODE_ENV === 'production') {
@@ -11,12 +10,6 @@ export function middleware(request: NextRequest) {
     if (url.protocol === 'http:') {
       return NextResponse.redirect(`https://toxiguard.site${url.pathname}`);
     }
-  }
-
-  // Редирект удаленных страниц
-  const removedPaths = ['/how-it-works', '/blog', '/waitlist'];
-  if (removedPaths.includes(url.pathname)) {
-    return NextResponse.redirect('https://toxiguard.site/', { status: 301 });
   }
 
   return NextResponse.next();

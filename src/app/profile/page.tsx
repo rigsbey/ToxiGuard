@@ -141,11 +141,11 @@ export default function ProfilePage() {
             </div>
             <div className="p-6 bg-gray-50">
               <div className="max-w-3xl mx-auto">
-                <h3 className="font-semibold text-lg mb-2">What you'll see in this demo:</h3>
+                <h3 className="font-semibold text-lg mb-2">ToxiGuard in Action:</h3>
                 <ul className="text-gray-600 space-y-2">
-                  <li>• Real-time risk analysis of an Upwork job posting (0:00-0:30)</li>
-                  <li>• Understanding risk indicators and warnings (0:30-1:00)</li>
-                  <li>• How to use ToxiGuard's recommendations (1:00-1:30)</li>
+                  <li>• Instant detection of hidden risks in freelance marketplace jobs</li>
+                  <li>• AI-powered analysis of budget, timeline, and project requirements</li>
+                  <li>• Protection against unreliable clients and unrealistic expectations</li>
                 </ul>
               </div>
             </div>
