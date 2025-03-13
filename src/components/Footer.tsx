@@ -27,6 +27,12 @@ export default function Footer() {
               >
                 FAQ
               </button>
+              <Link 
+                href="/blog" 
+                className="block hover:underline"
+              >
+                Blog
+              </Link>
             </nav>
           </div>
 

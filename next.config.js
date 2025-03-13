@@ -26,22 +26,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Redirect old blog URLs if they exist
-      {
-        source: '/articles/:slug',
-        destination: '/blog/:slug',
-        permanent: true,
-      },
-      {
-        source: '/posts/:slug',
-        destination: '/blog/:slug',
-        permanent: true,
-      },
-      {
-        source: '/news/:slug',
-        destination: '/blog/:slug',
-        permanent: true,
-      },
+      // Убираем старые редиректы для блога
     ];
   },
   experimental: {

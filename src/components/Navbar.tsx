@@ -37,12 +37,15 @@ export default function Navbar() {
     { label: 'Demo', onClick: scrollToRiskScanner },
     { label: 'Resources', onClick: scrollToResources },
     { label: 'FAQ', onClick: scrollToFAQ },
+    { label: 'Blog', href: '/blog' },
   ];
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleMobileMenuItemClick = (onClick: () => void) => {
-    onClick();
+  const handleMobileMenuItemClick = (onClick: (() => void) | undefined) => {
+    if (onClick) {
+      onClick();
+    }
     setMobileMenuOpen(false);
   };
 
@@ -59,13 +62,23 @@ export default function Navbar() {
             <>
               <div className="hidden md:flex bg-white/75 backdrop-blur-lg border border-gray-200 rounded-full px-2 py-0.5 items-center shadow-sm">
                 {menuItems.map((item) => (
-                  <button
-                    key={item.label}
-                    onClick={item.onClick}
-                    className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md"
-                  >
-                    {item.label}
-                  </button>
+                  item.href ? (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <button
+                      key={item.label}
+                      onClick={item.onClick}
+                      className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md"
+                    >
+                      {item.label}
+                    </button>
+                  )
                 ))}
               </div>
 
@@ -131,13 +144,24 @@ export default function Navbar() {
         <div className="md:hidden bg-white shadow-lg">
           <div className="flex flex-col space-y-1 p-4">
             {menuItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => handleMobileMenuItemClick(item.onClick)}
-                className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.label}
+                  onClick={() => handleMobileMenuItemClick(item.onClick)}
+                  className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
             <Link
               href={chromeStoreUrl}

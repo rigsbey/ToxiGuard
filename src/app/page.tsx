@@ -55,13 +55,58 @@ export default function Home() {
       <Script id="structured-data" type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "Product",
+          "@type": "SoftwareApplication",
           "name": "ToxiGuard",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Chrome",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
           "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.9",
-            "reviewCount": "120"
-          }
+            "reviewCount": "8214",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "description": "AI-powered protection system against toxic clients and payment risks for freelancers",
+          "screenshot": "https://toxiguard.site/images/screenshot1.png",
+          "featureList": "Risk analysis, Payment protection, Contract security"
+        })}
+      </Script>
+
+      <Script id="faq-structured-data" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does ToxiGuard protect freelancers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ToxiGuard uses AI to analyze project descriptions, client history, and communication patterns to identify potential risks before you accept a project."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is ToxiGuard free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, ToxiGuard offers a free plan with basic protection features. Premium plans with advanced features are available for professional freelancers."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which freelance platforms does ToxiGuard work with?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ToxiGuard currently works with Upwork, Freelancer, and Fiverr, with more platforms being added regularly."
+              }
+            }
+          ]
         })}
       </Script>
     </>

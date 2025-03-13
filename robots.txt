@@ -1,4 +1,12 @@
 User-agent: *
-Disallow: /blog/
-Disallow: /en/blog/
-Disallow: /resources/ 
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Разрешаем индексацию блога и ресурсов
+Allow: /blog/
+Allow: /en/blog/
+Allow: /resources/
+
+# Ссылка на Sitemap
+Sitemap: https://toxiguard.site/sitemap.xml 

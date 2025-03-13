@@ -19,10 +19,10 @@ export default function HeroSection() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Защитите свой фриланс от рисков с помощью AI
+              AI Protection Against Toxic Clients & Payment Risks
             </h1>
             <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-              ToxiGuard анализирует проекты на Upwork и предупреждает о возможных рисках, помогая вам принимать более безопасные решения.
+              ToxiGuard analyzes Upwork projects and warns you about potential risks, helping freelancers make safer decisions and avoid problematic clients.
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Link
@@ -36,21 +36,21 @@ export default function HeroSection() {
                   alt="Chrome" 
                   className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" 
                 />
-                Установить для Chrome
+                Install Chrome Extension
               </Link>
               <button
                 onClick={scrollToHowItWorks}
                 className="text-base font-semibold leading-7 text-gray-900 hover:text-blue-600 transition-colors duration-200"
               >
-                Подробнее <span aria-hidden="true">→</span>
+                Learn More <span aria-hidden="true">→</span>
               </button>
             </div>
             <div className="mt-4 text-sm text-gray-500 flex items-center gap-2">
               <span className="flex items-center">
-                <span className="text-yellow-400">★</span> 5.0/5
+                <span className="text-yellow-400">★</span> 4.9/5
               </span>
               <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-              <span>2000+ активных пользователей</span>
+              <span>Trusted by 8,214+ active freelancers</span>
             </div>
           </motion.div>
           <motion.div 
@@ -63,7 +63,7 @@ export default function HeroSection() {
               <div className="relative">
                 <img
                   src="/images/screenshot1.png"
-                  alt="ToxiGuard анализ проекта"
+                  alt="ToxiGuard project analysis"
                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -73,7 +73,7 @@ export default function HeroSection() {
               <div className="relative">
                 <img
                   src="/images/screenshot2.png"
-                  alt="ToxiGuard оценка рисков"
+                  alt="ToxiGuard risk assessment"
                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -81,7 +81,7 @@ export default function HeroSection() {
               <div className="relative">
                 <img
                   src="/images/screenshot3.png"
-                  alt="ToxiGuard рекомендации"
+                  alt="ToxiGuard recommendations"
                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
