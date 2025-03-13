@@ -1,11 +1,11 @@
 export async function generateStaticParams() {
-  return [{ slug: 'googlee5bfa023f20e3180' }];
+  return [{ slug: 'cJxB6xaxazRAHUhm1d7MgbgciM8QiVZY0Vg4TIwbhe8' }];
 }
 
 export default function GoogleVerificationPage() {
   return (
     <div>
-      google-site-verification: googlee5bfa023f20e3180.html
+      google-site-verification: cJxB6xaxazRAHUhm1d7MgbgciM8QiVZY0Vg4TIwbhe8.html
     </div>
   );
 } 
