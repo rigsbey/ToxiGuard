@@ -4,7 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: true,
+  trailingSlash: false,
   images: {
     domains: ['toxiguard.site'],
   },
@@ -16,13 +16,33 @@ const nextConfig = {
       new CopyPlugin({
         patterns: [
           {
-            from: 'public/googlee5bfa023f20e3180.html',
+            from: 'public/cJxB6xaxazRAHUhm1d7MgbgciM8QiVZY0Vg4TIwbhe8.html',
             to: '.'
           }
         ]
       })
     );
     return config;
+  },
+  async redirects() {
+    return [
+      // Redirect old blog URLs if they exist
+      {
+        source: '/articles/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/posts/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/news/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+    ];
   },
   experimental: {
   }
