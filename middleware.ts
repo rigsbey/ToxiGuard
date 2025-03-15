@@ -3,18 +3,16 @@ import { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
-  const userAgent = request.headers.get('user-agent') || '';
   
-  // Не применять редиректы для Googlebot и других поисковых ботов
-  if (userAgent.toLowerCase().match(/googlebot|bingbot|yandex|baiduspider/)) {
-    return NextResponse.next();
-  }
-  
-  const needsRedirect = url.hostname.startsWith('www.');
-  
-  if (needsRedirect) {
+  // Проверяем, нужна ли переадресация
+  if (url.hostname.startsWith('www.')) {
     url.hostname = url.hostname.replace('www.', '');
-    return NextResponse.redirect(url, 301);
+    return NextResponse.redirect(url, {
+      status: 301,
+      headers: {
+        'Cache-Control': 'public, max-age=31536000, immutable'
+      }
+    });
   }
 
   return NextResponse.next();
@@ -22,7 +20,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Исключаем статические файлы и Google верификационный файл
-    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|google-verification).*)',
+    // Применяем middleware только к основным страницам
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|robots.txt|sitemap.xml|google[a-zA-Z0-9_-]*).*)',
   ],
 }; 

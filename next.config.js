@@ -26,10 +26,21 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Убираем старые редиректы для блога
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.toxiguard.site',
+          },
+        ],
+        destination: 'https://toxiguard.site/:path*',
+        permanent: true,
+      },
     ];
   },
   experimental: {
+    optimizeCss: true,
   }
 };
 
