@@ -1,23 +1,15 @@
-// This file is kept for compatibility but logic has been moved to the root middleware.ts
+// TEMPORARY: All middleware functionality disabled to fix redirect loops
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  // All redirect logic has been moved to the root middleware.ts file
+  // All functionality disabled
   return NextResponse.next();
 }
 
-// Config is still needed for proper middleware paths
+// Minimizing path matching to essential files only
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - robots.txt
-     * - sitemap.xml
-     */
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
+    '/((?!_next|api|images|static|assets|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 } 

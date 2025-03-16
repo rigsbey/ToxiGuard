@@ -24,20 +24,9 @@ const nextConfig = {
     );
     return config;
   },
+  // Временно отключаем перенаправления, чтобы избежать конфликтов с middleware
   async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.toxiguard.site',
-          },
-        ],
-        destination: 'https://toxiguard.site/:path*',
-        permanent: true,
-      },
-    ];
+    return [];
   },
   experimental: {
     optimizeCss: true,
