@@ -1,12 +1,19 @@
 User-agent: *
 Allow: /
-Disallow: /api/
 Disallow: /admin/
 
-# Разрешаем индексацию блога и ресурсов
+# Разрешаем API только для необходимых запросов, запрещаем внутренние эндпоинты
+Disallow: /api/internal/
+Disallow: /api/auth/
+Disallow: /api/private/
+
+# Явно разрешаем индексацию всех основных разделов
 Allow: /blog/
 Allow: /en/blog/
 Allow: /resources/
+Allow: /profile/
+Allow: /how-it-works/
+Allow: /pricing/
 
 # Ссылка на Sitemap
 Sitemap: https://toxiguard.site/sitemap.xml 

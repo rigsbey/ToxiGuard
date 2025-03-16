@@ -4,14 +4,19 @@ import { useState, useEffect, useRef } from 'react';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowRightIcon, ShieldCheckIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, ShieldCheckIcon, QuestionMarkCircleIcon, ClockIcon, DocumentChartBarIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import JobHistoryList from '@/components/JobHistoryList';
+import { getUserJobHistory, JobHistoryItem } from '@/lib/firestore';
 
 export default function ProfilePage() {
   const [userName, setUserName] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [jobHistory, setJobHistory] = useState<JobHistoryItem[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
 
@@ -21,11 +26,32 @@ export default function ProfilePage() {
         router.push('/login');
       } else {
         setUserName(user.email?.split('@')[0] || 'User');
+        setUserId(user.uid);
       }
     });
 
     return () => unsubscribe();
   }, [router]);
+
+  useEffect(() => {
+    if (userId) {
+      loadJobHistory();
+    }
+  }, [userId]);
+
+  const loadJobHistory = async () => {
+    if (!userId) return;
+    
+    setIsLoading(true);
+    try {
+      const history = await getUserJobHistory(userId);
+      setJobHistory(history);
+    } catch (error) {
+      console.error('Error loading job history:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handlePlayVideo = () => {
     if (videoRef.current) {
@@ -52,9 +78,9 @@ export default function ProfilePage() {
       <main className="min-h-screen bg-gray-50 pt-20 pb-12">
         <div className="max-w-6xl mx-auto px-4">
           {/* Welcome Section */}
-          <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
+          <div className="bg-white rounded-2xl shadow-sm p-8 mb-8 border border-gray-100">
             <motion.h1 
-              className="text-4xl font-bold mb-4"
+              className="text-4xl font-bold mb-4 text-gray-900"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -65,23 +91,77 @@ export default function ProfilePage() {
             </p>
           </div>
 
-          {/* Primary CTA Section */}
+          {/* Job History Section */}
           <motion.div
-            className="bg-white rounded-2xl shadow-sm p-8 mb-8"
+            className="mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="max-w-3xl mx-auto text-center">
-              <ShieldCheckIcon className="w-16 h-16 text-blue-600 mx-auto mb-6" />
+            <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 mb-4">
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-3">
+                  <DocumentChartBarIcon className="w-6 h-6 text-blue-600" />
+                  <h2 className="text-2xl font-bold text-gray-900">Job Analysis History</h2>
+                </div>
+                <button
+                  onClick={loadJobHistory}
+                  className="flex items-center gap-1 text-sm px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+              <p className="text-gray-500 mb-4">
+                View and manage all the job postings you've analyzed with ToxiGuard
+              </p>
+            </div>
+            
+            {isLoading ? (
+              <div className="py-20 text-center bg-white rounded-2xl shadow-sm border border-gray-100">
+                <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+                <p className="text-gray-500">Loading your job history...</p>
+              </div>
+            ) : jobHistory.length === 0 ? (
+              <div className="bg-white rounded-2xl shadow-sm p-8 text-center mb-8 border border-gray-100">
+                <div className="max-w-md mx-auto">
+                  <img 
+                    src="/empty-state.svg" 
+                    alt="No analyses yet" 
+                    className="w-48 h-48 mx-auto mb-6"
+                  />
+                  <h2 className="text-2xl font-semibold mb-4">
+                    Ready to Analyze Your First Project?
+                  </h2>
+                  <p className="text-gray-600 mb-6">
+                    Install the Chrome Extension, open any Upwork job posting, then click "Analyze" to see potential risks here. Your analysis results will appear automatically in this dashboard.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <JobHistoryList jobs={jobHistory} onRefresh={loadJobHistory} />
+            )}
+          </motion.div>
+
+          {/* Primary CTA Section */}
+          <motion.div
+            className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg p-8 mb-8 text-white overflow-hidden relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-xl"></div>
+            <div className="max-w-3xl mx-auto text-center relative z-10">
+              <SparklesIcon className="w-16 h-16 text-blue-200 mx-auto mb-6" />
               <h2 className="text-3xl font-bold mb-4">Get Started with ToxiGuard</h2>
-              <p className="text-gray-600 text-lg mb-8">
-                Install our Chrome extension to start analyzing job postings and protect your freelance business
+              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+                Install our Chrome extension to start analyzing job postings and protect your freelance business from high-risk projects
               </p>
               <Link 
                 href="https://chromewebstore.google.com/detail/icijbieljniejiicoddalgfkdkadknnn?utm_source=item-share-cb"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium mb-6"
+                className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors text-lg font-medium mb-6 shadow-md"
               >
                 Install Chrome Extension
                 <ArrowRightIcon className="w-5 h-5" />
@@ -89,7 +169,7 @@ export default function ProfilePage() {
               <div className="text-center mt-4">
                 <Link 
                   href="#demo"
-                  className="text-blue-600 hover:underline inline-flex items-center gap-1"
+                  className="text-blue-100 hover:text-white inline-flex items-center gap-1 hover:underline"
                 >
                   Already installed? See how to analyze your first project
                   <ArrowRightIcon className="w-4 h-4" />
@@ -101,12 +181,12 @@ export default function ProfilePage() {
           {/* Demo Section */}
           <motion.div
             id="demo"
-            className="bg-white rounded-2xl shadow-sm overflow-hidden mb-8"
+            className="bg-white rounded-2xl shadow-sm overflow-hidden mb-8 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="p-8 text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-4">See How It Works</h2>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">See How It Works</h2>
               <p className="text-gray-600 text-lg mb-8">
                 Watch how ToxiGuard analyzes job postings and helps you make informed decisions about potential projects
               </p>
@@ -130,7 +210,7 @@ export default function ProfilePage() {
                     onClick={handlePlayVideo}
                     className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors group"
                   >
-                    <div className="w-20 h-20 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center shadow-xl">
                       <svg className="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                       </svg>
@@ -151,25 +231,8 @@ export default function ProfilePage() {
             </div>
           </motion.div>
 
-          {/* Empty State for Analyses */}
-          <div className="bg-white rounded-2xl p-8 text-center mb-8">
-            <div className="max-w-md mx-auto">
-              <img 
-                src="/empty-state.svg" 
-                alt="No analyses yet" 
-                className="w-48 h-48 mx-auto mb-6"
-              />
-              <h2 className="text-2xl font-semibold mb-4">
-                Ready to Analyze Your First Project?
-              </h2>
-              <p className="text-gray-600 mb-6">
-                Install the Chrome Extension, open any Upwork job posting, then click "Analyze" to see potential risks here. Your analysis results will appear automatically in this dashboard.
-              </p>
-            </div>
-          </div>
-
           {/* Help Section */}
-          <div className="bg-white rounded-2xl p-8">
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
             <div className="max-w-2xl mx-auto text-center">
               <QuestionMarkCircleIcon className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h2 className="text-2xl font-semibold mb-4">Need Help?</h2>
