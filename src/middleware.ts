@@ -1,21 +1,13 @@
+// This file is kept for compatibility but logic has been moved to the root middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const url = request.nextUrl;
-  
-  // Проверяем, что мы в production среде
-  if (process.env.NODE_ENV === 'production') {
-    // Только HTTPS редирект
-    if (url.protocol === 'http:') {
-      return NextResponse.redirect(`https://toxiguard.site${url.pathname}`);
-    }
-  }
-
+  // All redirect logic has been moved to the root middleware.ts file
   return NextResponse.next();
 }
 
-// Указываем, на каких путях должен срабатывать middleware
+// Config is still needed for proper middleware paths
 export const config = {
   matcher: [
     /*
