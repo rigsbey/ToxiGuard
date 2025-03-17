@@ -97,10 +97,17 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
     // Use a default image since we don't have the actual images
     const defaultImage = '/images/upwork-screenshot.jpg';
     
-    // Process markdown content to HTML
+    // Process markdown content to HTML using remark
     const processedContent = content
       .replace(/^# .*$/m, '') // Remove the title (h1) as we display it separately
       .trim();
+    
+    // Convert markdown to HTML using remark
+    const processedHtml = await remark()
+      .use(html)
+      .process(processedContent);
+    
+    const contentHtml = processedHtml.toString();
     
     return {
       slug,
@@ -111,7 +118,7 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
       authorTitle: data.authorTitle || 'Freelance Protection Experts',
       tags: data.tags || ['freelancing', 'client protection'],
       readingTime,
-      content: processedContent,
+      content: contentHtml,
       image: defaultImage,
     };
   } catch (error) {
@@ -148,122 +155,86 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     <>
       <Navbar />
       <main className="pt-32 pb-16">
-        <article className="max-w-4xl mx-auto px-4">
-          <div className="mb-8">
-            <Link 
-              href="/blog" 
-              className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-4"
-            >
-              <ChevronLeftIcon className="w-4 h-4 mr-1" />
-              Back to Blog
-            </Link>
-            
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              {post.title}
-            </h1>
-            
-            <div className="flex flex-wrap items-center text-gray-600 text-sm gap-4 mb-6">
-              <div className="flex items-center">
-                <CalendarIcon className="w-4 h-4 mr-1" />
-                <time dateTime={post.date}>
-                  {formatDate(post.date)}
-                </time>
+        <div className="container mx-auto px-4">
+          <article className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <Link 
+                href="/blog" 
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-4"
+              >
+                <ChevronLeftIcon className="w-4 h-4 mr-1" />
+                Back to Blog
+              </Link>
+              
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                {post.title}
+              </h1>
+              
+              <div className="flex flex-wrap items-center text-gray-600 text-sm gap-4 mb-6">
+                <div className="flex items-center">
+                  <CalendarIcon className="w-4 h-4 mr-1" />
+                  <time dateTime={post.date}>
+                    {formatDate(post.date)}
+                  </time>
+                </div>
+                
+                <div className="flex items-center">
+                  <ClockIcon className="w-4 h-4 mr-1" />
+                  {post.readingTime}
+                </div>
+                
+                <div className="flex items-center">
+                  <span className="font-medium">{post.author}</span>
+                </div>
               </div>
               
-              <div className="flex items-center">
-                <ClockIcon className="w-4 h-4 mr-1" />
-                {post.readingTime}
-              </div>
-              
-              <div className="flex items-center">
-                <span className="font-medium">{post.author}</span>
-              </div>
+              {post.image && (
+                <div className="mb-8 rounded-xl overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-auto object-cover" 
+                  />
+                </div>
+              )}
             </div>
             
-            {post.image && (
-              <div className="mb-8 rounded-xl overflow-hidden">
-                <img 
-                  src={post.image} 
-                  alt={post.title}
-                  className="w-full h-auto object-cover" 
-                />
+            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+            
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <div className="flex items-center gap-2 flex-wrap mb-6">
+                <TagIcon className="w-4 h-4 text-gray-600" />
+                {post.tags.map(tag => (
+                  <Link 
+                    key={tag}
+                    href={`/blog/tag/${tag.replace(/\s+/g, '-').toLowerCase()}`}
+                    className="bg-gray-100 text-gray-700 py-1 px-2 rounded-md text-sm hover:bg-gray-200 transition-colors"
+                  >
+                    {tag}
+                  </Link>
+                ))}
               </div>
-            )}
-          </div>
+              
+              <div className="bg-blue-50 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
+                <div className="w-20 h-20 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-blue-600">
+                    {post.author.split(' ').map(name => name[0]).join('')}
+                  </span>
+                </div>
+                
+                <div>
+                  <h3 className="font-bold text-lg">{post.author}</h3>
+                  <p className="text-gray-600 mb-2">{post.authorTitle}</p>
+                  <p className="text-sm">Expert in freelance client management, protection strategies, and business growth.</p>
+                </div>
+              </div>
+            </div>
+          </article>
           
-          <div className="prose prose-lg max-w-none">
-            {post.content.split('\n\n').map((paragraph, index) => {
-              // Handle headings
-              if (paragraph.startsWith('## ')) {
-                return <h2 key={index} className="text-2xl font-bold mt-8 mb-4">{paragraph.replace('## ', '')}</h2>;
-              } else if (paragraph.startsWith('### ')) {
-                return <h3 key={index} className="text-xl font-bold mt-6 mb-3">{paragraph.replace('### ', '')}</h3>;
-              } else if (paragraph.startsWith('#### ')) {
-                return <h4 key={index} className="text-lg font-bold mt-4 mb-2">{paragraph.replace('#### ', '')}</h4>;
-              } else if (paragraph.startsWith('- ')) {
-                // Handle unordered lists
-                const items = paragraph.split('\n').map(item => item.replace('- ', ''));
-                return (
-                  <ul key={index} className="list-disc pl-6 mb-4">
-                    {items.map((item, i) => <li key={i} className="mb-1">{item}</li>)}
-                  </ul>
-                );
-              } else if (paragraph.match(/^\d+\. /)) {
-                // Handle ordered lists
-                const items = paragraph.split('\n').map(item => item.replace(/^\d+\. /, ''));
-                return (
-                  <ol key={index} className="list-decimal pl-6 mb-4">
-                    {items.map((item, i) => <li key={i} className="mb-1">{item}</li>)}
-                  </ol>
-                );
-              } else if (paragraph.startsWith('```')) {
-                // Handle code blocks
-                const code = paragraph.replace(/```.*\n/, '').replace(/\n```$/, '');
-                return (
-                  <pre key={index} className="bg-gray-100 p-4 rounded-md overflow-x-auto mb-4">
-                    <code>{code}</code>
-                  </pre>
-                );
-              } else {
-                // Regular paragraphs
-                return <p key={index} className="mb-4">{paragraph}</p>;
-              }
-            })}
+          <div className="max-w-4xl mx-auto px-4 mt-16">
+            <h2 className="text-2xl font-bold mb-6">Subscribe to Our Newsletter</h2>
+            <Newsletter />
           </div>
-          
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <div className="flex items-center gap-2 flex-wrap mb-6">
-              <TagIcon className="w-4 h-4 text-gray-600" />
-              {post.tags.map(tag => (
-                <Link 
-                  key={tag}
-                  href={`/blog/tag/${tag.replace(/\s+/g, '-').toLowerCase()}`}
-                  className="bg-gray-100 text-gray-700 py-1 px-2 rounded-md text-sm hover:bg-gray-200 transition-colors"
-                >
-                  {tag}
-                </Link>
-              ))}
-            </div>
-            
-            <div className="bg-blue-50 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
-              <div className="w-20 h-20 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center">
-                <span className="text-2xl font-bold text-blue-600">
-                  {post.author.split(' ').map(name => name[0]).join('')}
-                </span>
-              </div>
-              
-              <div>
-                <h3 className="font-bold text-lg">{post.author}</h3>
-                <p className="text-gray-600 mb-2">{post.authorTitle}</p>
-                <p className="text-sm">Expert in freelance client management, protection strategies, and business growth.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-        
-        <div className="max-w-4xl mx-auto px-4 mt-16">
-          <h2 className="text-2xl font-bold mb-6">Subscribe to Our Newsletter</h2>
-          <Newsletter />
         </div>
       </main>
       <Footer />

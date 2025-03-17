@@ -230,84 +230,86 @@ export default function BlogPage() {
       />
       
       <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950/50 pt-32">
-        <div className="container mx-auto px-4 py-20">
-          <div className="flex flex-col items-center text-center mb-20">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
-              ToxiGuard Blog
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl">
-              Insights, guides, and stories to help you navigate the freelance world safely and successfully.
-            </p>
-          </div>
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col items-center text-center mb-20">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
+                ToxiGuard Blog
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-3xl">
+                Insights, guides, and stories to help you navigate the freelance world safely and successfully.
+              </p>
+            </div>
           
-          <div className="mb-16">
-            <h2 className="text-3xl font-semibold mb-8">Featured Articles</h2>
-            <div className="grid grid-cols-1 gap-12">
-              {articles.slice(0, 1).map((article) => (
-                <div 
-                  key={article.id}
-                  className="flex flex-col md:flex-row gap-8 hover:opacity-90 transition-opacity cursor-pointer"
-                >
+            <div className="mb-16">
+              <h2 className="text-3xl font-semibold mb-8">Featured Articles</h2>
+              <div className="grid grid-cols-1 gap-12">
+                {articles.slice(0, 1).map((article) => (
                   <div 
-                    className="bg-muted rounded-lg aspect-video bg-cover bg-center md:w-2/3"
-                    style={{ backgroundImage: `url(${article.image})` }}
-                  />
-                  <div className="flex flex-col justify-center md:w-1/3 gap-6">
+                    key={article.id}
+                    className="flex flex-col md:flex-row gap-8 hover:opacity-90 transition-opacity cursor-pointer"
+                  >
+                    <div 
+                      className="bg-muted rounded-lg aspect-video bg-cover bg-center md:w-2/3"
+                      style={{ backgroundImage: `url(${article.image})` }}
+                    />
+                    <div className="flex flex-col justify-center md:w-1/3 gap-6">
+                      <div className="flex items-center gap-3">
+                        <Badge variant="secondary">{article.category}</Badge>
+                        <span className="text-sm text-muted-foreground">{article.date}</span>
+                      </div>
+                      <h3 className="text-4xl font-semibold">{article.title}</h3>
+                      <p className="text-muted-foreground">{article.description}</p>
+                      <div className="flex items-center gap-3 mt-4">
+                        <Avatar>
+                          <AvatarImage src={article.author.image} alt={article.author.name} />
+                          <AvatarFallback>{article.author.initials}</AvatarFallback>
+                        </Avatar>
+                        <span>{article.author.name}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="mb-16">
+              <h2 className="text-3xl font-semibold mb-8">Latest Articles</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {articles.slice(1).map((article) => (
+                  <div 
+                    key={article.id}
+                    className="flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer group"
+                  >
+                    <div 
+                      className="bg-muted rounded-lg aspect-video bg-cover bg-center relative"
+                      style={{ backgroundImage: `url(${article.image})` }}
+                    >
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg" />
+                    </div>
                     <div className="flex items-center gap-3">
                       <Badge variant="secondary">{article.category}</Badge>
                       <span className="text-sm text-muted-foreground">{article.date}</span>
                     </div>
-                    <h3 className="text-4xl font-semibold">{article.title}</h3>
-                    <p className="text-muted-foreground">{article.description}</p>
-                    <div className="flex items-center gap-3 mt-4">
-                      <Avatar>
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{article.title}</h3>
+                    <p className="text-muted-foreground text-sm">{article.description}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Avatar className="h-6 w-6">
                         <AvatarImage src={article.author.image} alt={article.author.name} />
                         <AvatarFallback>{article.author.initials}</AvatarFallback>
                       </Avatar>
-                      <span>{article.author.name}</span>
+                      <span className="text-sm">{article.author.name}</span>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-          
-          <div className="mb-16">
-            <h2 className="text-3xl font-semibold mb-8">Latest Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.slice(1).map((article) => (
-                <div 
-                  key={article.id}
-                  className="flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer group"
-                >
-                  <div 
-                    className="bg-muted rounded-lg aspect-video bg-cover bg-center relative"
-                    style={{ backgroundImage: `url(${article.image})` }}
-                  >
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg" />
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Badge variant="secondary">{article.category}</Badge>
-                    <span className="text-sm text-muted-foreground">{article.date}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{article.title}</h3>
-                  <p className="text-muted-foreground text-sm">{article.description}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Avatar className="h-6 w-6">
-                      <AvatarImage src={article.author.image} alt={article.author.name} />
-                      <AvatarFallback>{article.author.initials}</AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm">{article.author.name}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <div className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-800">
-            <h2 className="text-2xl font-bold mb-6 text-center">Subscribe to Our Newsletter</h2>
-            <div className="max-w-2xl mx-auto">
-              <Newsletter />
+            
+            <div className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-800">
+              <h2 className="text-2xl font-bold mb-6 text-center">Subscribe to Our Newsletter</h2>
+              <div className="max-w-2xl mx-auto">
+                <Newsletter />
+              </div>
             </div>
           </div>
         </div>
