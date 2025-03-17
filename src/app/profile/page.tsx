@@ -4,12 +4,22 @@ import { useState, useEffect, useRef } from 'react';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowRightIcon, ShieldCheckIcon, QuestionMarkCircleIcon, ClockIcon, DocumentChartBarIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { 
+  ArrowRightIcon, 
+  ShieldCheckIcon, 
+  QuestionMarkCircleIcon, 
+  ClockIcon, 
+  DocumentChartBarIcon, 
+  SparklesIcon,
+  DocumentTextIcon,
+  UserCircleIcon
+} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import JobHistoryList from '@/components/JobHistoryList';
 import { getUserJobHistory, JobHistoryItem } from '@/lib/firestore';
+import StatisticsPanel from '@/components/StatisticsPanel';
 
 export default function ProfilePage() {
   const [userName, setUserName] = useState('');
@@ -17,19 +27,55 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [jobHistory, setJobHistory] = useState<JobHistoryItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
+  const [extensionInstalled, setExtensionInstalled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const hidePasswordSecurityAlert = () => {
+      const passwordAlerts = document.querySelectorAll('div[role="dialog"]');
+      passwordAlerts.forEach(alert => {
+        if (alert.textContent?.includes('password') || 
+            alert.textContent?.includes('saved passwords') ||
+            alert.textContent?.includes('Password') || 
+            alert.textContent?.includes('leaked') ||
+            alert.textContent?.includes('compromised')) {
+          (alert as HTMLElement).style.display = 'none';
+        }
+      });
+
+      const style = document.createElement('style');
+      style.textContent = `
+        div[role="dialog"][aria-modal="true"]:has(div[aria-describedby]) {
+          display: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+    };
+
+    hidePasswordSecurityAlert();
+    const interval = setInterval(hidePasswordSecurityAlert, 1000);
+    setTimeout(() => clearInterval(interval), 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         router.push('/login');
       } else {
-        setUserName(user.email?.split('@')[0] || 'User');
+        const nameFromEmail = user.email?.split('@')[0] || 'User';
+        setUserName(nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1));
         setUserId(user.uid);
       }
     });
 
+    const checkExtension = () => {
+      setExtensionInstalled(localStorage.getItem('toxiguardExtensionInstalled') === 'true');
+    };
+    
+    checkExtension();
     return () => unsubscribe();
   }, [router]);
 
@@ -79,23 +125,42 @@ export default function ProfilePage() {
         <div className="max-w-6xl mx-auto px-4">
           {/* Welcome Section */}
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8 border border-gray-100">
-            <motion.h1 
-              className="text-4xl font-bold mb-4 text-gray-900"
+            <motion.div 
+              className="flex items-center justify-between"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              Welcome, {userName}!
-            </motion.h1>
-            <p className="text-gray-600 text-lg mb-6">
-              This is your command center for project risk analysis. Track your analyses, save history, and protect your freelance business.
-            </p>
+              <div>
+                <h1 className="text-4xl font-bold mb-4 text-gray-900 flex items-center gap-2">
+                  Welcome, {userName}! <span className="text-blue-500">👋</span>
+                </h1>
+                <p className="text-gray-600 text-lg mb-6">
+                  This is your command center for project risk analysis. Track your analyses, save history, and protect your freelance business.
+                </p>
+              </div>
+              <div className="hidden md:block">
+                <UserCircleIcon className="w-20 h-20 text-blue-100 bg-blue-50 rounded-full p-2" />
+              </div>
+            </motion.div>
           </div>
+
+          {/* Statistics Panel */}
+          {jobHistory.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <StatisticsPanel jobs={jobHistory} />
+            </motion.div>
+          )}
 
           {/* Job History Section */}
           <motion.div
             className="mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
           >
             <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 mb-4">
               <div className="flex items-center justify-between mb-1">
@@ -144,39 +209,68 @@ export default function ProfilePage() {
             )}
           </motion.div>
 
-          {/* Primary CTA Section */}
-          <motion.div
-            className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg p-8 mb-8 text-white overflow-hidden relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-xl"></div>
-            <div className="max-w-3xl mx-auto text-center relative z-10">
-              <SparklesIcon className="w-16 h-16 text-blue-200 mx-auto mb-6" />
-              <h2 className="text-3xl font-bold mb-4">Get Started with ToxiGuard</h2>
-              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                Install our Chrome extension to start analyzing job postings and protect your freelance business from high-risk projects
-              </p>
-              <Link 
-                href="https://chromewebstore.google.com/detail/icijbieljniejiicoddalgfkdkadknnn?utm_source=item-share-cb"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors text-lg font-medium mb-6 shadow-md"
-              >
-                Install Chrome Extension
-                <ArrowRightIcon className="w-5 h-5" />
-              </Link>
-              <div className="text-center mt-4">
+          {/* Primary CTA Section - показываем только если расширение не установлено */}
+          {!extensionInstalled && (
+            <motion.div
+              className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg p-8 mb-8 text-white overflow-hidden relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-xl"></div>
+              <div className="max-w-3xl mx-auto text-center relative z-10">
+                <SparklesIcon className="w-16 h-16 text-blue-200 mx-auto mb-6" />
+                <h2 className="text-3xl font-bold mb-4">Get Started with ToxiGuard</h2>
+                <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+                  Install our Chrome extension to start analyzing job postings and protect your freelance business from high-risk projects
+                </p>
                 <Link 
-                  href="#demo"
-                  className="text-blue-100 hover:text-white inline-flex items-center gap-1 hover:underline"
+                  href="https://chromewebstore.google.com/detail/icijbieljniejiicoddalgfkdkadknnn?utm_source=item-share-cb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors text-lg font-medium mb-6 shadow-md"
                 >
-                  Already installed? See how to analyze your first project
-                  <ArrowRightIcon className="w-4 h-4" />
+                  Install Chrome Extension
+                  <ArrowRightIcon className="w-5 h-5" />
+                </Link>
+                <div className="text-center mt-4">
+                  <Link 
+                    href="#demo"
+                    className="text-blue-100 hover:text-white inline-flex items-center gap-1 hover:underline"
+                  >
+                    Already installed? See how to analyze your first project
+                    <ArrowRightIcon className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+          
+          {/* Если расширение установлено, показываем альтернативный блок с призывом анализировать вакансии */}
+          {extensionInstalled && (
+            <motion.div
+              className="bg-gradient-to-br from-green-600 to-teal-700 rounded-2xl shadow-lg p-8 mb-8 text-white overflow-hidden relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-xl"></div>
+              <div className="max-w-3xl mx-auto text-center relative z-10">
+                <ShieldCheckIcon className="w-16 h-16 text-green-200 mx-auto mb-6" />
+                <h2 className="text-3xl font-bold mb-4">Analyze Your Next Job Post</h2>
+                <p className="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
+                  Use your installed ToxiGuard extension on any Upwork job posting to identify potential risks
+                </p>
+                <Link 
+                  href="https://www.upwork.com/nx/jobs/search/?sort=recency"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-green-600 px-8 py-4 rounded-lg hover:bg-green-50 transition-colors text-lg font-medium mb-6 shadow-md"
+                >
+                  Browse Jobs on Upwork
+                  <ArrowRightIcon className="w-5 h-5" />
                 </Link>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
 
           {/* Demo Section */}
           <motion.div
@@ -219,13 +313,22 @@ export default function ProfilePage() {
                 )}
               </div>
             </div>
-            <div className="p-6 bg-gray-50">
+            <div className="p-8 bg-gray-50">
               <div className="max-w-3xl mx-auto">
-                <h3 className="font-semibold text-lg mb-2">ToxiGuard in Action:</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• Instant detection of hidden risks in freelance marketplace jobs</li>
-                  <li>• AI-powered analysis of budget, timeline, and project requirements</li>
-                  <li>• Protection against unreliable clients and unrealistic expectations</li>
+                <h3 className="font-semibold text-lg mb-4">ToxiGuard in Action:</h3>
+                <ul className="text-gray-600 space-y-3">
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-500 rounded-full bg-green-100 p-1">✓</span>
+                    Instant detection of hidden risks in freelance marketplace jobs
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500 rounded-full bg-blue-100 p-1">✓</span>
+                    AI-powered analysis of budget, timeline, and project requirements
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-500 rounded-full bg-purple-100 p-1">✓</span>
+                    Protection against unreliable clients and unrealistic expectations
+                  </li>
                 </ul>
               </div>
             </div>
@@ -242,18 +345,21 @@ export default function ProfilePage() {
               <div className="flex justify-center gap-4">
                 <Link 
                   href="/faq"
-                  className="text-blue-600 hover:underline inline-flex items-center gap-1"
+                  className="text-blue-600 hover:underline inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors"
                 >
+                  <DocumentTextIcon className="w-5 h-5" />
                   View FAQ
-                  <ArrowRightIcon className="w-4 h-4" />
+                  <ArrowRightIcon className="w-4 h-4 ml-1" />
                 </Link>
-                <span className="text-gray-300">|</span>
                 <Link 
                   href="/support"
-                  className="text-blue-600 hover:underline inline-flex items-center gap-1"
+                  className="text-blue-600 hover:underline inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors"
                 >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                  </svg>
                   Contact Support
-                  <ArrowRightIcon className="w-4 h-4" />
+                  <ArrowRightIcon className="w-4 h-4 ml-1" />
                 </Link>
               </div>
             </div>

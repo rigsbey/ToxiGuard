@@ -1,109 +1,319 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
-import { blogPosts } from '@/data/blogPosts';
-import SeoHeading from '@/components/SeoHeading';
+import Link from 'next/link';
+import Image from 'next/image';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Newsletter from '@/components/Newsletter';
+import { formatDate } from '@/utils/date';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Script from 'next/script';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+
+const articles = [
+  {
+    id: 1,
+    category: "Safety",
+    author: {
+      name: "Alex Thompson",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop",
+      initials: "AT"
+    },
+    title: "Top 10 Red Flags in Freelance Client Communication",
+    description: "Learn to identify warning signs in client messages and project descriptions that could indicate potential problems. Protect yourself from toxic clients before it's too late.",
+    image: "https://images.unsplash.com/photo-1586892477838-2b96e85e0f96?w=1200&h=675&fit=crop",
+    date: "Jan 15, 2024"
+  },
+  {
+    id: 2,
+    category: "Tips",
+    author: {
+      name: "Sarah Chen",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop",
+      initials: "SC"
+    },
+    title: "Secure Payment Methods for Freelancers",
+    description: "A comprehensive guide to choosing the safest payment methods and protecting yourself from payment scams in the freelance world.",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=675&fit=crop",
+    date: "Feb 3, 2024"
+  },
+  {
+    id: 3,
+    category: "Guide",
+    author: {
+      name: "Mike Roberts",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop",
+      initials: "MR"
+    },
+    title: "Building a Bulletproof Freelance Contract",
+    description: "Essential clauses and terms to include in your freelance contracts to protect your interests and ensure timely payments.",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&h=675&fit=crop",
+    date: "Feb 28, 2024"
+  },
+  {
+    id: 4,
+    category: "Tools",
+    author: {
+      name: "Laura Johnson",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
+      initials: "LJ"
+    },
+    title: "AI Tools for Freelancer Safety: ToxiGuard and Beyond",
+    description: "Discover how AI-powered tools like ToxiGuard can help you identify potentially problematic clients before accepting a project.",
+    image: "https://images.unsplash.com/photo-1562813733-b31f71025d54?w=1200&h=675&fit=crop",
+    date: "Mar 10, 2024"
+  },
+  {
+    id: 5,
+    category: "Story",
+    author: {
+      name: "David Wilson",
+      image: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?w=200&h=200&fit=crop",
+      initials: "DW"
+    },
+    title: "How I Avoided a $10,000 Freelance Scam Using ToxiGuard",
+    description: "A freelance developer shares his experience of how analyzing a suspicious client saved him from a potential scam and protected his business.",
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1200&h=675&fit=crop",
+    date: "Mar 22, 2024"
+  },
+  {
+    id: 6,
+    category: "Security",
+    author: {
+      name: "Natalie Kim",
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop",
+      initials: "NK"
+    },
+    title: "Privacy and Security for Freelancers: A Complete Guide",
+    description: "Essential practices to keep your freelancing business, client data, and personal information secure in today's digital marketplace.",
+    image: "https://images.unsplash.com/photo-1563237023-b1e970526dcb?w=1200&h=675&fit=crop",
+    date: "Apr 5, 2024"
+  }
+];
 
 export const metadata: Metadata = {
-  title: 'Freelance Protection Blog | ToxiGuard',
-  description: 'Learn how to protect yourself from toxic clients, secure payments, and avoid risky projects with expert advice from the ToxiGuard team.',
-  keywords: ['freelance protection', 'toxic client detection', 'freelance payment security', 'upwork risk analysis', 'freelance contract protection'],
+  title: 'ToxiGuard Blog - Resources for Freelancer Protection',
+  description: 'Expert tips, guides, and insights to help freelancers protect themselves from toxic clients and payment risks.',
+  keywords: 'freelancer blog, client protection, toxic clients, payment security, freelance tips, client screening',
   openGraph: {
-    title: 'Freelance Protection Blog | ToxiGuard',
-    description: 'Learn how to protect yourself from toxic clients, secure payments, and avoid risky projects with expert advice from the ToxiGuard team.',
+    title: 'ToxiGuard Blog - Resources for Freelancer Protection',
+    description: 'Expert tips, guides, and insights to help freelancers protect themselves from toxic clients and payment risks.',
     url: 'https://toxiguard.site/blog',
+    siteName: 'ToxiGuard',
+    images: [
+      {
+        url: 'https://toxiguard.site/images/og/blog-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'ToxiGuard Blog Resources',
+      },
+    ],
+    locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ToxiGuard Blog - Resources for Freelancer Protection',
+    description: 'Expert tips, guides, and insights to help freelancers protect themselves from toxic clients and payment risks.',
+    images: ['https://toxiguard.site/images/og/blog-og.jpg'],
   },
 };
 
+type BlogPost = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+  tags: string[];
+  readingTime: string;
+  image: string;
+};
+
+async function getBlogPosts(): Promise<BlogPost[]> {
+  const postsDirectory = path.join(process.cwd(), 'src/data/blog-posts');
+  
+  try {
+    const filenames = fs.readdirSync(postsDirectory);
+    
+    const posts = filenames
+      .filter(filename => filename.endsWith('.md'))
+      .map(filename => {
+        const slug = filename.replace(/\.md$/, '');
+        const filePath = path.join(postsDirectory, filename);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const { data, content } = matter(fileContents);
+        
+        // Extract title and description from the markdown content if not in frontmatter
+        let title = data.title;
+        let description = data.description;
+        
+        if (!title) {
+          // Extract the first h1 heading as title
+          const titleMatch = content.match(/^# (.*)/m);
+          title = titleMatch ? titleMatch[1] : 'Untitled';
+        }
+        
+        if (!description) {
+          // Extract first paragraph after intro as description
+          const descMatch = content.match(/^## Introduction\s*\n\n([^\n]+)/m);
+          description = descMatch ? descMatch[1] : '';
+        }
+        
+        // Estimate reading time
+        const words = content.split(/\s+/).length;
+        const readingTime = Math.ceil(words / 200) + ' min read';
+        
+        // Use a default image for all blog posts since we don't have the actual images
+        const defaultImage = '/images/upwork-screenshot.jpg';
+        
+        return {
+          slug,
+          title,
+          description: description || `Learn more about ${title}`,
+          date: data.date || new Date().toISOString().split('T')[0],
+          author: data.author || 'ToxiGuard Team',
+          tags: data.tags || ['freelancing', 'client protection'],
+          readingTime,
+          image: defaultImage, // Use default image instead of data.image
+        };
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
+    return posts;
+  } catch (error) {
+    console.error('Error reading blog posts:', error);
+    return [];
+  }
+}
+
 export default function BlogPage() {
   return (
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <SeoHeading 
-            level={1} 
-            className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
-            keywords={['freelance protection blog', 'toxic client advice', 'freelance security tips']}
-          >
-            Freelance Protection Blog
-          </SeoHeading>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
-            Expert advice to help you avoid toxic clients and protect your freelance business
-          </p>
-        </div>
-        
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {blogPosts.map((post) => (
-            <article key={post.id} className="flex flex-col items-start">
-              <div className="relative w-full">
-                <img
-                  src={post.image || '/blog/placeholder.jpg'}
-                  alt={post.title}
-                  className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-                />
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
-              </div>
-              <div className="max-w-xl">
-                <div className="mt-8 flex items-center gap-x-4 text-xs">
-                  <time dateTime={post.isoDate} className="text-gray-500">
-                    {post.date}
-                  </time>
-                  <span className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
-                    {post.category}
-                  </span>
-                </div>
-                <div className="group relative">
-                  <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                    <Link href={`/blog/${post.slug}`}>
-                      <span className="absolute inset-0" />
-                      {post.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.excerpt}</p>
-                </div>
-                <div className="mt-4 flex items-center gap-x-4">
-                  <div className="text-sm text-gray-500">
-                    {post.readTime}
+    <>
+      <Navbar />
+      
+      <Script
+        id="blog-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Blog',
+            name: 'ToxiGuard Blog',
+            description: 'Expert tips, guides, and insights to help freelancers protect themselves from toxic clients and payment risks.',
+            url: 'https://toxiguard.site/blog',
+            publisher: {
+              '@type': 'Organization',
+              name: 'ToxiGuard',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://toxiguard.site/images/logo.png',
+              }
+            },
+            blogPost: articles.map(article => ({
+              '@type': 'BlogPosting',
+              headline: article.title,
+              description: article.description,
+              datePublished: article.date,
+              author: {
+                '@type': 'Person',
+                name: article.author.name,
+              },
+              image: article.image,
+              url: `https://toxiguard.site/blog/${article.id}`,
+              keywords: article.category,
+            })),
+          })
+        }}
+      />
+      
+      <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950/50 pt-32">
+        <div className="container mx-auto px-4 py-20">
+          <div className="flex flex-col items-center text-center mb-20">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
+              ToxiGuard Blog
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl">
+              Insights, guides, and stories to help you navigate the freelance world safely and successfully.
+            </p>
+          </div>
+          
+          <div className="mb-16">
+            <h2 className="text-3xl font-semibold mb-8">Featured Articles</h2>
+            <div className="grid grid-cols-1 gap-12">
+              {articles.slice(0, 1).map((article) => (
+                <div 
+                  key={article.id}
+                  className="flex flex-col md:flex-row gap-8 hover:opacity-90 transition-opacity cursor-pointer"
+                >
+                  <div 
+                    className="bg-muted rounded-lg aspect-video bg-cover bg-center md:w-2/3"
+                    style={{ backgroundImage: `url(${article.image})` }}
+                  />
+                  <div className="flex flex-col justify-center md:w-1/3 gap-6">
+                    <div className="flex items-center gap-3">
+                      <Badge variant="secondary">{article.category}</Badge>
+                      <span className="text-sm text-muted-foreground">{article.date}</span>
+                    </div>
+                    <h3 className="text-4xl font-semibold">{article.title}</h3>
+                    <p className="text-muted-foreground">{article.description}</p>
+                    <div className="flex items-center gap-3 mt-4">
+                      <Avatar>
+                        <AvatarImage src={article.author.image} alt={article.author.name} />
+                        <AvatarFallback>{article.author.initials}</AvatarFallback>
+                      </Avatar>
+                      <span>{article.author.name}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        
-        <div className="mt-16 text-center">
-          <SeoHeading 
-            level={2} 
-            className="text-2xl font-bold tracking-tight text-gray-900"
-            keywords={['freelance newsletter', 'protection tips', 'freelance advice']}
-          >
-            Subscribe to Our Newsletter
-          </SeoHeading>
-          <p className="mt-4 text-lg text-gray-600">
-            Get the latest freelance protection tips and strategies delivered to your inbox
-          </p>
-          <div className="mt-6 flex max-w-md mx-auto items-center gap-x-4">
-            <label htmlFor="email-address" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="email-address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
-              placeholder="Enter your email"
-            />
-            <button
-              type="submit"
-              className="flex-none rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Subscribe
-            </button>
+              ))}
+            </div>
+          </div>
+          
+          <div className="mb-16">
+            <h2 className="text-3xl font-semibold mb-8">Latest Articles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {articles.slice(1).map((article) => (
+                <div 
+                  key={article.id}
+                  className="flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer group"
+                >
+                  <div 
+                    className="bg-muted rounded-lg aspect-video bg-cover bg-center relative"
+                    style={{ backgroundImage: `url(${article.image})` }}
+                  >
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg" />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Badge variant="secondary">{article.category}</Badge>
+                    <span className="text-sm text-muted-foreground">{article.date}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{article.title}</h3>
+                  <p className="text-muted-foreground text-sm">{article.description}</p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <Avatar className="h-6 w-6">
+                      <AvatarImage src={article.author.image} alt={article.author.name} />
+                      <AvatarFallback>{article.author.initials}</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm">{article.author.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-800">
+            <h2 className="text-2xl font-bold mb-6 text-center">Subscribe to Our Newsletter</h2>
+            <div className="max-w-2xl mx-auto">
+              <Newsletter />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      
+      <Footer />
+    </>
   );
 } 

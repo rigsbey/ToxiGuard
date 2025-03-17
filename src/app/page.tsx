@@ -6,7 +6,7 @@ import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
 import WaitlistSection from '@/components/WaitlistSection'
 import SuccessStories from '@/components/SuccessStories'
-import BlogPreview from '@/components/BlogSection'
+import { Blog } from '@/components/ui/blog-section-with-rich-preview'
 import HowItWorksSection from '@/components/HowItWorksSection'
 import MetricsSection from '@/components/MetricsSection'
 import dynamic from 'next/dynamic'
@@ -35,6 +35,75 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      <Script id="schema-software-application" type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "ToxiGuard",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "9.00",
+            "priceCurrency": "USD"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "852"
+          },
+          "description": "AI-powered protection system for freelancers against toxic clients and payment risks"
+        }
+      `}
+      </Script>
+      
+      <Script id="schema-organization" type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "ToxiGuard",
+          "url": "https://toxiguard.site",
+          "logo": "https://toxiguard.site/logo.png",
+          "sameAs": [
+            "https://twitter.com/toxiguard",
+            "https://linkedin.com/company/toxiguard",
+            "https://facebook.com/toxiguard"
+          ]
+        }
+      `}
+      </Script>
+      
+      <Script id="schema-product" type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "ToxiGuard AI Protection",
+          "description": "AI-powered protection system for freelancers against toxic clients and payment risks",
+          "image": "https://toxiguard.site/og-image.jpg",
+          "brand": {
+            "@type": "Brand",
+            "name": "ToxiGuard"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "852"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": "https://toxiguard.site/pricing",
+            "priceCurrency": "USD",
+            "price": "9.00",
+            "priceValidUntil": "2024-12-31",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      `}
+      </Script>
+      
       <Navbar />
       <main>
         <Hero />
@@ -42,7 +111,7 @@ export default function Home() {
         <HowItWorksSection />
         <ProblemSection />
         <SuccessStories />
-        <BlogPreview />
+        <Blog />
         <RoadmapSection />
         <MetricsSection />
         <TestimonialsSection />

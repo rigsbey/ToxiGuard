@@ -35,7 +35,6 @@ export default function Navbar() {
   const menuItems = [
     { label: 'How it works', onClick: scrollToHowItWorks },
     { label: 'Demo', onClick: scrollToRiskScanner },
-    { label: 'Resources', onClick: scrollToResources },
     { label: 'FAQ', onClick: scrollToFAQ },
     { label: 'Blog', href: '/blog' },
   ];
@@ -52,21 +51,21 @@ export default function Navbar() {
   return (
     <nav className="fixed w-full bg-white/80 backdrop-blur-lg shadow-sm z-50 top-0 left-0">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+        <div className="flex h-16 items-center justify-between relative">
+          <Link href="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-200 z-10">
             <span className="text-xl">🛡️</span>
             <span className="text-xl font-medium">ToxiGuard</span>
           </Link>
 
           {isHomePage ? (
             <>
-              <div className="hidden md:flex bg-white/75 backdrop-blur-lg border border-gray-200 rounded-full px-2 py-0.5 items-center shadow-sm">
+              <div className="hidden md:flex bg-white/75 backdrop-blur-lg border border-gray-200 rounded-full px-2 py-0.5 items-center shadow-sm absolute left-1/2 transform -translate-x-1/2">
                 {menuItems.map((item) => (
                   item.href ? (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md"
+                      className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md hover:bg-gray-100"
                     >
                       {item.label}
                     </Link>
@@ -74,7 +73,7 @@ export default function Navbar() {
                     <button
                       key={item.label}
                       onClick={item.onClick}
-                      className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md"
+                      className="px-3 py-1.5 text-sm text-gray-600/60 hover:text-gray-900/80 transition-colors rounded-md hover:bg-gray-100"
                     >
                       {item.label}
                     </button>
@@ -92,12 +91,12 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <div className="hidden md:flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-4 z-10">
                 <Link
                   href={chromeStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   <img 
                     src="/images/chrome-logo.svg" 
@@ -108,7 +107,7 @@ export default function Navbar() {
                 </Link>
                 <Link 
                   href="/login"
-                  className="bg-black text-white px-6 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors"
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
                 >
                   Sign in
                 </Link>
@@ -120,7 +119,7 @@ export default function Navbar() {
                 href={chromeStoreUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors border border-blue-200"
               >
                 <img 
                   src="/images/chrome-logo.svg" 
@@ -131,7 +130,7 @@ export default function Navbar() {
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
+                className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg"
               >
                 Sign Out
               </button>
@@ -141,51 +140,58 @@ export default function Navbar() {
       </div>
 
       {isHomePage && mobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg">
-          <div className="flex flex-col space-y-1 p-4">
-            {menuItems.map((item) => (
-              item.href ? (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <button
-                  key={item.label}
-                  onClick={() => handleMobileMenuItemClick(item.onClick)}
-                  className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-                >
-                  {item.label}
-                </button>
-              )
-            ))}
-            <Link
-              href={chromeStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <img 
-                src="/images/chrome-logo.svg" 
-                alt="Chrome" 
-                className="w-4 h-4" 
-              />
-              Install Extension
-            </Link>
-            <Link
-              href="/login"
-              className="flex items-center justify-center px-3 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Sign in
-            </Link>
-          </div>
-        </div>
+        <AnimatePresence>
+          <motion.div 
+            className="md:hidden bg-white shadow-lg"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <div className="flex flex-col space-y-1 p-4">
+              {menuItems.map((item) => (
+                item.href ? (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={item.label}
+                    onClick={() => handleMobileMenuItemClick(item.onClick)}
+                    className="text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                  >
+                    {item.label}
+                  </button>
+                )
+              ))}
+              <Link
+                href={chromeStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <img 
+                  src="/images/chrome-logo.svg" 
+                  alt="Chrome" 
+                  className="w-4 h-4" 
+                />
+                Install Extension
+              </Link>
+              <Link
+                href="/login"
+                className="flex items-center justify-center px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-sm"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Sign in
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       )}
     </nav>
   );

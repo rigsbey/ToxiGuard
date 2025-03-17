@@ -24,9 +24,20 @@ const nextConfig = {
     );
     return config;
   },
-  // Временно отключаем перенаправления, чтобы избежать конфликтов с middleware
+  // Настраиваем необходимые редиректы
   async redirects() {
-    return [];
+    return [
+      {
+        source: '/www/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      }
+    ];
   },
   experimental: {
     optimizeCss: true,

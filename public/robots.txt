@@ -1,12 +1,19 @@
 User-agent: *
 Allow: /
 Allow: /blog/
+Allow: /how-it-works/
+Allow: /pricing/
+Allow: /resources/
 Disallow: /api/
 Disallow: /_next/
+Disallow: /admin/
+
+# Явно разрешаем индексацию основных страниц
+Allow: /index.html
+Allow: /sitemap.xml
 
 Sitemap: https://toxiguard.site/sitemap.xml
 
 # Блокируем служебные пути
 Disallow: /404
-Disallow: /www/
 Disallow: /*?* 

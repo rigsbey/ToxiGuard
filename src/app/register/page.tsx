@@ -3,6 +3,17 @@ import RegisterForm from '@/components/RegisterForm';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+export const metadata = {
+  title: 'Sign Up for ToxiGuard - Protect Your Freelance Business Today',
+  description: 'Create your ToxiGuard account in under 2 minutes and start protecting your freelance business from toxic clients and payment risks with our AI-powered tools.',
+  robots: 'index, follow',
+  openGraph: {
+    title: 'Join ToxiGuard - AI Protection for Freelancers',
+    description: 'Start protecting your freelance business today. Free trial available.',
+    type: 'website'
+  }
+};
+
 export default function RegisterPage() {
   return (
     <>

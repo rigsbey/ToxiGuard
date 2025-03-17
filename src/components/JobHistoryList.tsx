@@ -3,6 +3,7 @@ import { ChevronDownIcon, ChevronUpIcon, ExclamationTriangleIcon, DocumentTextIc
 import { JobHistoryItem, updateJobStatus } from '@/lib/firestore';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import React from 'react';
 
 interface JobHistoryListProps {
   jobs: JobHistoryItem[];
@@ -35,6 +36,29 @@ const riskBgColors: Record<string, string> = {
   medium: 'bg-yellow-50',
   high: 'bg-red-50',
   critical: 'bg-red-50'
+};
+
+const riskIcons: Record<string, React.ReactNode> = {
+  low: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-green-600">
+      <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3A5.25 5.25 0 0 0 12 1.5Zm2.25 8.25v-3a2.25 2.25 0 0 0-4.5 0v3h4.5Z" clipRule="evenodd" />
+    </svg>
+  ),
+  medium: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-yellow-600">
+      <path fillRule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clipRule="evenodd" />
+    </svg>
+  ),
+  high: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-red-600">
+      <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
+    </svg>
+  ),
+  critical: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-white">
+      <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
+    </svg>
+  )
 };
 
 export default function JobHistoryList({ jobs, onRefresh }: JobHistoryListProps) {
@@ -113,10 +137,11 @@ export default function JobHistoryList({ jobs, onRefresh }: JobHistoryListProps)
                 </div>
                 <div className="mt-2 flex flex-wrap items-center gap-2">
                   <span className={`inline-flex items-center text-xs rounded-full px-2.5 py-1 font-medium border ${riskColors[riskLevel] || 'bg-gray-100 text-gray-800'}`}>
-                    Risk: {job.riskLevel}
+                    {riskIcons[riskLevel]}
+                    <span className="ml-1">Risk: {job.riskLevel}</span>
                   </span>
-                  <span className="text-sm text-gray-500 flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <span className="text-xs text-gray-400 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                     {formatDate(job.timestamp)}
@@ -147,7 +172,8 @@ export default function JobHistoryList({ jobs, onRefresh }: JobHistoryListProps)
                         <div className="flex justify-between items-center mb-3">
                           <span className="text-gray-700 font-medium">Risk Score:</span>
                           <div className="flex items-center gap-2">
-                            <div className={`text-sm rounded-full px-2 py-0.5 ${riskColors[riskLevel] || 'bg-gray-100'}`}>
+                            <div className={`text-sm rounded-full px-2 py-0.5 flex items-center gap-1 ${riskColors[riskLevel] || 'bg-gray-100'}`}>
+                              {riskIcons[riskLevel]}
                               {job.riskLevel}
                             </div>
                             <div className={`text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full ${riskColors[riskLevel] || 'bg-gray-100'}`}>
@@ -163,6 +189,10 @@ export default function JobHistoryList({ jobs, onRefresh }: JobHistoryListProps)
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                             </svg>
                           </Link>
+                        </div>
+                        <div className="mb-3 pb-3 border-b border-gray-100">
+                          <span className="text-gray-700 font-medium">Analyzed on:</span>{' '}
+                          <span className="text-gray-500 text-sm">{formatDate(job.timestamp)}</span>
                         </div>
                         {job.clientInfo && (
                           <div>

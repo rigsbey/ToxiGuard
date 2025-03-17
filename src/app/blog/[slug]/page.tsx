@@ -1,172 +1,272 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
-import SeoHeading from '@/components/SeoHeading';
-import Script from 'next/script';
-import RelatedArticles from '@/components/RelatedArticles';
-import { blogPosts, getPostBySlug, getRelatedPosts } from '@/data/blogPosts';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ChevronLeftIcon, ClockIcon, CalendarIcon, TagIcon } from '@heroicons/react/24/outline';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Newsletter from '@/components/Newsletter';
+import { formatDate } from '@/utils/date';
+import { remark } from 'remark';
+import html from 'remark-html';
 
-interface BlogPostParams {
-  params: {
-    slug: string;
-  };
-}
+type BlogPost = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+  authorTitle: string;
+  tags: string[];
+  readingTime: string;
+  content: string;
+  image: string;
+};
 
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
-export async function generateMetadata({ params }: BlogPostParams): Promise<Metadata> {
-  const post = getPostBySlug(params.slug);
+// Generate metadata for the blog post
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = await getPostData(params.slug);
   
   if (!post) {
     return {
-      title: 'Post Not Found | ToxiGuard',
-      description: 'The requested blog post could not be found.',
+      title: 'Post Not Found',
+      description: 'The requested blog post could not be found.'
     };
   }
   
   return {
-    title: `${post.title} | ToxiGuard`,
-    description: post.excerpt,
-    keywords: post.keywords,
+    title: `${post.title} | ToxiGuard Blog`,
+    description: post.description,
     openGraph: {
-      title: `${post.title} | ToxiGuard`,
-      description: post.excerpt,
-      url: `https://toxiguard.site/blog/${post.slug}`,
+      title: post.title,
+      description: post.description,
       type: 'article',
-      publishedTime: post.isoDate,
-      authors: ['https://toxiguard.site/about-us'],
-      tags: post.keywords.slice(0, 5),
+      publishedTime: post.date,
+      authors: [post.author],
+      tags: post.tags,
+      images: [
+        {
+          url: post.image.startsWith('/') ? `https://toxiguard.site${post.image}` : post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.excerpt,
+      description: post.description,
+      images: post.image.startsWith('/') ? `https://toxiguard.site${post.image}` : post.image,
     },
   };
 }
 
-export default function BlogPost({ params }: BlogPostParams) {
-  const post = getPostBySlug(params.slug);
+// Get blog post data
+async function getPostData(slug: string): Promise<BlogPost | null> {
+  const postDirectory = path.join(process.cwd(), 'src/data/blog-posts');
+  
+  try {
+    const filePath = path.join(postDirectory, `${slug}.md`);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(fileContents);
+    
+    // Extract title and description from the markdown content if not in frontmatter
+    let title = data.title;
+    let description = data.description;
+    
+    if (!title) {
+      // Extract the first h1 heading as title
+      const titleMatch = content.match(/^# (.*)/m);
+      title = titleMatch ? titleMatch[1] : 'Untitled';
+    }
+    
+    if (!description) {
+      // Extract first paragraph after intro as description
+      const descMatch = content.match(/^## Introduction\s*\n\n([^\n]+)/m);
+      description = descMatch ? descMatch[1] : '';
+    }
+    
+    // Estimate reading time
+    const words = content.split(/\s+/).length;
+    const readingTime = Math.ceil(words / 200) + ' min read';
+    
+    // Use a default image since we don't have the actual images
+    const defaultImage = '/images/upwork-screenshot.jpg';
+    
+    // Process markdown content to HTML
+    const processedContent = content
+      .replace(/^# .*$/m, '') // Remove the title (h1) as we display it separately
+      .trim();
+    
+    return {
+      slug,
+      title,
+      description,
+      date: data.date || new Date().toISOString().split('T')[0],
+      author: data.author || 'ToxiGuard Team',
+      authorTitle: data.authorTitle || 'Freelance Protection Experts',
+      tags: data.tags || ['freelancing', 'client protection'],
+      readingTime,
+      content: processedContent,
+      image: defaultImage,
+    };
+  } catch (error) {
+    console.error(`Error reading blog post ${slug}:`, error);
+    return null;
+  }
+}
+
+// Generate static paths for all blog posts
+export async function generateStaticParams() {
+  const postDirectory = path.join(process.cwd(), 'src/data/blog-posts');
+  
+  try {
+    const filenames = fs.readdirSync(postDirectory);
+    return filenames
+      .filter(filename => filename.endsWith('.md'))
+      .map(filename => ({
+        slug: filename.replace(/\.md$/, ''),
+      }));
+  } catch (error) {
+    console.error('Error generating static paths:', error);
+    return [];
+  }
+}
+
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getPostData(params.slug);
   
   if (!post) {
     notFound();
   }
   
-  const relatedPosts = getRelatedPosts(params.slug);
-  
   return (
     <>
-      <Script id="article-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": post.title,
-        "description": post.excerpt,
-        "image": `https://toxiguard.site${post.image}`,
-        "author": {
-          "@type": "Organization",
-          "name": "ToxiGuard",
-          "url": "https://toxiguard.site"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ToxiGuard",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://toxiguard.site/logo.png"
-          }
-        },
-        "datePublished": post.isoDate,
-        "dateModified": post.isoDate,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://toxiguard.site/blog/${post.slug}`
-        },
-        "keywords": post.keywords.join(', ')
-      })}} />
-      
-      <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl">
-            <div className="mb-10">
-              <Link href="/blog" className="text-blue-600 hover:text-blue-800">
-                ← Back to Blog
-              </Link>
-            </div>
-            
-            <div className="mb-8">
-              <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                {post.category}
-              </span>
-              <time dateTime={post.isoDate} className="text-gray-500 ml-4">
-                {post.date}
-              </time>
-            </div>
-            
-            <SeoHeading 
-              level={1} 
-              className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-6"
-              keywords={post.keywords.slice(0, 4)}
+      <Navbar />
+      <main className="pt-32 pb-16">
+        <article className="max-w-4xl mx-auto px-4">
+          <div className="mb-8">
+            <Link 
+              href="/blog" 
+              className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-4"
             >
-              {post.title}
-            </SeoHeading>
+              <ChevronLeftIcon className="w-4 h-4 mr-1" />
+              Back to Blog
+            </Link>
             
-            <div className="prose prose-lg prose-blue mx-auto">
-              <p className="lead text-xl text-gray-600 mb-8">
-                {post.excerpt}
-              </p>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              {post.title}
+            </h1>
+            
+            <div className="flex flex-wrap items-center text-gray-600 text-sm gap-4 mb-6">
+              <div className="flex items-center">
+                <CalendarIcon className="w-4 h-4 mr-1" />
+                <time dateTime={post.date}>
+                  {formatDate(post.date)}
+                </time>
+              </div>
               
-              <img 
-                src={post.image} 
-                alt={post.title} 
-                className="w-full rounded-xl mb-8"
-              />
+              <div className="flex items-center">
+                <ClockIcon className="w-4 h-4 mr-1" />
+                {post.readingTime}
+              </div>
               
-              {/* Placeholder for article content */}
-              <p>
-                This is a placeholder for the full article content. In a real implementation, 
-                this would be replaced with the actual content of the blog post, either from a CMS 
-                or from a markdown file.
-              </p>
-              
-              <div className="mt-12 p-6 bg-gray-50 rounded-xl">
-                <SeoHeading level={3} className="text-xl font-bold mb-4" keywords={['freelance protection tools', 'client screening software']}>
-                  Protect Your Freelance Business
-                </SeoHeading>
-                <p>
-                  ToxiGuard helps thousands of freelancers avoid toxic clients and protect their businesses. 
-                  Our AI-powered Chrome extension analyzes Upwork job postings in real-time, identifying red flags 
-                  and providing risk assessments before you bid.
-                </p>
-                <div className="mt-4">
-                  <Link 
-                    href="https://chromewebstore.google.com/detail/toxiguard/icijbieljniejiicoddalgfkdkadknnn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors mr-4"
-                  >
-                    Install Free Extension
-                  </Link>
-                  <Link 
-                    href="/blog"
-                    className="inline-block text-blue-600 hover:text-blue-800"
-                  >
-                    Read More Articles
-                  </Link>
-                </div>
+              <div className="flex items-center">
+                <span className="font-medium">{post.author}</span>
               </div>
             </div>
             
-            <RelatedArticles 
-              articles={relatedPosts} 
-              currentSlug={params.slug} 
-            />
+            {post.image && (
+              <div className="mb-8 rounded-xl overflow-hidden">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  className="w-full h-auto object-cover" 
+                />
+              </div>
+            )}
           </div>
+          
+          <div className="prose prose-lg max-w-none">
+            {post.content.split('\n\n').map((paragraph, index) => {
+              // Handle headings
+              if (paragraph.startsWith('## ')) {
+                return <h2 key={index} className="text-2xl font-bold mt-8 mb-4">{paragraph.replace('## ', '')}</h2>;
+              } else if (paragraph.startsWith('### ')) {
+                return <h3 key={index} className="text-xl font-bold mt-6 mb-3">{paragraph.replace('### ', '')}</h3>;
+              } else if (paragraph.startsWith('#### ')) {
+                return <h4 key={index} className="text-lg font-bold mt-4 mb-2">{paragraph.replace('#### ', '')}</h4>;
+              } else if (paragraph.startsWith('- ')) {
+                // Handle unordered lists
+                const items = paragraph.split('\n').map(item => item.replace('- ', ''));
+                return (
+                  <ul key={index} className="list-disc pl-6 mb-4">
+                    {items.map((item, i) => <li key={i} className="mb-1">{item}</li>)}
+                  </ul>
+                );
+              } else if (paragraph.match(/^\d+\. /)) {
+                // Handle ordered lists
+                const items = paragraph.split('\n').map(item => item.replace(/^\d+\. /, ''));
+                return (
+                  <ol key={index} className="list-decimal pl-6 mb-4">
+                    {items.map((item, i) => <li key={i} className="mb-1">{item}</li>)}
+                  </ol>
+                );
+              } else if (paragraph.startsWith('```')) {
+                // Handle code blocks
+                const code = paragraph.replace(/```.*\n/, '').replace(/\n```$/, '');
+                return (
+                  <pre key={index} className="bg-gray-100 p-4 rounded-md overflow-x-auto mb-4">
+                    <code>{code}</code>
+                  </pre>
+                );
+              } else {
+                // Regular paragraphs
+                return <p key={index} className="mb-4">{paragraph}</p>;
+              }
+            })}
+          </div>
+          
+          <div className="mt-8 pt-8 border-t border-gray-200">
+            <div className="flex items-center gap-2 flex-wrap mb-6">
+              <TagIcon className="w-4 h-4 text-gray-600" />
+              {post.tags.map(tag => (
+                <Link 
+                  key={tag}
+                  href={`/blog/tag/${tag.replace(/\s+/g, '-').toLowerCase()}`}
+                  className="bg-gray-100 text-gray-700 py-1 px-2 rounded-md text-sm hover:bg-gray-200 transition-colors"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+            
+            <div className="bg-blue-50 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
+              <div className="w-20 h-20 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center">
+                <span className="text-2xl font-bold text-blue-600">
+                  {post.author.split(' ').map(name => name[0]).join('')}
+                </span>
+              </div>
+              
+              <div>
+                <h3 className="font-bold text-lg">{post.author}</h3>
+                <p className="text-gray-600 mb-2">{post.authorTitle}</p>
+                <p className="text-sm">Expert in freelance client management, protection strategies, and business growth.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <div className="max-w-4xl mx-auto px-4 mt-16">
+          <h2 className="text-2xl font-bold mb-6">Subscribe to Our Newsletter</h2>
+          <Newsletter />
         </div>
-      </div>
+      </main>
+      <Footer />
     </>
   );
 } 

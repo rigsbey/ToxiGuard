@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ChevronDownIcon, 
@@ -8,6 +8,7 @@ import {
   ShieldCheckIcon 
 } from '@heroicons/react/24/outline';
 import { useScrollToSection } from '@/hooks/useScrollToWaitlist';
+import Script from 'next/script';
 
 interface FAQItem {
   question: string;
@@ -49,72 +50,82 @@ export default function FAQSection() {
     }
   ];
 
+  // Create structured data for FAQs
+  const generateFAQSchema = () => {
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    };
+    
+    return JSON.stringify(faqSchema);
+  };
+
   return (
-    <section id="faq-section" className="py-16 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Frequently Asked Questions</h2>
+    <section id="faq-section" className="py-24 bg-gray-50">
+      <Script id="faq-schema" type="application/ld+json">
+        {generateFAQSchema()}
+      </Script>
+      
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Everything you need to know about protecting your freelance business
+          </p>
+        </div>
         
-        <div className="space-y-8 md:space-y-10">
+        <div className="max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
-            <motion.div
-              key={faq.question}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+            <div 
+              key={index}
+              className="mb-4 border border-gray-200 rounded-lg overflow-hidden"
             >
-              <div 
-                className="bg-white p-6 rounded-xl shadow-sm cursor-pointer hover:bg-gray-50 transition-colors"
+              <button
+                className="w-full flex justify-between items-center p-5 bg-white hover:bg-gray-50 transition-colors text-left"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-bold flex items-center gap-3">
-                    {index === 0 ? (
-                      <QuestionMarkCircleIcon className="w-6 h-6 text-blue-600" />
-                    ) : index === 3 ? (
-                      <ShieldCheckIcon className="w-6 h-6 text-green-600" />
-                    ) : (
-                      <ChevronDownIcon className="w-6 h-6 text-purple-600" />
-                    )}
-                    {faq.question}
-                  </h3>
-                  <ChevronDownIcon className={`w-5 h-5 transition-transform ${
-                    openIndex === index ? 'rotate-180' : ''
-                  }`} />
-                </div>
-                
-                <motion.div
+                <span className="font-medium text-lg pr-8">{faq.question}</span>
+                <ChevronDownIcon 
+                  className={`w-5 h-5 transition-transform ${openIndex === index ? 'transform rotate-180' : ''}`} 
+                />
+              </button>
+              
+              {openIndex === index && (
+                <motion.div 
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{
-                    height: openIndex === index ? 'auto' : 0,
-                    opacity: openIndex === index ? 1 : 0
-                  }}
-                  className="overflow-hidden"
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="px-5 pb-5 pt-0 bg-white"
                 >
-                  <p className="pt-4 text-gray-600">{faq.answer}</p>
+                  <p className="text-gray-600">{faq.answer}</p>
                 </motion.div>
-              </div>
-            </motion.div>
+              )}
+            </div>
           ))}
         </div>
+        
+        <div className="text-center mt-12">
+          <button 
+            onClick={scrollToWaitlist}
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+          >
+            <ShieldCheckIcon className="w-5 h-5" />
+            Start protecting your business
+          </button>
+          <p className="mt-4 text-sm text-gray-500">
+            Free 7-day trial. No credit card required.
+          </p>
+        </div>
       </div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map(faq => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer
-              }
-            }))
-          })
-        }}
-      />
     </section>
   );
 } 

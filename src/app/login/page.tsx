@@ -12,6 +12,21 @@ import Footer from '@/components/Footer';
 import { Suspense } from 'react';
 import LoginForm from '@/components/LoginForm';
 
+// Metadata needs to be in a separate file for 'use client' components
+// Create a file named metadata.js in the same directory with this content:
+/*
+export const metadata = {
+  title: 'Log In to ToxiGuard - Access Your AI Protection Dashboard',
+  description: 'Sign in to your ToxiGuard account to manage your freelance protection settings, analyze clients, and secure your business.',
+  robots: 'noindex, follow',
+  openGraph: {
+    title: 'ToxiGuard Login - Access Your Protection Dashboard',
+    description: 'Sign in to manage your freelance business protection tools.',
+    type: 'website'
+  }
+};
+*/
+
 export default function LoginPage() {
   return (
     <>

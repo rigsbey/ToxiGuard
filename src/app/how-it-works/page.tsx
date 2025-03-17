@@ -1,3 +1,20 @@
+export const metadata = {
+  title: 'How ToxiGuard Works: AI Protection Against Toxic Clients for Freelancers',
+  description: 'Learn how ToxiGuard AI technology scans for red flags, analyzes client behavior, and protects your freelance business from payment risks and problem clients.',
+  keywords: [
+    'how toxiguard works',
+    'AI client screening',
+    'freelance protection system',
+    'toxic client detection',
+    'freelance risk analysis',
+    'payment protection for freelancers'
+  ],
+  openGraph: {
+    title: 'How ToxiGuard AI Protects Freelancers from Toxic Clients',
+    description: 'Discover the 3-step process: Risk scanning, behavior analysis, and contract protection to save freelancers $7k/year.'
+  }
+};
+
 export default function HowItWorksPage() {
   return (
     <div 
@@ -22,8 +39,7 @@ export default function HowItWorksPage() {
               </div>
             </div>
             <p className="text-gray-600">
-              "ToxicGuard показал 5 скрытых рисков в контракте. Отказалась от проекта 
-              и через 2 дня нашла клиента на 40% дороже!"
+              "ToxiGuard showed 5 hidden risks in the contract. I declined the project and found a client paying 40% more in just 2 days!"
             </p>
           </div>
         </div>
