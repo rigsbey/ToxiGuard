@@ -189,7 +189,21 @@ async function getBlogPosts(): Promise<BlogPost[]> {
   }
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  // Загружаем реальные статьи из файловой системы
+  const blogPosts = await getBlogPosts();
+
+  // Сопоставляем готовые статьи с реальными постами если возможно
+  const realPosts = blogPosts.map((post, index) => {
+    const matchedArticle = articles.find(a => a.title.toLowerCase().includes(post.title.toLowerCase()));
+    return {
+      ...post,
+      category: matchedArticle?.category || "Guide",
+      authorImage: matchedArticle?.author?.image || "",
+      authorInitials: post.author.split(" ").map(name => name[0]).join("")
+    };
+  });
+
   return (
     <>
       <Navbar />
@@ -212,18 +226,18 @@ export default function BlogPage() {
                 url: 'https://toxiguard.site/images/logo.png',
               }
             },
-            blogPost: articles.map(article => ({
+            blogPost: realPosts.map(post => ({
               '@type': 'BlogPosting',
-              headline: article.title,
-              description: article.description,
-              datePublished: article.date,
+              headline: post.title,
+              description: post.description,
+              datePublished: post.date,
               author: {
                 '@type': 'Person',
-                name: article.author.name,
+                name: post.author,
               },
-              image: article.image,
-              url: `https://toxiguard.site/blog/${article.id}`,
-              keywords: article.category,
+              image: post.image,
+              url: `https://toxiguard.site/blog/${post.slug}`,
+              keywords: post.tags?.join(', '),
             })),
           })
         }}
@@ -241,69 +255,72 @@ export default function BlogPage() {
               </p>
             </div>
           
-            <div className="mb-16">
-              <h2 className="text-3xl font-semibold mb-8">Featured Articles</h2>
-              <div className="grid grid-cols-1 gap-12">
-                {articles.slice(0, 1).map((article) => (
-                  <div 
-                    key={article.id}
+            {realPosts.length > 0 && (
+              <div className="mb-16">
+                <h2 className="text-3xl font-semibold mb-8">Featured Articles</h2>
+                <div className="grid grid-cols-1 gap-12">
+                  <Link 
+                    href={`/blog/${realPosts[0].slug}`}
                     className="flex flex-col md:flex-row gap-8 hover:opacity-90 transition-opacity cursor-pointer"
                   >
                     <div 
                       className="bg-muted rounded-lg aspect-video bg-cover bg-center md:w-2/3"
-                      style={{ backgroundImage: `url(${article.image})` }}
+                      style={{ backgroundImage: `url(${realPosts[0].image})` }}
                     />
                     <div className="flex flex-col justify-center md:w-1/3 gap-6">
                       <div className="flex items-center gap-3">
-                        <Badge variant="secondary">{article.category}</Badge>
-                        <span className="text-sm text-muted-foreground">{article.date}</span>
+                        <Badge variant="secondary">{realPosts[0].category}</Badge>
+                        <span className="text-sm text-muted-foreground">{formatDate(realPosts[0].date)}</span>
                       </div>
-                      <h3 className="text-4xl font-semibold">{article.title}</h3>
-                      <p className="text-muted-foreground">{article.description}</p>
+                      <h3 className="text-4xl font-semibold">{realPosts[0].title}</h3>
+                      <p className="text-muted-foreground">{realPosts[0].description}</p>
                       <div className="flex items-center gap-3 mt-4">
                         <Avatar>
-                          <AvatarImage src={article.author.image} alt={article.author.name} />
-                          <AvatarFallback>{article.author.initials}</AvatarFallback>
+                          <AvatarImage src={realPosts[0].authorImage} alt={realPosts[0].author} />
+                          <AvatarFallback>{realPosts[0].authorInitials}</AvatarFallback>
                         </Avatar>
-                        <span>{article.author.name}</span>
+                        <span>{realPosts[0].author}</span>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
             
-            <div className="mb-16">
-              <h2 className="text-3xl font-semibold mb-8">Latest Articles</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {articles.slice(1).map((article) => (
-                  <div 
-                    key={article.id}
-                    className="flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer group"
-                  >
-                    <div 
-                      className="bg-muted rounded-lg aspect-video bg-cover bg-center relative"
-                      style={{ backgroundImage: `url(${article.image})` }}
+            {realPosts.length > 1 && (
+              <div className="mb-16">
+                <h2 className="text-3xl font-semibold mb-8">Latest Articles</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {realPosts.slice(1).map((post) => (
+                    <Link 
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer group"
                     >
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg" />
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Badge variant="secondary">{article.category}</Badge>
-                      <span className="text-sm text-muted-foreground">{article.date}</span>
-                    </div>
-                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{article.title}</h3>
-                    <p className="text-muted-foreground text-sm">{article.description}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage src={article.author.image} alt={article.author.name} />
-                        <AvatarFallback>{article.author.initials}</AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm">{article.author.name}</span>
-                    </div>
-                  </div>
-                ))}
+                      <div 
+                        className="bg-muted rounded-lg aspect-video bg-cover bg-center relative"
+                        style={{ backgroundImage: `url(${post.image})` }}
+                      >
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg" />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Badge variant="secondary">{post.category}</Badge>
+                        <span className="text-sm text-muted-foreground">{formatDate(post.date)}</span>
+                      </div>
+                      <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{post.title}</h3>
+                      <p className="text-muted-foreground text-sm">{post.description}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <Avatar className="h-6 w-6">
+                          <AvatarImage src={post.authorImage} alt={post.author} />
+                          <AvatarFallback>{post.authorInitials}</AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm">{post.author}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             
             <div className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-800">
               <h2 className="text-2xl font-bold mb-6 text-center">Subscribe to Our Newsletter</h2>
