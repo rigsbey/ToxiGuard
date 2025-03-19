@@ -36,6 +36,16 @@ const nextConfig = {
         source: '/index.html',
         destination: '/',
         permanent: true,
+      },
+      {
+        source: '/_next/static/:path*',
+        destination: '/_next/static/:path*',
+        permanent: true,
+      },
+      {
+        source: '/static/:path*',
+        destination: '/static/:path*',
+        permanent: true,
       }
     ];
   },

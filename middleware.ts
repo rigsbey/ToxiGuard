@@ -8,7 +8,8 @@ export function middleware(request: NextRequest) {
   // Убедимся, что мы не обрабатываем запросы к статическим файлам и API
   if (url.pathname.startsWith('/_next') || 
       url.pathname.startsWith('/api') || 
-      url.pathname.match(/\.(jpe?g|png|svg|ico|css|js|woff2?)$/)) {
+      url.pathname.startsWith('/static') ||
+      url.pathname.match(/\.(jpe?g|png|svg|ico|css|js|woff2?|xml|txt)$/)) {
     return NextResponse.next();
   }
   
@@ -19,6 +20,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Применяем middleware только к основным страницам
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|robots.txt|sitemap.xml|google[a-zA-Z0-9_-]*).*)',
+    '/((?!api|_next/static|_next/image|assets|static|favicon.ico|robots.txt|sitemap.xml|google[a-zA-Z0-9_-]*).*)',
   ],
 }; 

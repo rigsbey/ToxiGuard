@@ -14,5 +14,18 @@
     "NEXT_PUBLIC_SITE_URL": "https://toxiguard.site"
   },
   "framework": "nextjs",
-  "regions": ["fra1"]
+  "regions": ["fra1"],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "toxiguard.site"
+        }
+      ],
+      "destination": "https://www.toxiguard.site/$1",
+      "permanent": true
+    }
+  ]
 } 

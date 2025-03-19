@@ -11,6 +11,7 @@ import matter from 'gray-matter';
 import Script from 'next/script';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { BlogList } from '@/components/ui/blog-list';
 
 const articles = [
   {
@@ -121,12 +122,22 @@ export const metadata: Metadata = {
   },
 };
 
+// Категории для блога
+const categories: Record<string, string> = {
+  "10-signs-toxic-client": "Safety",
+  "secure-contracts-freelancers": "Contract",
+  "secure-payment-strategies-freelancers": "Payment",
+  "setting-boundaries-with-clients": "Advice"
+};
+
 type BlogPost = {
   slug: string;
   title: string;
   description: string;
   date: string;
   author: string;
+  authorTitle?: string;
+  category?: string;
   tags: string[];
   readingTime: string;
   image: string;
@@ -164,10 +175,13 @@ async function getBlogPosts(): Promise<BlogPost[]> {
         
         // Estimate reading time
         const words = content.split(/\s+/).length;
-        const readingTime = Math.ceil(words / 200) + ' min read';
+        const readingTime = Math.ceil(words / 200) + ' мин';
+        
+        // Get category from mapping or first tag
+        const category = categories[slug] || (data.tags && data.tags.length > 0 ? data.tags[0] : "Guide");
         
         // Use a default image for all blog posts since we don't have the actual images
-        const defaultImage = '/images/upwork-screenshot.jpg';
+        const defaultImage = data.image || '/images/upwork-screenshot.jpg';
         
         return {
           slug,
@@ -175,9 +189,11 @@ async function getBlogPosts(): Promise<BlogPost[]> {
           description: description || `Learn more about ${title}`,
           date: data.date || new Date().toISOString().split('T')[0],
           author: data.author || 'ToxiGuard Team',
+          authorTitle: data.authorTitle,
+          category,
           tags: data.tags || ['freelancing', 'client protection'],
           readingTime,
-          image: defaultImage, // Use default image instead of data.image
+          image: defaultImage,
         };
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -193,16 +209,20 @@ export default async function BlogPage() {
   // Загружаем реальные статьи из файловой системы
   const blogPosts = await getBlogPosts();
 
-  // Сопоставляем готовые статьи с реальными постами если возможно
-  const realPosts = blogPosts.map((post, index) => {
-    const matchedArticle = articles.find(a => a.title.toLowerCase().includes(post.title.toLowerCase()));
-    return {
-      ...post,
-      category: matchedArticle?.category || "Guide",
-      authorImage: matchedArticle?.author?.image || "",
-      authorInitials: post.author.split(" ").map(name => name[0]).join("")
-    };
-  });
+  // Адаптируем в нужный формат для компонента BlogList
+  const formattedPosts = blogPosts.map(post => ({
+    slug: post.slug,
+    title: post.title,
+    description: post.description,
+    date: formatDate(post.date),
+    image: post.image,
+    category: post.category,
+    author: {
+      name: post.author,
+      avatar: undefined, // У нас нет аватаров, поэтому используем fallback
+    },
+    readingTime: post.readingTime
+  }));
 
   return (
     <>
@@ -226,7 +246,7 @@ export default async function BlogPage() {
                 url: 'https://toxiguard.site/images/logo.png',
               }
             },
-            blogPost: realPosts.map(post => ({
+            blogPost: blogPosts.map(post => ({
               '@type': 'BlogPosting',
               headline: post.title,
               description: post.description,
@@ -244,90 +264,27 @@ export default async function BlogPage() {
       />
       
       <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950/50 pt-32">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col items-center text-center mb-20">
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
-                ToxiGuard Blog
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl">
-                Insights, guides, and stories to help you navigate the freelance world safely and successfully.
-              </p>
-            </div>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">
+              ToxiGuard Blog
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Инсайты, руководства и истории, которые помогут вам безопасно и успешно работать в фрилансе
+            </p>
+          </div>
           
-            {realPosts.length > 0 && (
-              <div className="mb-16">
-                <h2 className="text-3xl font-semibold mb-8">Featured Articles</h2>
-                <div className="grid grid-cols-1 gap-12">
-                  <Link 
-                    href={`/blog/${realPosts[0].slug}`}
-                    className="flex flex-col md:flex-row gap-8 hover:opacity-90 transition-opacity cursor-pointer"
-                  >
-                    <div 
-                      className="bg-muted rounded-lg aspect-video bg-cover bg-center md:w-2/3"
-                      style={{ backgroundImage: `url(${realPosts[0].image})` }}
-                    />
-                    <div className="flex flex-col justify-center md:w-1/3 gap-6">
-                      <div className="flex items-center gap-3">
-                        <Badge variant="secondary">{realPosts[0].category}</Badge>
-                        <span className="text-sm text-muted-foreground">{formatDate(realPosts[0].date)}</span>
-                      </div>
-                      <h3 className="text-4xl font-semibold">{realPosts[0].title}</h3>
-                      <p className="text-muted-foreground">{realPosts[0].description}</p>
-                      <div className="flex items-center gap-3 mt-4">
-                        <Avatar>
-                          <AvatarImage src={realPosts[0].authorImage} alt={realPosts[0].author} />
-                          <AvatarFallback>{realPosts[0].authorInitials}</AvatarFallback>
-                        </Avatar>
-                        <span>{realPosts[0].author}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            )}
-            
-            {realPosts.length > 1 && (
-              <div className="mb-16">
-                <h2 className="text-3xl font-semibold mb-8">Latest Articles</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {realPosts.slice(1).map((post) => (
-                    <Link 
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer group"
-                    >
-                      <div 
-                        className="bg-muted rounded-lg aspect-video bg-cover bg-center relative"
-                        style={{ backgroundImage: `url(${post.image})` }}
-                      >
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg" />
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Badge variant="secondary">{post.category}</Badge>
-                        <span className="text-sm text-muted-foreground">{formatDate(post.date)}</span>
-                      </div>
-                      <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{post.title}</h3>
-                      <p className="text-muted-foreground text-sm">{post.description}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Avatar className="h-6 w-6">
-                          <AvatarImage src={post.authorImage} alt={post.author} />
-                          <AvatarFallback>{post.authorInitials}</AvatarFallback>
-                        </Avatar>
-                        <span className="text-sm">{post.author}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            <div className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-800">
-              <h2 className="text-2xl font-bold mb-6 text-center">Subscribe to Our Newsletter</h2>
-              <div className="max-w-2xl mx-auto">
-                <Newsletter />
-              </div>
-            </div>
+          {formattedPosts.length > 0 && (
+            <BlogList 
+              title="Все статьи" 
+              articles={formattedPosts} 
+              showViewAll={false}
+            />
+          )}
+          
+          <div className="max-w-2xl mx-auto my-20 pt-10 border-t">
+            <h2 className="text-2xl font-bold mb-6 text-center">Подпишитесь на нашу рассылку</h2>
+            <Newsletter />
           </div>
         </div>
       </div>

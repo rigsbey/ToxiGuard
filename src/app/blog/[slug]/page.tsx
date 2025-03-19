@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeftIcon, ClockIcon, CalendarIcon, TagIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import fs from 'fs';
@@ -12,6 +11,7 @@ import Newsletter from '@/components/Newsletter';
 import { formatDate } from '@/utils/date';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { BlogArticle } from '@/components/ui/blog-article';
 
 type BlogPost = {
   slug: string;
@@ -92,7 +92,7 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
     
     // Estimate reading time
     const words = content.split(/\s+/).length;
-    const readingTime = Math.ceil(words / 200) + ' min read';
+    const readingTime = Math.ceil(words / 200) + ' мин';
     
     // Use a default image since we don't have the actual images
     const defaultImage = '/images/upwork-screenshot.jpg';
@@ -119,7 +119,7 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
       tags: data.tags || ['freelancing', 'client protection'],
       readingTime,
       content: contentHtml,
-      image: defaultImage,
+      image: data.image || defaultImage,
     };
   } catch (error) {
     console.error(`Error reading blog post ${slug}:`, error);
@@ -151,88 +151,39 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     notFound();
   }
   
+  const category = post.tags && post.tags.length > 0 ? post.tags[0] : 'Guide';
+  
   return (
     <>
       <Navbar />
       <main className="pt-32 pb-16">
         <div className="container mx-auto px-4">
-          <article className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <Link 
-                href="/blog" 
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-4"
-              >
-                <ChevronLeftIcon className="w-4 h-4 mr-1" />
-                Back to Blog
-              </Link>
-              
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                {post.title}
-              </h1>
-              
-              <div className="flex flex-wrap items-center text-gray-600 text-sm gap-4 mb-6">
-                <div className="flex items-center">
-                  <CalendarIcon className="w-4 h-4 mr-1" />
-                  <time dateTime={post.date}>
-                    {formatDate(post.date)}
-                  </time>
-                </div>
-                
-                <div className="flex items-center">
-                  <ClockIcon className="w-4 h-4 mr-1" />
-                  {post.readingTime}
-                </div>
-                
-                <div className="flex items-center">
-                  <span className="font-medium">{post.author}</span>
-                </div>
-              </div>
-              
-              {post.image && (
-                <div className="mb-8 rounded-xl overflow-hidden">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-auto object-cover" 
-                  />
-                </div>
-              )}
-            </div>
-            
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
-            
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <div className="flex items-center gap-2 flex-wrap mb-6">
-                <TagIcon className="w-4 h-4 text-gray-600" />
-                {post.tags.map(tag => (
-                  <Link 
-                    key={tag}
-                    href={`/blog/tag/${tag.replace(/\s+/g, '-').toLowerCase()}`}
-                    className="bg-gray-100 text-gray-700 py-1 px-2 rounded-md text-sm hover:bg-gray-200 transition-colors"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-              </div>
-              
-              <div className="bg-blue-50 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
-                <div className="w-20 h-20 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-blue-600">
-                    {post.author.split(' ').map(name => name[0]).join('')}
-                  </span>
-                </div>
-                
-                <div>
-                  <h3 className="font-bold text-lg">{post.author}</h3>
-                  <p className="text-gray-600 mb-2">{post.authorTitle}</p>
-                  <p className="text-sm">Expert in freelance client management, protection strategies, and business growth.</p>
-                </div>
-              </div>
-            </div>
-          </article>
+          <div className="mb-6">
+            <Link 
+              href="/blog" 
+              className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              <ChevronLeftIcon className="w-4 h-4 mr-1" />
+              Назад к блогу
+            </Link>
+          </div>
           
-          <div className="max-w-4xl mx-auto px-4 mt-16">
-            <h2 className="text-2xl font-bold mb-6">Subscribe to Our Newsletter</h2>
+          <BlogArticle 
+            title={post.title}
+            content={post.content}
+            image={post.image}
+            author={{
+              name: post.author,
+              role: post.authorTitle
+            }}
+            date={formatDate(post.date)}
+            readTime={post.readingTime}
+            category={category}
+            tags={post.tags}
+          />
+          
+          <div className="max-w-4xl mx-auto mt-16">
+            <h2 className="text-2xl font-bold mb-6">Подпишитесь на нашу рассылку</h2>
             <Newsletter />
           </div>
         </div>
