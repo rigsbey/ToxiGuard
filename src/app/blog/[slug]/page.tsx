@@ -92,7 +92,7 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
     
     // Estimate reading time
     const words = content.split(/\s+/).length;
-    const readingTime = Math.ceil(words / 200) + ' мин';
+    const readingTime = Math.ceil(words / 200) + ' min';
     
     // Use a default image since we don't have the actual images
     const defaultImage = '/images/upwork-screenshot.jpg';
@@ -164,7 +164,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
             >
               <ChevronLeftIcon className="w-4 h-4 mr-1" />
-              Назад к блогу
+              Back to Blog
             </Link>
           </div>
           
@@ -183,7 +183,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           />
           
           <div className="max-w-4xl mx-auto mt-16">
-            <h2 className="text-2xl font-bold mb-6">Подпишитесь на нашу рассылку</h2>
+            <h2 className="text-2xl font-bold mb-6">Subscribe to our newsletter</h2>
             <Newsletter />
           </div>
         </div>

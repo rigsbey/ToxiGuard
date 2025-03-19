@@ -253,41 +253,80 @@ export default async function BlogPage() {
               datePublished: post.date,
               author: {
                 '@type': 'Person',
-                name: post.author,
+                name: post.author
               },
-              image: post.image,
-              url: `https://toxiguard.site/blog/${post.slug}`,
-              keywords: post.tags?.join(', '),
-            })),
+              url: `https://toxiguard.site/blog/${post.slug}`
+            }))
           })
         }}
       />
       
-      <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950/50 pt-32">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">
-              ToxiGuard Blog
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Инсайты, руководства и истории, которые помогут вам безопасно и успешно работать в фрилансе
+      <main className="pt-32 pb-16">
+        <div className="container px-4 mx-auto">
+          <div className="max-w-4xl mx-auto mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">ToxiGuard Blog</h1>
+            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+              Insights, guides, and stories to help you freelance safely and successfully
             </p>
+            <div className="border-b border-gray-200 dark:border-gray-800 pb-2 mb-12">
+              <h2 className="text-xl font-semibold">All Articles</h2>
+            </div>
           </div>
           
-          {formattedPosts.length > 0 && (
-            <BlogList 
-              title="Все статьи" 
-              articles={formattedPosts} 
-              showViewAll={false}
-            />
-          )}
+          <div className="max-w-4xl mx-auto grid grid-cols-1 gap-12 mb-16">
+            {formattedPosts.map((post) => (
+              <article key={post.slug} className="border-b border-gray-200 dark:border-gray-800 pb-12 last:border-0">
+                <Link href={`/blog/${post.slug}`} className="group">
+                  <div className="flex flex-col md:flex-row gap-8">
+                    <div className="w-full md:w-1/3 mb-6 md:mb-0">
+                      <div className="aspect-video relative rounded-lg overflow-hidden">
+                        <Image
+                          src={post.image || '/images/upwork-screenshot.jpg'}
+                          alt={post.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full md:w-2/3">
+                      <div className="flex items-center gap-3 mb-3">
+                        {post.category && (
+                          <Badge variant="secondary" className="px-2 py-0.5 text-xs">
+                            {post.category}
+                          </Badge>
+                        )}
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{post.date}</span>
+                      </div>
+                      <h2 className="text-2xl font-bold mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {post.title}
+                      </h2>
+                      <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        {post.description}
+                      </p>
+                      <div className="flex items-center">
+                        <div className="flex items-center">
+                          <Avatar className="h-8 w-8 mr-2">
+                            <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                          <span className="text-sm font-medium">{post.author.name}</span>
+                        </div>
+                        <span className="mx-3 text-gray-300 dark:text-gray-700">•</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{post.readingTime} read</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
           
-          <div className="max-w-2xl mx-auto my-20 pt-10 border-t">
-            <h2 className="text-2xl font-bold mb-6 text-center">Подпишитесь на нашу рассылку</h2>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6">Subscribe to our newsletter</h2>
             <Newsletter />
           </div>
         </div>
-      </div>
+      </main>
       
       <Footer />
     </>

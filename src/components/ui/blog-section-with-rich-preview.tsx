@@ -6,6 +6,7 @@ function Blog() {
   const articles = [
     {
       id: 1,
+      slug: "10-signs-toxic-client",
       category: "Safety",
       author: {
         name: "Alex Thompson",
@@ -18,6 +19,7 @@ function Blog() {
     },
     {
       id: 2,
+      slug: "secure-payment-strategies-freelancers",
       category: "Tips",
       author: {
         name: "Sarah Chen",
@@ -30,6 +32,7 @@ function Blog() {
     },
     {
       id: 3,
+      slug: "secure-contracts-freelancers",
       category: "Guide",
       author: {
         name: "Mike Roberts",
@@ -55,8 +58,9 @@ function Blog() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {articles.map((article, index) => (
-            <div 
+            <Link 
               key={article.id} 
+              href={`/blog/${article.slug}`}
               className={`flex flex-col gap-4 hover:opacity-90 transition-opacity cursor-pointer ${
                 index === 0 ? "md:col-span-2" : ""
               }`}
@@ -86,7 +90,7 @@ function Blog() {
                   {article.description}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

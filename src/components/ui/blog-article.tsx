@@ -26,59 +26,64 @@ export function BlogArticle({
   image,
   author,
   date,
-  readTime = "5 мин",
-  category = "Статья",
+  readTime = "5 min",
+  category = "Article",
   tags = [],
 }: BlogArticleProps) {
   return (
-    <div className="max-w-4xl mx-auto overflow-hidden">
-      <div className="relative w-full aspect-video mb-8">
-        {image && (
-          <Image
-            src={image}
-            alt={title}
-            fill
-            className="object-cover rounded-lg"
-            priority
-          />
-        )}
-      </div>
+    <div className="max-w-4xl mx-auto">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{title}</h1>
       
-      <div className="p-6 md:p-8">
-        <div className="flex flex-wrap items-center gap-4 mb-4">
-          <Badge variant="secondary">{category}</Badge>
-          <div className="flex items-center text-sm text-muted-foreground gap-1">
-            <CalendarIcon className="h-4 w-4" />
-            <span>{date}</span>
-          </div>
-          <div className="flex items-center text-sm text-muted-foreground gap-1">
-            <ClockIcon className="h-4 w-4" />
-            <span>{readTime}</span>
-          </div>
-        </div>
-        
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">{title}</h1>
-        
-        <div className="flex items-center gap-3 mb-8 pb-6 border-b">
-          <Avatar className="h-10 w-10">
-            {author.avatar ? (
-              <AvatarImage src={author.avatar} alt={author.name} />
-            ) : null}
-            <AvatarFallback>{author.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+      <div className="flex items-center flex-wrap gap-4 mb-8">
+        <div className="flex items-center">
+          <Avatar className="h-10 w-10 mr-3">
+            <AvatarImage src={author.avatar} alt={author.name} />
+            <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-medium">{author.name}</p>
+            <div className="font-medium">{author.name}</div>
             {author.role && (
-              <p className="text-sm text-muted-foreground">{author.role}</p>
+              <div className="text-sm text-gray-500 dark:text-gray-400">{author.role}</div>
             )}
           </div>
         </div>
         
-        <div className="prose prose-slate dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+        <div className="flex items-center text-gray-500 dark:text-gray-400">
+          <CalendarIcon className="h-4 w-4 mr-1" />
+          <span className="text-sm">{date}</span>
+        </div>
+        
+        {readTime && (
+          <div className="flex items-center text-gray-500 dark:text-gray-400">
+            <ClockIcon className="h-4 w-4 mr-1" />
+            <span className="text-sm">{readTime} read</span>
+          </div>
+        )}
+        
+        {category && (
+          <Badge variant="secondary" className="px-2.5 py-0.5">
+            {category}
+          </Badge>
+        )}
+      </div>
+      
+      <div className="relative w-full aspect-video mb-10 rounded-lg overflow-hidden">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 66vw"
+          className="object-cover"
+          priority
+        />
+      </div>
+      
+      <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div dangerouslySetInnerHTML={{ __html: content }} />
         
         {tags.length > 0 && (
           <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
-            <h3 className="text-lg font-medium mb-3">Теги</h3>
+            <h3 className="text-lg font-medium mb-3">Tags</h3>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <Link key={tag} href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}>
