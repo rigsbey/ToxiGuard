@@ -10,6 +10,7 @@ export default function ProjectAnalysisOverlay() {
   const [isAnalysisVisible, setIsAnalysisVisible] = useState(false);
   const [isReportVisible, setIsReportVisible] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   
   const risks = [
     {
@@ -77,6 +78,7 @@ export default function ProjectAnalysisOverlay() {
       <div className="text-center mb-6 md:mb-8">
         <h2 className="text-xl md:text-3xl font-bold text-gray-900 px-4">
           Instant Risk Scanner
+          <span className="ml-2 text-xs md:text-sm text-white bg-blue-500 px-2 py-1 rounded-full">DEMO</span>
         </h2>
         <p className="text-gray-500 mt-1 md:mt-2 text-sm md:text-base">
           AI-powered analysis of project requirements
@@ -84,19 +86,23 @@ export default function ProjectAnalysisOverlay() {
       </div>
 
       <div className="relative">
-        {/* Интерактивный скриншот */}
+        {/* Интерактивное видео вместо скриншота */}
         <motion.div
           className="relative cursor-pointer group"
           onClick={() => setIsAnalysisVisible(true)}
           whileHover={{ scale: 1.01 }}
         >
           <div className="relative rounded-xl overflow-hidden">
-            <Image
-              src="/images/upwork-screenshot.jpg"
-              alt="Project screenshot"
+            <video 
+              ref={videoRef}
+              src="/demo.mp4"
               width={1200}
               height={800}
-              className="object-cover"
+              className="object-cover w-full"
+              muted
+              loop
+              autoPlay
+              playsInline
             />
             <div className="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-colors" />
           </div>
