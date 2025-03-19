@@ -6,7 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const nextConfig = {
   trailingSlash: false,
   images: {
-    domains: ['toxiguard.site'],
+    domains: ['toxiguard.site', 'images.unsplash.com'],
   },
   eslint: {
     ignoreDuringBuilds: true,
