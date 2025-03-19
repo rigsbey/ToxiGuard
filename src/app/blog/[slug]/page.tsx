@@ -94,8 +94,8 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
     const words = content.split(/\s+/).length;
     const readingTime = Math.ceil(words / 200) + ' min';
     
-    // Use a default image since we don't have the actual images
-    const defaultImage = '/images/upwork-screenshot.jpg';
+    // Get image from frontmatter or use default
+    const image = data.image || '/images/upwork-screenshot.jpg';
     
     // Process markdown content to HTML using remark
     const processedContent = content
@@ -119,7 +119,7 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
       tags: data.tags || ['freelancing', 'client protection'],
       readingTime,
       content: contentHtml,
-      image: data.image || defaultImage,
+      image,
     };
   } catch (error) {
     console.error(`Error reading blog post ${slug}:`, error);

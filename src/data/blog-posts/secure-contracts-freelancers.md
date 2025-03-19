@@ -1,14 +1,14 @@
 ---
-title: "Secure Contracts for Freelancers: Essential Clauses and Wording"
-description: "Protect your freelance business with proper contract language. Learn the essential clauses every freelance contract should include and how to avoid common legal pitfalls."
-date: "2023-10-12"
-author: "Sarah Chen"
-authorTitle: "Legal Advisor for Freelancers"
-tags: ["contracts", "legal protection", "payment terms", "scope management", "freelance business"]
-image: "/images/blog/secure-contracts.jpg"
+title: "Building a Bulletproof Freelance Contract: Protect Your Business"
+description: "Learn how to create freelance contracts that protect your business, establish clear expectations, and help you avoid common legal pitfalls."
+date: "2023-12-07"
+author: "Michael Roberts"
+authorTitle: "Legal Consultant for Freelancers"
+tags: ["contracts", "legal protection", "client management", "freelance business"]
+image: "/images/blog/freelance-contract.jpg"
 ---
 
-# Secure Contracts for Freelancers: Essential Clauses and Wording
+# Building a Bulletproof Freelance Contract: Protect Your Business
 
 ## Introduction
 
