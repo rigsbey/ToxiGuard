@@ -15,5 +15,4 @@ Allow: /sitemap.xml
 Sitemap: https://www.toxiguard.site/sitemap.xml
 
 # Блокируем служебные пути
-Disallow: /404
-Disallow: /*?* 
+Disallow: /404 
