@@ -12,7 +12,7 @@ Disallow: /admin/
 Allow: /index.html
 Allow: /sitemap.xml
 
-Sitemap: https://www.toxiguard.site/sitemap.xml
+Sitemap: https://toxiguard.site/sitemap.xml
 
 # Блокируем служебные пути
 Disallow: /404 
