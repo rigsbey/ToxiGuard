@@ -69,7 +69,10 @@ export default function Home() {
           "sameAs": [
             "https://twitter.com/toxiguard",
             "https://linkedin.com/company/toxiguard",
-            "https://facebook.com/toxiguard"
+            "https://facebook.com/toxiguard",
+            "https://www.tiktok.com/@toxiguard",
+            "https://www.instagram.com/toxiguard",
+            "https://www.youtube.com/@toxiguard"
           ]
         }
       `}
