@@ -35,29 +35,6 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <Script id="schema-software-application" type="application/ld+json">
-      {`
-        {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "ToxiGuard",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Web",
-          "offers": {
-            "@type": "Offer",
-            "price": "9.00",
-            "priceCurrency": "USD"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "852"
-          },
-          "description": "AI-powered protection system for freelancers against toxic clients and payment risks"
-        }
-      `}
-      </Script>
-      
       <Script id="schema-organization" type="application/ld+json">
       {`
         {
@@ -123,31 +100,6 @@ export default function Home() {
         <WaitlistSection />
       </main>
       <Footer />
-
-      <Script id="structured-data" type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "ToxiGuard",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Chrome",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "8214",
-            "bestRating": "5",
-            "worstRating": "1"
-          },
-          "description": "AI-powered protection system against toxic clients and payment risks for freelancers",
-          "screenshot": "https://toxiguard.site/images/screenshot1.png",
-          "featureList": "Risk analysis, Payment protection, Contract security"
-        })}
-      </Script>
 
       <Script id="faq-structured-data" type="application/ld+json">
         {JSON.stringify({

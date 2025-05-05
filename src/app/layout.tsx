@@ -65,24 +65,33 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="canonical" href="https://toxiguard.site" />
         <meta name="google-site-verification" content="cJxB6xaxazRAHUhm1d7MgbgciM8QiVZY0Vg4TIwbhe8" />
-        {/* Структурированные данные для лучшей индексации */}
+        {/* Заменяем на более подробную разметку SoftwareApplication */}
         <Script
-          id="schema-org"
+          id="schema-software-application-main"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'SoftwareApplication',
-              'name': 'ToxiGuard',
-              'description': 'AI-powered protection system against toxic projects and payment risks for freelancers',
-              'applicationCategory': 'BusinessApplication',
-              'offers': {
-                '@type': 'Offer',
-                'price': '0',
-                'priceCurrency': 'USD'
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "ToxiGuard",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web, Chrome",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
               },
-              'operatingSystem': 'Web',
-              'url': 'https://toxiguard.site'
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "8214",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "description": "AI-powered protection system against toxic projects and payment risks for freelancers",
+              "screenshot": "https://toxiguard.site/images/screenshot1.png",
+              "featureList": "Risk analysis, Payment protection, Contract security",
+              "url": "https://toxiguard.site"
             })
           }}
         />
