@@ -84,6 +84,30 @@ export default function Home() {
       `}
       </Script>
       
+      <Script id="schema-video-demo" type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "VideoObject",
+          "name": "ToxiGuard AI Risk Scanner Demo",
+          "description": "Watch a demo of ToxiGuard's AI instantly analyzing project requirements to identify potential risks for freelancers on platforms like Upwork.",
+          "thumbnailUrl": "https://toxiguard.site/images/demo-video-thumbnail.jpg",
+          "uploadDate": "2025-05-01T08:00:00+00:00",
+          "duration": "PT1M0S",
+          "contentUrl": "https://toxiguard.site/demo.mp4",
+          "embedUrl": "https://toxiguard.site/demo",
+          "publisher": {
+            "@type": "Organization",
+            "name": "ToxiGuard",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://toxiguard.site/logo.png"
+            }
+          }
+        }
+      `}
+      </Script>
+      
       <Navbar />
       <main>
         <Hero />
