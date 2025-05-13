@@ -18,17 +18,20 @@ import TestimonialsSection from '@/components/TestimonialsSectionWrapper'
 
 // Обновленные SEO-метаданные на английском языке
 export const metadata = {
-  title: 'ToxiGuard: AI Protection Against Toxic Clients & Payment Risks for Freelancers',
+  title: 'ToxiGuard: AI Risk Shield for Upwork Freelancers & Agencies',
   description:
-    'Protect your business with ToxiGuard — AI-driven project analysis, risk prevention, and secure contracts. Join over 8,214 freelancers who save time and money.',
+    'Detect toxic clients on Upwork with ToxiGuard AI. Real-time risk analysis for freelancers and agencies. Payment protection and red flag alerts. Join 8214+ users who avoid bad clients.',
   keywords: [
     'protection against toxic clients',
     'AI for freelancers',
+    'AI for agencies',
     'project risk analysis',
     'secure contracts for freelancers',
+    'upwork agency protection',
     'how to avoid toxic clients',
     'payment protection',
-    'AI risk scanner'
+    'AI risk scanner',
+    'upwork risk shield'
   ],
 };
 
@@ -61,7 +64,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "Product",
           "name": "ToxiGuard AI Protection",
-          "description": "AI-powered protection system for freelancers against toxic clients and payment risks",
+          "description": "AI-powered protection system for freelancers and agencies against toxic clients and payment risks on Upwork",
           "image": "https://toxiguard.site/og-image.jpg",
           "brand": {
             "@type": "Brand",
@@ -90,7 +93,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "VideoObject",
           "name": "ToxiGuard AI Risk Scanner Demo",
-          "description": "Watch a demo of ToxiGuard's AI instantly analyzing project requirements to identify potential risks for freelancers on platforms like Upwork.",
+          "description": "Watch a demo of ToxiGuard's AI instantly analyzing project requirements to identify potential risks for freelancers and agencies on Upwork.",
           "thumbnailUrl": "https://toxiguard.site/images/demo-video-thumbnail.jpg",
           "uploadDate": "2025-05-01T08:00:00+00:00",
           "duration": "PT1M0S",
@@ -132,10 +135,10 @@ export default function Home() {
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "How does ToxiGuard protect freelancers?",
+              "name": "How does ToxiGuard protect freelancers and agencies?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "ToxiGuard uses AI to analyze project descriptions, client history, and communication patterns to identify potential risks before you accept a project."
+                "text": "ToxiGuard uses AI to analyze project descriptions, client history, and communication patterns to identify potential risks before you accept a project. For agencies, it provides team-wide protection and analytics."
               }
             },
             {
@@ -143,7 +146,7 @@ export default function Home() {
               "name": "Is ToxiGuard free to use?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, ToxiGuard offers a free plan with basic protection features. Premium plans with advanced features are available for professional freelancers."
+                "text": "Yes, ToxiGuard offers a free plan with basic protection features. Premium plans with advanced features are available for professional freelancers and agencies."
               }
             },
             {
@@ -152,6 +155,14 @@ export default function Home() {
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "ToxiGuard currently works with Upwork, Freelancer, and Fiverr, with more platforms being added regularly."
+              }
+            },
+            {
+              "@type": "Question", 
+              "name": "Can ToxiGuard protect agency accounts with multiple team members?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, ToxiGuard offers special features for agencies to protect team-managed accounts on Upwork with centralized risk monitoring and client insights for all team members."
               }
             }
           ]

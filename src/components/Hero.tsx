@@ -47,12 +47,12 @@ export default function Hero() {
       <section className="text-center max-w-3xl">
         <LaurelBadge />
         <h1 className="text-[1.75rem] font-bold sm:text-6xl text-center leading-[1.25] sm:leading-[1.15] mt-16 mb-8">
-          Smart Client Protection<br/>
+          Detect Toxic Clients on Upwork<br/>
           for <TypewriterText />
         </h1>
         <p className="text-gray-500 text-sm sm:text-lg mt-6 sm:mt-8 mb-12">
-          AI-powered project analysis • Risk prevention • Secure contracts<br/>
-          Get customizable protection perfect for freelancers and agencies
+          ToxiGuard AI helps you detect toxic clients on Upwork through real-time risk analysis, payment protection, and red flag alerts. <br/>
+          Join 8214+ freelancers and agencies who avoid bad clients.
         </p>
       </section>
 

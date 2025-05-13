@@ -7,29 +7,29 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://toxiguard.site'),
-  title: 'ToxiGuard | AI Protection Against Toxic Clients for Freelancers',
-  description: 'Protect your freelance business with AI-powered risk analysis. Identify toxic clients, secure payments, and avoid problematic projects before it\'s too late.',
-  keywords: ['freelance protection', 'toxic client detection', 'AI for freelancers', 'upwork risk analysis', 'freelance payment security', 'client risk assessment', 'freelancer tools', 'prevent payment scams'],
+  title: 'ToxiGuard: AI Risk Shield for Upwork Freelancers & Agencies',
+  description: 'Detect toxic clients on Upwork with ToxiGuard AI. Real-time risk analysis for freelancers and agencies. Payment protection and red flag alerts. Join 8214+ users who avoid bad clients.',
+  keywords: ['freelance protection', 'toxic client detection', 'AI for freelancers', 'upwork risk analysis', 'agency client screening', 'client risk assessment', 'freelancer tools', 'prevent payment scams', 'upwork agency protection', 'upwork risk shield'],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://toxiguard.site',
     siteName: 'ToxiGuard',
-    title: 'ToxiGuard | AI Protection Against Toxic Clients for Freelancers',
-    description: 'Protect your freelance business with AI-powered risk analysis. Identify toxic clients, secure payments, and avoid problematic projects before it\'s too late.',
+    title: 'ToxiGuard: AI Risk Shield for Upwork Freelancers & Agencies',
+    description: 'Detect toxic clients on Upwork with ToxiGuard AI. Real-time risk analysis for freelancers and agencies. Payment protection and red flag alerts. Join 8214+ users who avoid bad clients.',
     images: [
       {
         url: '/images/toxiguard-og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'ToxiGuard - AI Protection for Freelancers',
+        alt: 'ToxiGuard - AI Risk Shield for Upwork Freelancers & Agencies',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ToxiGuard | AI Protection for Freelancers',
-    description: 'Protect your freelance business with AI-powered risk analysis',
+    title: 'ToxiGuard: AI Risk Shield for Upwork Freelancers & Agencies',
+    description: 'Detect toxic clients on Upwork with ToxiGuard AI. Real-time risk analysis for freelancers and agencies. Payment protection and red flag alerts.',
     images: ['/images/toxiguard-twitter-image.jpg'],
   },
   robots: {
@@ -63,7 +63,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="canonical" href="https://toxiguard.site" />
         <meta name="google-site-verification" content="cJxB6xaxazRAHUhm1d7MgbgciM8QiVZY0Vg4TIwbhe8" />
         {/* Заменяем на более подробную разметку SoftwareApplication */}
         <Script
@@ -88,9 +87,9 @@ export default function RootLayout({
                 "bestRating": "5",
                 "worstRating": "1"
               },
-              "description": "AI-powered protection system against toxic projects and payment risks for freelancers",
+              "description": "Detect toxic clients on Upwork with ToxiGuard AI. Real-time risk analysis for freelancers and agencies. Payment protection and red flag alerts.",
               "screenshot": "https://toxiguard.site/images/screenshot1.png",
-              "featureList": "Risk analysis, Payment protection, Contract security",
+              "featureList": "Risk analysis, Payment protection, Red flag alerts, Agency account protection",
               "url": "https://toxiguard.site"
             })
           }}
