@@ -15,6 +15,9 @@ import Footer from '@/components/Footer'
 import Script from 'next/script'
 import Link from 'next/link'
 import TestimonialsSection from '@/components/TestimonialsSectionWrapper'
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 
 // Обновленные SEO-метаданные на английском языке
 export const metadata = {
@@ -36,6 +39,31 @@ export const metadata = {
 };
 
 export default function Home() {
+  let latestPosts: { slug: string; title: string; date: string }[] = [];
+  try {
+    const postsDirectory = path.join(process.cwd(), 'src/data/blog-posts');
+    const filenames = fs.readdirSync(postsDirectory);
+    latestPosts = filenames
+      .filter(filename => filename.endsWith('.md'))
+      .map(filename => {
+        const slug = filename.replace(/\.md$/, '');
+        const filePath = path.join(postsDirectory, filename);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const { data, content } = matter(fileContents);
+        let title = data.title;
+        if (!title) {
+          const titleMatch = content.match(/^# (.*)/m);
+          title = titleMatch ? titleMatch[1] : 'Untitled';
+        }
+        return {
+          slug,
+          title,
+          date: data.date || new Date().toISOString().split('T')[0],
+        };
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 3);
+  } catch (e) {}
   return (
     <>
       <Script id="schema-organization" type="application/ld+json">
@@ -118,6 +146,22 @@ export default function Home() {
         <HowItWorksSection />
         <ProblemSection />
         <SuccessStories />
+        <section className="py-12 bg-gray-50 dark:bg-gray-900">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-6">Latest from the blog</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {latestPosts.map(post => (
+                <div key={post.slug} className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                  <a href={`/blog/${post.slug}`} className="text-xl font-semibold text-blue-600 hover:underline block mb-2">{post.title}</a>
+                  <span className="text-gray-500 text-sm">{post.date}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6">
+              <Link href="/blog" className="text-blue-600 hover:underline font-medium">All blog articles →</Link>
+            </div>
+          </div>
+        </section>
         <Blog />
         <RoadmapSection />
         <MetricsSection />

@@ -62,6 +62,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: post.description,
       images: post.image.startsWith('/') ? `https://toxiguard.site${post.image}` : post.image,
     },
+    alternates: {
+      canonical: `https://toxiguard.site/blog/${params.slug}`,
+    },
   };
 }
 
