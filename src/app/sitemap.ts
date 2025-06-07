@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/terms',
   ].map(route => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    lastModified: new Date().toISOString(),
     changeFrequency: route === '' ? 'daily' : 'weekly' as 'daily' | 'weekly',
     priority: route === '' ? 1 : 0.8,
   }));
@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       
       return {
         url: `${baseUrl}/blog/${slug}`,
-        lastModified: data.date || new Date(),
+        lastModified: (data.date ? new Date(data.date) : new Date()).toISOString(),
         changeFrequency: 'weekly' as const,
         priority: 0.6,
       };
