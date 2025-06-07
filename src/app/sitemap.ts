@@ -31,9 +31,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const { data } = matter(fileContents);
       const slug = filename.replace(/\.md$/, '');
       
+      let lastModDate = new Date();
+      if (data.date) {
+        const parsed = new Date(data.date);
+        if (!isNaN(parsed.getTime())) {
+          lastModDate = parsed;
+        }
+      }
+      
       return {
         url: `${baseUrl}/blog/${slug}`,
-        lastModified: (data.date ? new Date(data.date) : new Date()).toISOString(),
+        lastModified: lastModDate.toISOString(),
         changeFrequency: 'weekly' as const,
         priority: 0.6,
       };
