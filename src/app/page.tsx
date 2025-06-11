@@ -40,8 +40,16 @@ export const metadata = {
 
 const getLatestPosts = () => {
   try {
-    const postsDirectory = path.join(process.cwd(), 'src/data/blog-posts');
+    const currentWorkingDirectory = process.cwd();
+    const postsDirectory = path.join(currentWorkingDirectory, 'src/data/blog-posts');
+    
+    console.log('--- Debugging Blog Posts Loading ---');
+    console.log('Current Working Directory:', currentWorkingDirectory);
+    console.log('Attempting to read from:', postsDirectory);
+
     const filenames = fs.readdirSync(postsDirectory);
+    console.log('Files found:', filenames);
+    
     const posts = filenames
       .filter(filename => filename.endsWith('.md'))
       .map(filename => {
@@ -62,9 +70,17 @@ const getLatestPosts = () => {
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3);
+    
+    console.log('Successfully processed posts:', posts.length);
+    console.log('--- End Debugging ---');
     return posts;
   } catch (e: any) {
-    throw new Error(`Failed to load blog posts for homepage: ${e.message}`);
+    console.error('--- Critical Error Loading Blog Posts ---');
+    console.error('CWD:', process.cwd());
+    console.error('Error:', e.message);
+    console.error('--- End Error ---');
+    // Мы временно не будем ломать сборку, чтобы увидеть логи
+    return [];
   }
 };
 
