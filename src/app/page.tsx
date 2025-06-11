@@ -63,7 +63,9 @@ export default function Home() {
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3);
-  } catch (e) {}
+  } catch (e) {
+    console.error('Failed to load blog posts for homepage:', e);
+  }
   return (
     <>
       <Script id="schema-organization" type="application/ld+json">
