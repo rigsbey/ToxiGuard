@@ -38,12 +38,11 @@ export const metadata = {
   ],
 };
 
-export default function Home() {
-  let latestPosts: { slug: string; title: string; date: string }[] = [];
+const getLatestPosts = () => {
   try {
     const postsDirectory = path.join(process.cwd(), 'src/data/blog-posts');
     const filenames = fs.readdirSync(postsDirectory);
-    latestPosts = filenames
+    const posts = filenames
       .filter(filename => filename.endsWith('.md'))
       .map(filename => {
         const slug = filename.replace(/\.md$/, '');
@@ -63,9 +62,15 @@ export default function Home() {
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3);
-  } catch (e) {
-    console.error('Failed to load blog posts for homepage:', e);
+    return posts;
+  } catch (e: any) {
+    throw new Error(`Failed to load blog posts for homepage: ${e.message}`);
   }
+};
+
+export default function Home() {
+  const latestPosts = getLatestPosts();
+  
   return (
     <>
       <Script id="schema-organization" type="application/ld+json">
