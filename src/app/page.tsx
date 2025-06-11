@@ -40,16 +40,8 @@ export const metadata = {
 
 const getLatestPosts = () => {
   try {
-    const currentWorkingDirectory = process.cwd();
-    const postsDirectory = path.join(currentWorkingDirectory, 'src/data/blog-posts');
-    
-    console.log('--- Debugging Blog Posts Loading ---');
-    console.log('Current Working Directory:', currentWorkingDirectory);
-    console.log('Attempting to read from:', postsDirectory);
-
+    const postsDirectory = path.join(process.cwd(), 'src/data/blog-posts');
     const filenames = fs.readdirSync(postsDirectory);
-    console.log('Files found:', filenames);
-    
     const posts = filenames
       .filter(filename => filename.endsWith('.md'))
       .map(filename => {
@@ -70,16 +62,9 @@ const getLatestPosts = () => {
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3);
-    
-    console.log('Successfully processed posts:', posts.length);
-    console.log('--- End Debugging ---');
     return posts;
-  } catch (e: any) {
-    console.error('--- Critical Error Loading Blog Posts ---');
-    console.error('CWD:', process.cwd());
-    console.error('Error:', e.message);
-    console.error('--- End Error ---');
-    // Мы временно не будем ломать сборку, чтобы увидеть логи
+  } catch (e) {
+    // В случае ошибки возвращаем пустой массив, чтобы не ломать сборку
     return [];
   }
 };
@@ -169,23 +154,28 @@ export default function Home() {
         <HowItWorksSection />
         <ProblemSection />
         <SuccessStories />
-        <section className="py-12 bg-gray-50 dark:bg-gray-900">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-6">Latest from the blog</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {latestPosts.map(post => (
-                <div key={post.slug} className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-                  <a href={`/blog/${post.slug}`} className="text-xl font-semibold text-blue-600 hover:underline block mb-2">{post.title}</a>
-                  <span className="text-gray-500 text-sm">{post.date}</span>
-                </div>
-              ))}
+        
+        {latestPosts.length > 0 && (
+          <section className="py-12 bg-gray-50 dark:bg-gray-900">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold text-center mb-8">Latest from Our Blog</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {latestPosts.map(post => (
+                  <Link href={`/blog/${post.slug}`} key={post.slug} className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 className="text-xl font-semibold text-blue-600 hover:underline mb-2">{post.title}</h3>
+                    <span className="text-gray-500 text-sm">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </Link>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <Link href="/blog" className="text-blue-600 hover:underline font-medium">
+                  View all articles →
+                </Link>
+              </div>
             </div>
-            <div className="mt-6">
-              <Link href="/blog" className="text-blue-600 hover:underline font-medium">All blog articles →</Link>
-            </div>
-          </div>
-        </section>
-        <Blog />
+          </section>
+        )}
+
         <RoadmapSection />
         <MetricsSection />
         <TestimonialsSection />
