@@ -182,7 +182,11 @@ async function getBlogPosts(): Promise<BlogPost[]> {
         const category = categories[slug] || (data.tags && data.tags.length > 0 ? data.tags[0] : "Guide");
         
         // Use a default image for all blog posts since we don't have the actual images
-        const defaultImage = data.image || '/images/upwork-screenshot.jpg';
+        let defaultImage = data.image || '/images/upwork-screenshot.jpg';
+        if (defaultImage.startsWith('/')) {
+          // Fallback remote image when local asset missing
+          defaultImage = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=60';
+        }
         
         return {
           slug,

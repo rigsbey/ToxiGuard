@@ -21,7 +21,7 @@ export const blogPosts: BlogPost[] = [
     isoDate: '2025-03-10T10:00:00Z',
     readTime: '8 min read',
     category: 'Client Screening',
-    image: '/blog/toxic-client-signs.jpg',
+    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=60',
     keywords: ['toxic client warning signs', 'upwork red flags', 'bad client indicators', 'freelance client screening', 'upwork client vetting', 'freelance protection']
   },
   {
@@ -33,7 +33,7 @@ export const blogPosts: BlogPost[] = [
     isoDate: '2025-03-05T10:00:00Z',
     readTime: '10 min read',
     category: 'Contract Protection',
-    image: '/blog/freelance-contracts.jpg',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=60',
     keywords: ['freelance contracts', 'contract protection', 'scope creep prevention', 'payment protection clauses', 'freelance legal protection', 'intellectual property rights']
   },
   {
@@ -45,7 +45,7 @@ export const blogPosts: BlogPost[] = [
     isoDate: '2025-02-28T10:00:00Z',
     readTime: '12 min read',
     category: 'Freelance Business',
-    image: '/blog/cost-bad-clients.jpg',
+    image: 'https://images.unsplash.com/photo-1551836022-b88e7cc5314f?auto=format&fit=crop&w=1200&q=60',
     keywords: ['bad client cost', 'toxic client impact', 'freelance mental health', 'client relationship ROI', 'freelance business protection']
   },
   {
@@ -57,7 +57,7 @@ export const blogPosts: BlogPost[] = [
     isoDate: '2025-02-20T10:00:00Z',
     readTime: '9 min read',
     category: 'Technology',
-    image: '/blog/ai-freelancers.jpg',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=60',
     keywords: ['AI freelance tools', 'client screening technology', 'freelance risk assessment', 'artificial intelligence freelancing', 'automated client vetting']
   },
   {
@@ -69,7 +69,7 @@ export const blogPosts: BlogPost[] = [
     isoDate: '2025-02-15T10:00:00Z',
     readTime: '7 min read',
     category: 'Payment Security',
-    image: '/blog/payment-protection.jpg',
+    image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=60',
     keywords: ['freelance payment protection', 'secure payment methods', 'milestone payments', 'escrow services', 'preventing payment disputes']
   },
   {
@@ -81,7 +81,7 @@ export const blogPosts: BlogPost[] = [
     isoDate: '2025-02-08T10:00:00Z',
     readTime: '11 min read',
     category: 'Negotiation',
-    image: '/blog/negotiate-rates.jpg',
+    image: 'https://images.unsplash.com/photo-1522204507441-281b019020fa?auto=format&fit=crop&w=1200&q=60',
     keywords: ['freelance rate negotiation', 'increasing freelance rates', 'value-based pricing', 'client negotiation scripts', 'confidence in pricing']
   }
 ];

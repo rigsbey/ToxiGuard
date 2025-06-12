@@ -36,7 +36,7 @@ export default function BlogPost() {
         "@type": "Article",
         "headline": "10 Warning Signs of a Toxic Client on Upwork",
         "description": "Learn to identify red flags in Upwork project descriptions and client behavior before accepting work. Protect yourself from problematic clients with these essential warning signs.",
-        "image": "https://toxiguard.site/blog/toxic-client-signs.jpg",
+        "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=60",
         "author": {
           "@type": "Organization",
           "name": "ToxiGuard",
@@ -91,7 +91,7 @@ export default function BlogPost() {
               </p>
               
               <img 
-                src="/blog/toxic-client-signs.jpg" 
+                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=60" 
                 alt="Freelancer analyzing client messages for red flags" 
                 className="w-full rounded-xl mb-8"
               />

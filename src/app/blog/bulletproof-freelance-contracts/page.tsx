@@ -36,7 +36,7 @@ export default function BlogPost() {
         "@type": "Article",
         "headline": "How to Create Bulletproof Freelance Contracts",
         "description": "Learn essential contract clauses that protect freelancers from scope creep, payment issues, and intellectual property disputes. Create contracts that safeguard your business.",
-        "image": "https://toxiguard.site/blog/freelance-contracts.jpg",
+        "image": "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=60",
         "author": {
           "@type": "Organization",
           "name": "ToxiGuard",
@@ -91,7 +91,7 @@ export default function BlogPost() {
               </p>
               
               <img 
-                src="/blog/freelance-contracts.jpg" 
+                src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=60" 
                 alt="Freelancer reviewing contract documents" 
                 className="w-full rounded-xl mb-8"
               />

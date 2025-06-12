@@ -98,7 +98,10 @@ async function getPostData(slug: string): Promise<BlogPost | null> {
     const readingTime = Math.ceil(words / 200) + ' min';
     
     // Get image from frontmatter or use default
-    const image = data.image || '/images/upwork-screenshot.jpg';
+    let image = data.image || '/images/upwork-screenshot.jpg';
+    if (image.startsWith('/')) {
+      image = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=60';
+    }
     
     // Process markdown content to HTML using remark
     const processedContent = content
