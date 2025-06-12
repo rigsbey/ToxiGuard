@@ -14,6 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/blog',
     '/privacy',
     '/terms',
+    '/chrome-extension',
+    '/features/ai-scope-creep',
   ].map(route => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),

@@ -35,6 +35,7 @@ export default function Navbar() {
   const menuItems = [
     { label: 'How it works', onClick: scrollToHowItWorks },
     { label: 'Demo', onClick: scrollToRiskScanner },
+    { label: 'Scope Creep Detector', href: '/features/ai-scope-creep' },
     { label: 'FAQ', onClick: scrollToFAQ },
     { label: 'Blog', href: '/blog' },
   ];
