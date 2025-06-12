@@ -1,6 +1,6 @@
 ---
 title: "Navigating NDAs: A Freelancer's Friendly Guide to Keeping Secrets Safe"
-date: "YYYY-MM-DD" # Пожалуйста, обновите эту дату
+date: "2025-06-11"
 author: "ToxiGuard Team" # Пожалуйста, обновите автора, если нужно
 authorTitle: "Freelance Protection Experts" # Пожалуйста, обновите должность автора, если нужно
 tags: ["freelancing", "legal", "nda", "client management", "contracts"] # Пожалуйста, проверьте/обновите теги

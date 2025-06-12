@@ -98,6 +98,7 @@ export const metadata: Metadata = {
   title: 'ToxiGuard Blog - Resources for Freelancer Protection',
   description: 'Expert tips, guides, and insights to help freelancers protect themselves from toxic clients and payment risks.',
   keywords: 'freelancer blog, client protection, toxic clients, payment security, freelance tips, client screening',
+  alternates: { canonical: 'https://toxiguard.site/blog' },
   openGraph: {
     title: 'ToxiGuard Blog - Resources for Freelancer Protection',
     description: 'Expert tips, guides, and insights to help freelancers protect themselves from toxic clients and payment risks.',
