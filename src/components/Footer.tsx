@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useScrollToSection } from '@/hooks/useScrollToSection';
+import ObfuscateEmail from '@/components/ObfuscateEmail';
 
 export default function Footer() {
   const scrollToFAQ = useScrollToSection('faq-section');
@@ -40,12 +41,7 @@ export default function Footer() {
           <div className="space-y-3">
             <h3 className="font-semibold mb-2">Support</h3>
             <nav className="space-y-2">
-              <a 
-                href="mailto:toxiguard.post@gmail.com" 
-                className="block hover:underline"
-              >
-                toxiguard.post@gmail.com
-              </a>
+              <ObfuscateEmail address="toxiguard.post@gmail.com" className="block hover:underline" />
             </nav>
           </div>
 

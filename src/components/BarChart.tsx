@@ -9,7 +9,7 @@ interface BarChartProps {
 
 const BarChart = ({ data, className }: BarChartProps) => {
   return (
-    <div className={`flex items-end gap-6 ${className}`} style={{ height: '260px' }}>
+    <div className={`flex items-end gap-6 h-[260px] ${className}`}>
       {data.map((item, index) => (
         <motion.div 
           key={index}
@@ -20,10 +20,9 @@ const BarChart = ({ data, className }: BarChartProps) => {
           style={{ 
             backgroundColor: item.color,
             backgroundImage: `linear-gradient(to top, ${item.color} 0%, ${item.color}DD 100%)`,
-            boxShadow: `0 15px 40px ${item.color}40`,
-            width: '80px'
+            boxShadow: `0 15px 40px ${item.color}40`
           }}
-          className="relative rounded-2xl group cursor-pointer hover:-translate-y-2 transition-transform"
+          className="relative rounded-2xl w-20 group cursor-pointer hover:-translate-y-2 transition-transform"
         >
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity">
             <div className="bg-gray-800 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-lg">
